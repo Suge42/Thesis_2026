@@ -24,19 +24,19 @@
 \contentsline {section}{\numberline {2.4}Infrastructure and Optimization}{12}{}%
 \contentsline {subsection}{\numberline {2.4.1}PyTorch Lightning Training Pipeline}{12}{}%
 \contentsline {subsection}{\numberline {2.4.2}Distributed Hyperparameter Tuning with Ray Tune and Optuna}{13}{}%
-\contentsline {chapter}{\numberline {3}Experiments and Discussion}{14}{}%
-\contentsline {section}{\numberline {3.1}Experimental Setup}{15}{}%
-\contentsline {subsection}{\numberline {3.1.1}HPC Environment and I/O Bottleneck Mitigation}{15}{}%
-\contentsline {subsection}{\numberline {3.1.2}Evaluation Metrics}{15}{}%
-\contentsline {section}{\numberline {3.2}Baseline Results (Non-Hybrid Models)}{15}{}%
-\contentsline {subsection}{\numberline {3.2.1}Temporal CNN Performance}{15}{}%
-\contentsline {subsection}{\numberline {3.2.2}Temporal GRU RNN Performance}{15}{}%
-\contentsline {section}{\numberline {3.3}Proposed Architecture Results (Hybrid Model)}{15}{}%
-\contentsline {subsection}{\numberline {3.3.1}Hierarchical Transformer-LSTM Performance}{15}{}%
-\contentsline {section}{\numberline {3.4}Discussion}{15}{}%
-\contentsline {subsection}{\numberline {3.4.1}Single-Year vs. Multi-Year Capabilities}{15}{}%
-\contentsline {subsection}{\numberline {3.4.2}The Impact of Class Imbalance}{15}{}%
-\contentsline {chapter}{\numberline {4}Conclusions and Future Work}{15}{}%
-\contentsline {section}{\numberline {4.1}Conclusions}{15}{}%
-\contentsline {section}{\numberline {4.2}Future Work}{15}{}%
-\contentsline {chapter}{Bibliography}{15}{}%
+\contentsline {chapter}{\numberline {3}Experiments and Discussion}{13}{}%
+\contentsline {section}{\numberline {3.1}Experimental Setup}{14}{}%
+\contentsline {subsection}{\numberline {3.1.1}HPC Environment and I/O Bottleneck Mitigation}{14}{}%
+\contentsline {subsection}{\numberline {3.1.2}Evaluation Metrics}{14}{}%
+\contentsline {section}{\numberline {3.2}Baseline Results (Non-Hybrid Models)}{14}{}%
+\contentsline {subsection}{\numberline {3.2.1}Temporal CNN Performance}{14}{}%
+\contentsline {subsection}{\numberline {3.2.2}Temporal GRU RNN Performance}{14}{}%
+\contentsline {section}{\numberline {3.3}Proposed Architecture Results (Hybrid Model)}{14}{}%
+\contentsline {subsection}{\numberline {3.3.1}Hierarchical Transformer-LSTM Performance}{14}{}%
+\contentsline {section}{\numberline {3.4}Discussion}{14}{}%
+\contentsline {subsection}{\numberline {3.4.1}Single-Year vs. Multi-Year Capabilities}{14}{}%
+\contentsline {subsection}{\numberline {3.4.2}The Impact of Class Imbalance}{14}{}%
+\contentsline {chapter}{\numberline {4}Conclusions and Future Work}{14}{}%
+\contentsline {section}{\numberline {4.1}Conclusions}{14}{}%
+\contentsline {section}{\numberline {4.2}Future Work}{14}{}%
+\contentsline {chapter}{Bibliography}{14}{}%

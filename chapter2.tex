@@ -253,36 +253,6 @@ The tuning process was executed with a budget of 30 total trials.
 The Optuna sampler was initialized with 20 completely random startup trials to thoroughly explore the boundaries of the parameter space before
 transitioning to a Bayesian optimization strategy. To maximize hardware efficiency, Ray Tune was configured to run 3 trials concurrently.
 During this exploratory phase, each trial was trained for a truncated duration of 5 epochs.
-
-\begin{algorithm}[htpb]
-    \caption{Distributed Ray Tune and Lightning Orchestration}
-    \label{alg:ray_tune}
-    \begin{algorithmic}[1]
-        \Require Search space $\mathcal{S}$, Trials $N = 30$, Concurrent Workers $W = 3$
-        \Ensure Best configuration $config_{best}$ and evaluated Test Metrics
-        \vspace{1.5mm}
-        \Function{MetaparametersTuning}{$\mathcal{S}$}
-            \State $\mathcal{D} \gets \text{Initialize Optuna TPE Sampler}(\text{startup\_trials}=20)$
-            \State $results \gets \text{RayTuneRun}($
-            \State \quad $\text{train\_fn} = \text{LightningTrainer},$
-            \State \quad $\text{search\_space} = \mathcal{S},$
-            \State \quad $\text{num\_samples} = N,$
-            \State \quad $\text{max\_concurrent} = W,$
-            \State \quad $\text{scheduler} = \mathcal{D}$
-            \State $)$
-            \State $config_{best} \gets \text{GetBestConfig}(results, \text{metric}=\text{'val\_acc'}, \text{mode}=\text{'max'})$
-            \State \textbf{return} $config_{best}$
-        \EndFunction
-        \vspace{1.5mm}
-        \State \textbf{Execution:}
-        \State $config_{best} \gets \textsc{MetaparametersTuning}(\mathcal{S})$ \Comment{Run 5 epochs per trial}
-        \State $Model_{final} \gets \text{InitializeModel}(config_{best})$
-        \State $Trainer_{final} \gets \text{LightningTrainer}(\text{max\_epochs}=40, \text{early\_stopping}=10)$
-        \State $Trainer_{final}.\text{fit}(Model_{final})$
-        \State $TestMetrics \gets Trainer_{final}.\text{test}(Model_{final})$
-    \end{algorithmic}
-\end{algorithm}
-
 The continuous search space included a log-uniform distribution for the learning rate (bounded between $1\mathrm{e}{-5}$ and $1\mathrm{e}{-2}$) and
 the weight decay (bounded between $1\mathrm{e}{-7}$ and $1\mathrm{e}{-3}$). Discrete grid-search choices were provided for the batch size (8, 16, or 32).
 Furthermore, architecture-specific parameters were dynamically tuned:
