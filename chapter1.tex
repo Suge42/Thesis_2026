@@ -1,0 +1,273 @@
+\chapter{Introduction and Background}
+\label{cha:intro}
+
+
+\section{Introduction}
+\label{sec:context}
+
+The global agricultural sector is currently facing unprecedented challenges. Driven by rapid population growth, climate change,
+and the need for sustainable resource management, modern agriculture must maximize crop yields while minimizing environmental impact \cite{fao_2017_future}.
+Precision agriculture \cite{precision_farming_1} \cite{precision_farming_2} has emerged as a crucial solution to address these demands,
+relying heavily on accurate, large-scale, and up-to-date information regarding land use and crop distribution.
+Traditionally, acquiring this data required costly and time-consuming manual field surveys,
+which are impossible to scale effectively at a national or global level.
+
+Over the past decade, Earth Observation (EO) satellites have revolutionized how we monitor agricultural lands.
+Constellations such as the European Space Agency’s Sentinel-2 provide free,
+high-resolution multispectral imagery with frequent revisit times (every 5 to 10 days) \cite{drusch_sentinel2_2012}.
+By observing how a specific parcel of land reflects light over time \cite{tucker_1979},
+it is possible to track the phenological cycle---the biological growth stages---of vegetation.
+This continuous stream of data allows researchers to identify specific crop types based on their unique growth signatures rather than relying on a single,
+static snapshot \cite{zeng_phenology_2020}.
+
+Simultaneously, the rise of Deep Learning (DL) has provided the computational tools necessary to process this massive influx of satellite data.
+Early approaches in remote sensing relied heavily on traditional machine learning algorithms and spatial pattern recognition. However, as the field evolved,
+it became evident that the temporal dimension—how a pixel changes over a year—holds the most predictive power for crop classification.
+Consequently, sequence-modeling architectures such as Temporal Convolutional Neural Networks (1D-CNNs) \cite{cnn_1} \cite{cnn_2} and Recurrent Neural Networks (RNNs)
+\cite{rnn_1} have become the standard for agricultural time-series analysis.
+
+Despite these advancements, operationalizing deep learning for crop mapping presents significant difficulties.
+First, Satellite Image Time Series (SITS) are inherently irregular; optical sensors cannot penetrate clouds,
+leading to missing data and uneven temporal gaps that disrupt traditional machine learning models.
+Second, processing high-dimensional spatial-temporal datasets---such as tracking entire 2D image patches over a temporal sequence---creates
+severe computational and memory bottlenecks, particularly in High-Performance Computing (HPC) environments.
+Finally, most current state-of-the-art models suffer from "temporal myopia"; they analyze only a single year of weather and phenology,
+completely ignoring the fundamental agricultural practice of crop rotation,
+where farmers intentionally alternate crops across multiple years to maintain soil health \cite{crop_rotation}.
+
+This thesis aims to bridge these gaps. To overcome the hardware bottlenecks associated with heavy spatial-temporal grids,
+this work shifts to a highly optimized 1D pixel-based pipeline. By analyzing the temporal evolution of individual pixels rather than broad spatial patches,
+the computational load is drastically reduced, enabling rapid prototyping and extensive hyperparameter optimization on an HPC cluster.
+Building upon this efficient infrastructure, the project establishes robust single-year temporal baselines---specifically 1D-CNNs and
+Gated Recurrent Units (GRUs)---and compares them against a novel, hybrid multi-year architecture: the Transformer-LSTM.
+By integrating the self-attention mechanism proven effective on satellite time series \cite{attention_is_all_you_need} \cite{garnot2020psetae}
+with the recurrent memory of an LSTM, the proposed system seeks to answer whether teaching a neural network the historical rules of multi-year
+crop rotation can significantly outperform models that rely on single-year phenology alone.
+
+
+\section{Research Question and Objectives}
+\label{sec:question_objectives}
+
+The goal of this thesis is to explore the efficacy of deep sequence-modeling architectures in classifying agricultural crop types using
+irregular SITS. Specifically, this research investigates the transition from traditional, single-year phenological analysis to a multi-year,
+hybrid approach capable of learning long-term farming practices. This leads to the primary research question of this study:
+
+\begin{quote}
+\textit{``How can we efficiently process irregular Satellite Image Time Series for large-scale crop mapping, and does the integration of multi-year crop
+    rotation history via a hybrid Transformer-RNN architecture significantly outperform traditional single-year phenological models?''}
+\end{quote}
+
+To systematically answer this question, the project is structured around four specific objectives,
+spanning both machine learning infrastructure and architectural design:
+
+\begin{enumerate}
+    \item[i)] \textbf{Overcoming I/O and Computational Bottlenecks:}
+        To redesign the data pipeline, shifting from heavy spatial-temporal patches to a highly optimized 1D pixel-based extraction method.
+        This aims to resolve severe High-Performance Computing (HPC) memory constraints and reduce epoch training times, enabling rapid experimentation.
+    
+    \item[ii)] \textbf{Establishing Robust Single-Year Baselines:}
+        To design, train, and tune standard non-hybrid temporal architectures; specifically a 1-Dimensional Convolutional Neural Network (1D-CNN)
+        and a Gated Recurrent Unit Recurrent Neural Network (GRU-RNN). These models serve as the baseline for evaluating standard intra-year phenological classification.
+    
+    \item[iii)] \textbf{Developing a Multi-Year Hybrid Architecture:}
+        To construct a novel Hierarchical Transformer-LSTM model that extends beyond a single harvest cycle.
+        This objective focuses on using self-attention to manage intra-year weather irregularities and an LSTM memory cell to capture inter-year crop rotation dependencies.
+    
+    \item[iv)] \textbf{Automating Hyperparameter Optimization:}
+        To build a robust, fully automated Machine Learning Operations (MLOps) pipeline integrating PyTorch Lightning, Ray Tune, and Optuna.
+        This ensures all models are evaluated fairly at their peak capacity through distributed hyperparameter tuning on an HPC cluster.
+\end{enumerate}
+
+
+\section{State of the Art}
+\label{sec:sota}
+
+\subsection{Deep Learning for Precision Agriculture}
+\label{subsec:dl_precision_ag}
+
+The paradigm of precision agriculture has fundamentally transformed modern farming management.
+By transitioning from uniform field-level treatments to highly granular, site-specific interventions,
+precision agriculture seeks to optimize resource inputs---such as water, fertilizers,
+and pesticides---while maximizing overall crop yield \cite{precision_farming_1, precision_farming_2}.
+This shift relies entirely on the continuous acquisition and analysis of vast amounts of heterogeneous data collected
+from on site Internet of Things (IoT) sensors, Unmanned Aerial Vehicles (UAVs), and Earth Observation (EO) satellites.
+
+Historically, extracting actionable insights from these diverse data sources depended on traditional machine learning algorithms,
+such as Random Forests (RF) and Support Vector Machines (SVM) \cite{osman_crop_2013, brickner_field_2025}.
+While effective for specific, localized tasks, these traditional methods are inherently limited by their reliance on manual feature engineering.
+Researchers were required to construct and select specific vegetation indices or spatial textures beforehand, a process that is highly domain-specific,
+time-consuming, and difficult to scale across different geographical regions and climatic conditions.
+
+The advent of Deep Learning (DL) has largely overcome these limitations, triggering a major shift in agricultural data analysis \cite{kamilaris_deep_2018}.
+Unlike traditional machine learning, deep neural networks possess the capacity for automatic, hierarchical feature extraction.
+By ingesting raw or minimally processed data, DL models can autonomously learn complex, non-linear representations directly from the input space.
+In precision agriculture, this has led to unprecedented breakthroughs across a wide array of applications, including automated weed detection,
+early disease diagnosis, and precise yield estimation \cite{kattenborn_review_2021}. 
+
+In the specific context of remote sensing and land cover mapping, deep learning has proven exceptionally proficient at handling the massive
+dimensionality of Satellite Image Time Series (SITS). By leveraging specialized architectures capable of modeling both spatial hierarchies
+and temporal dependencies, deep learning models can now accurately map crop distributions at a national scale, outperforming traditional
+shallow classifiers and forming the foundational technology upon which this thesis is built \cite{kussul_deep_2017}.
+
+\subsection{Remote Sensing and Sentinel-2 Time Series}
+\label{subsec:rs_sentinel2}
+
+\textbf{The Importance of Spatio-Temporal Dynamics} \\
+The European Space Agency's Sentinel-2 mission has revolutionized agricultural monitoring by providing high spatial
+resolution imagery with a frequent 5-day revisit time. This creates dense Satellite Image Time Series (SITS) that capture the
+vital phenological evolution of crops throughout the growing season \cite{sainte_fare_garnot_time_2019}.
+However, extracting actionable insights from SITS requires models to navigate a complex time-space tradeoff.
+Research demonstrates that for crop type classification on Sentinel-2 data, the temporal structure is often richer than the spatial structure;
+consequently, hybrid models (like recurrent convolutional networks) perform best when the majority of their parameters are allocated to modeling
+temporal sequences rather than spatial features \cite{sainte_fare_garnot_time_2019}.
+
+\textbf{Encoding and Sequence Modeling} \\
+To effectively process these time series, researchers have explored various representation and sequence-modeling strategies:
+\begin{itemize}
+    \item \textbf{Image-Based Encodings:}
+        One approach involves transforming 1D time-series data (such as vegetation indices) into 2D image representations---like Gramian Angular Fields
+        or Markov Transition Fields---allowing standard convolutional networks to efficiently extract static and dynamic temporal patterns \cite{dias_image_2020}.
+    \item \textbf{Recurrent to Transformer Evolution:}
+        While models like Long Short-Term Memory (LSTM) networks have traditionally handled sequential data,
+        modern approaches increasingly rely on Transformer architectures to overcome LSTM limitations with long-range dependencies \cite{zhou_improved_2024}.
+        In crop mapping, advanced models like the Temporo-Spatial Vision Transformer (TSVIT) utilize purely self-attention mechanisms to process multi-modal SITS,
+        combining optical data (Sentinel-2) with radar (Sentinel-1) to boost classification performance without relying on standard convolutions \cite{follath_multimodal_2024}.
+\end{itemize}
+
+\textbf{Overcoming Noise and Label Scarcity} \\
+Despite the rich information in SITS, operational mapping is frequently hindered by cloud cover noise and a severe lack of pixel-level ground truth data.
+Recent deep learning innovations address these bottlenecks directly:
+\begin{itemize}
+    \item \textbf{Knowledge-Guided Networks:}
+        To ensure models learn meaningful phenology rather than dataset artifacts, prior domain knowledge can be integrated into the architecture.
+        For instance, the Knowledge-Guided Crop Mapping Network (KGCMNet) forces the model to reconstruct known vegetation indices (like NDVI) during training,
+        which significantly sharpens its spatio-temporal representations \cite{qin_knowledge_2024}.
+    \item \textbf{Weakly Supervised Learning:}
+        To bypass the need for exhaustive pixel-level annotations, weakly supervised frameworks (e.g., Exact) utilize only image-level labels.
+        These models explore space-time perceptive clues to rectify erroneous semantic biases caused by anomalous temporal clips,
+        pushing weakly supervised performance to nearly 95\% of fully supervised baselines \cite{zhu_exact_2025}.
+    \item \textbf{Multimodal Pseudo-Labeling:}
+        Another highly scalable solution involves integrating top-down SITS with bottom-up, ground-level field images.
+        By using multimodal data to generate reliable pseudo-labels, models can achieve high accuracy across vast geographical areas
+        while drastically reducing the need for expensive on site data collection \cite{abbas_multimodal_2025}.
+\end{itemize}
+
+\subsection{Sequence Modeling: From CNNs to Transformers}
+\label{subsec:sequence_modeling}
+
+The accurate classification of agricultural land relies heavily on the ability to interpret the chronological sequence of crop phenology.
+As deep learning has evolved, so too have the architectures designed to model these complex temporal dynamics.
+
+\textbf{Convolutional Neural Networks (CNNs)} \\
+Early deep learning approaches for Satellite Image Time Series (SITS) relied heavily on Convolutional Neural Networks (CNNs).
+While originally designed to extract spatial features from static images \cite{kattenborn_review_2021},
+CNNs were successfully adapted for temporal sequences via 1-Dimensional (1D) convolutions.
+By operating filters across the temporal dimension of a pixel's profile, 1D-CNNs can efficiently capture localized temporal patterns and phenological shifts,
+significantly outperforming traditional machine learning classifiers like Random Forests \cite{kussul_deep_2017}.
+However, standard CNNs lack an inherent mechanism to model strict, long-term sequential dependencies, as their receptive field is limited by the kernel size.
+
+\textbf{Recurrent Neural Networks (RNNs), GRUs and LSTMs} \\
+To explicitly model the chronological order of agricultural events, Recurrent Neural Networks (RNNs) became the standard.
+The foundational RNN Encoder-Decoder architecture allowed models to ingest variable-length sequences and maintain a hidden state that summarizes
+past inputs to inform future predictions \cite{cho_learning_2014}. To address the vanishing gradient problem inherent in basic RNNs,
+Long Short-Term Memory (LSTM) networks and Gated Recurrent Units (GRUs) were widely adopted. These architectures are particularly advantageous in remote sensing,
+as specialized recurrent layers (such as GRU-D) can be engineered to handle the irregular time gaps, cloud occlusions,
+and missing values that commonly afflict satellite time series \cite{zhao_recurrent_2021}. 
+
+\textbf{The Transformer Paradigm} \\
+Despite their success, LSTMs process data sequentially, which bottlenecks training parallelization and limits their ability to capture
+extremely long-range dependencies across a full growing season \cite{zhou_improved_2024}.
+The introduction of Transformer architecturesmarked a paradigm shift in sequence modeling.
+By dispensing with recurrence and relying entirely on self-attention mechanisms, Transformers evaluate the relationships between all time steps simultaneously,
+regardless of their distance in the sequence \cite{zhou_improved_2024}.
+In modern crop mapping applications, Transformers have demonstrated superior classification accuracy and generalizability compared to 1D-CNNs,
+especially when handling complex, multi-year, or irregularly sampled temporal features \cite{pham_temporally_2024}.
+
+\textbf{Hybrid Architectures} \\
+Most recently, researchers have sought to combine the localized sequential extraction capabilities of LSTMs with the global receptive field of Transformers.
+Dual-path and hybrid LSTM-Transformer models process temporal inputs simultaneously, leveraging Bidirectional LSTMs to capture short- and mid-term
+sequential dependencies, while utilizing Transformer encoders to model long-range spatial and temporal interactions \cite{guo_dual_2025}.
+These hybrid networks mitigate the individual weaknesses of both architectures and represent the current state-of-the-art for decoding
+the complex spatiotemporal dynamics of Earth observation data \cite{guo_dual_2025, zhou_improved_2024}.
+
+\textbf{Hybrid Architectures} \\
+To maximize predictive performance, researchers have increasingly developed hybrid architectures that integrate multiple sequence-modeling paradigms.
+Early hybrid networks in remote sensing frequently combined CNNs with RNNs (such as ConvLSTMs or CNN+GRU architectures) to
+simultaneously extract spatial textures and temporal phenology \cite{sainte_fare_garnot_time_2019}.
+However, as the focus has shifted toward capturing highly complex, long-term temporal dynamics,
+newer approaches have begun merging the localized sequential extraction capabilities of LSTMs with the global receptive field of Transformers.
+Dual-path and cascaded LSTM-Transformer models process temporal inputs by leveraging Bidirectional LSTMs
+to capture short- and mid-term sequential dependencies, while utilizing Transformer encoders to model long-range interactions \cite{guo_dual_2025}.
+These advanced hybrid networks mitigate the individual weaknesses of both architectures and represent the current
+state-of-the-art for decoding the complex spatiotemporal dynamics of Earth observation data \cite{guo_dual_2025, zhou_improved_2024}.
+
+\subsection{Multi-Year Crop Rotation Modeling}
+\label{subsec:crop_rotation}
+
+\textbf{The Importance of Long-Term Agricultural Dynamics} \\
+Crop rotation is a fundamental agricultural practice wherein farmers alternate the species of crops grown on a specific plot across consecutive seasons.
+This strategy is essential for maintaining soil health, preventing nutrient depletion, and breaking pest and disease cycles.
+Despite its agronomic importance, most remote sensing models suffer from "temporal myopia,"
+analyzing single-year phenology while ignoring inter-annual historical dependencies.
+
+\textbf{Traditional and Knowledge-Based Approaches} \\
+Early attempts to map multi-year dynamics relied on explicitly injecting prior agronomic knowledge into the classification pipeline.
+For example, probabilistic models such as Bayesian networks and Conditional Random Fields have been used to encode known crop rotation rules;
+the outputs of these networks are then fed into standard classifiers (such as Support Vector Machines)
+to guide the algorithm and improve early-season mapping accuracy \cite{osman_crop_2013, sainte_fare_garnot_time_2019}.
+While effective, these methods require manually constructed rule bases and lack the flexibility to adapt to unexpected crop sequence changes.
+
+\textbf{Machine Learning and Temporal Transferability} \\
+As satellite archives have grown, researchers have increasingly utilized machine learning to track land-use transitions over longer periods.
+Hierarchical classification workflows (such as tiered Random Forests) have been successfully deployed across multiple years to explicitly track crop rotations,
+field abandonment, and land-use intensity \cite{brickner_field_2025}.
+However, monitoring annual crop rotations over a decade presents significant challenges regarding temporal transferability;
+models trained on a specific year often struggle to generalize to past or future years due to shifting weather patterns,
+varying sensor availability, and inter-annual phenological shifts \cite{pham_temporally_2024}. 
+
+\textbf{The Deep Learning Frontier} \\
+While current methods successfully track multi-year changes, they predominantly process each year independently and rely
+on post-classification comparisons to identify rotations.
+The next frontier in precision agriculture mapping is the development of deep sequence-modeling architectures that do not require external rulesets,
+but rather possess the intrinsic memory capacity to learn and predict multi-year agricultural cycles directly from continuous, raw satellite time-series data.
+
+\textbf{The Deep Learning Frontier} \\
+While early deep learning methods successfully tracked multi-year changes,
+they predominantly processed each year independently and relied on post-classification comparisons to identify rotations.
+The next frontier in precision agriculture mapping is the development of architectures that possess the intrinsic memory capacity to learn
+and predict multi-year agricultural cycles directly from continuous, raw satellite time-series data.
+Recently, researchers have demonstrated significant success in bridging these paradigms by integrating Bayesian modeling—such
+as Hidden Markov Models (HMMs)—with deep Transformer Encoders to explicitly capture intricate multi-year crop rotation patterns \cite{perantoni_bayesian_2024}.
+Building upon these foundations, the focus now shifts toward purely neural hybrid architectures capable of modeling these complex temporal dependencies end-to-end.
+
+
+\section{Contributions}
+\label{sec:contributions}
+
+This thesis advances the field of agricultural remote sensing by addressing the computational bottlenecks of large-scale mapping
+and exploring the predictive power of multi-year sequence modeling. The primary contributions of this work are as follows:
+
+\begin{itemize}
+    \item \textbf{Adoption of an Optimized 1D Data Pipeline:}
+        To overcome the limitations of memory-intensive 2D spatial patches, a streamlined, 1D pixel-based data representation is utilized. 
+        This approach drastically reduces High-Performance Computing (HPC) I/O bottlenecks, enabling the rapid processing and evaluation of massive, 
+        multi-year Satellite Image Time Series (SITS).
+    
+    \item \textbf{Comprehensive Baseline Benchmarking:}
+        Robust single-year temporal baseline models, specifically a 1-Dimensional Convolutional Neural Network (1D-CNN) 
+        and a Gated Recurrent Unit Recurrent Neural Network (GRU-RNN), are developed, trained and thoroughly evaluated. 
+        These baselines provide a rigorous standard for intra-year phenological classification against which more complex models can be compared.
+    
+    \item \textbf{Novel Multi-Year Hybrid Architecture:}
+        A custom Hierarchical Transformer-LSTM architecture is designed and implemented. 
+        This hybrid model uniquely combines the self-attention mechanisms of a Transformer with the recurrent memory of 
+        an LSTM to capture both intra-year weather irregularities and inter-year crop rotation dependencies.
+    
+    \item \textbf{Integration of Automated MLOps and Distributed Tuning:}
+        A robust Machine Learning Operations (MLOps) workflow, leveraging PyTorch Lightning, Ray Tune, and Optuna, 
+        is adapted to automate the training pipeline. This infrastructure facilitates distributed hyperparameter optimization 
+        across an HPC cluster, ensuring that all architectures are evaluated fairly and at their maximum potential.
+\end{itemize}
+
+By delivering this end-to-end framework, this thesis not only provides a scalable software solution for operational crop mapping
+but also offers critical insights into whether neural networks can effectively learn the historical, multi-year rules of agricultural crop rotation.

@@ -1,0 +1,254 @@
+\begin{thebibliography}{10}
+
+\bibitem{abbas_multimodal_2025}
+Adel Abbas, Claudia Paris, and Andrew Nelson.
+\newblock Multimodal satellite-field data integration for scalable crop-type
+  mapping with limited labels.
+\newblock {\em IEEE Transactions on Geoscience and Remote Sensing}, 63:1--16,
+  2025.
+
+\bibitem{akiba2019optuna}
+Takuya Akiba, Shotaro Sano, Toshihiko Yanase, Takeru Ohta, and Masanori Koyama.
+\newblock Optuna: A next-generation hyperparameter optimization framework.
+\newblock In {\em Proceedings of the 25th ACM SIGKDD international conference
+  on knowledge discovery \& data mining}, pages 2623--2631, 2019.
+
+\bibitem{brickner_field_2025}
+Nechama~Z Brickner, Lior Fine, Offer Rozenstein, and Tarin Paz-Kagan.
+\newblock Field crop mapping using machine learning and multi-sensor satellite
+  fusion: toward dynamic agricultural monitoring.
+\newblock {\em Smart Agricultural Technology}, 12:101650, 2025.
+
+\bibitem{crop_rotation}
+D.~G. Bullock.
+\newblock Crop rotation.
+\newblock {\em Critical Reviews in Plant Sciences}, 11(4):309--326, 1992.
+
+\bibitem{cho_learning_2014}
+Kyunghyun Cho, Bart van Merri{\"e}nboer, Caglar Gulcehre, Dzmitry Bahdanau,
+  Fethi Bougares, Holger Schwenk, and Yoshua Bengio.
+\newblock Learning phrase representations using rnn encoder-decoder for
+  statistical machine translation.
+\newblock In {\em Proceedings of the 2014 Conference on Empirical Methods in
+  Natural Language Processing (EMNLP)}, pages 1724--1734, 2014.
+
+\bibitem{dias_image_2020}
+Danielle Dias, Ulisses Dias, Nathalia Menini, Rubens Lamparelli, Guerric
+  Le~Maire, and Ricardo da~S~Torres.
+\newblock Image-based time series representations for pixelwise eucalyptus
+  region classification: A comparative study.
+\newblock {\em IEEE Geoscience and Remote Sensing Letters}, 17(8):1450--1454,
+  2020.
+
+\bibitem{drusch_sentinel2_2012}
+Matthias Drusch, Umberto Del~Bello, S{\'e}bastien Carlier, Olivier Colin,
+  V~Fernandez, Ferran Gascon, B~Hoersch, C~Isola, P~Laberinti, P~Martimort,
+  et~al.
+\newblock Sentinel-2: {ESA}'s optical high-resolution mission for {GMES}
+  operational services.
+\newblock {\em Remote sensing of Environment}, 120:25--36, 2012.
+
+\bibitem{falcon2019pytorch}
+William Falcon et~al.
+\newblock Pytorch lightning.
+\newblock {\em GitHub. Note:
+  https://github.com/PyTorchLightning/pytorch-lightning}, 3, 2019.
+
+\bibitem{follath_multimodal_2024}
+Theresa Follath, David Mickisch, Jan Hemmerling, Stefan Erasmi, Marcel
+  Schwieder, and Beg{\"u}m Demir.
+\newblock Multi-modal vision transformers for crop mapping from satellite image
+  time series.
+\newblock In {\em IGARSS 2024-2024 IEEE International Geoscience and Remote
+  Sensing Symposium}, pages 1937--1941. IEEE, 2024.
+
+\bibitem{fao_2017_future}
+{Food and Agriculture Organization of the United Nations (FAO)}.
+\newblock {\em The future of food and agriculture -- Trends and challenges}.
+\newblock FAO, Rome, Italy, 2017.
+
+\bibitem{guo_dual_2025}
+Zexuan Guo, Quan Chen, and Huali Liao.
+\newblock Dual-path lstm-transformer architecture for spatiotemporal
+  forecasting of global digital divide.
+\newblock In {\em 2025 2nd International Conference on Digital Media,
+  Communication and Information Systems (DMCIS)}, pages 165--168. IEEE, 2025.
+
+\bibitem{hochreiter_long_1997}
+Sepp Hochreiter and J{\"u}rgen Schmidhuber.
+\newblock Long short-term memory.
+\newblock {\em Neural Computation}, 9(8):1735--1780, 1997.
+
+\bibitem{kamilaris_deep_2018}
+Andreas Kamilaris and Francesc~X Prenafeta-Bold{\'u}.
+\newblock Deep learning in agriculture: A survey.
+\newblock {\em Computers and electronics in agriculture}, 147:70--90, 2018.
+
+\bibitem{kattenborn_review_2021}
+Teja Kattenborn, Jens Leitloff, Felix Schiefer, and Stefan Hinz.
+\newblock Review on convolutional neural networks (cnn) in vegetation remote
+  sensing.
+\newblock {\em ISPRS journal of photogrammetry and remote sensing}, 173:24--49,
+  2021.
+
+\bibitem{cnn_1}
+Nataliia Kussul, Mykola Lavreniuk, Sergii Skakun, and Andrii Shelestov.
+\newblock Deep learning classification of land cover and crop types using
+  remote sensing data.
+\newblock {\em IEEE Geoscience and Remote Sensing Letters}, 14(5):778--782,
+  2017.
+
+\bibitem{kussul_deep_2017}
+Nataliia Kussul, Mykola Lavreniuk, Sergii Skakun, and Andrii Shelestov.
+\newblock Deep learning classification of land cover and crop types using
+  remote sensing data.
+\newblock {\em IEEE Geoscience and Remote Sensing Letters}, 14(5):778--782,
+  2017.
+
+\bibitem{liaw2018tune}
+Richard Liaw, Eric Liang, Robert Nishihara, Philipp Moritz, Joseph~E Gonzalez,
+  and Ion Stoica.
+\newblock Tune: A research platform for distributed model selection and
+  training.
+\newblock {\em arXiv preprint arXiv:1807.05118}, 2018.
+
+\bibitem{loshchilov2017decoupled}
+Ilya Loshchilov and Frank Hutter.
+\newblock Decoupled weight decay regularization.
+\newblock {\em arXiv preprint arXiv:1711.05101}, 2017.
+
+\bibitem{precision_farming_1}
+Sitabhra Majumder, Arunabha Pal, Sumit Ray, Sapparapu~Sai Sivani, Sanju Saha,
+  and Ankita Priyadarshini.
+\newblock An overview of the role of iot in modern agriculture application.
+\newblock In {\em 2024 2nd International Conference on Signal Processing,
+  Communication, Power and Embedded System (SCOPES)}, pages 1--4, 19-21
+  December 2024.
+
+\bibitem{rnn_1}
+Emile Ndikumana, Dinh Ho~Tong~Minh, Nicolas Baghdadi, Dominique Courault, and
+  Laure Hossard.
+\newblock Deep recurrent neural network for agricultural classification using
+  multitemporal sar sentinel-1 for camargue, france.
+\newblock {\em Remote Sensing}, 10(8), 2018.
+
+\bibitem{osman_crop_2013}
+Julien Osman, Jordi Inglada, Jean-Fran{\c{c}}ois Dejoux, Olivier Hagolle, and
+  G{\'e}rard Dedieu.
+\newblock Crop mapping by supervised classification of high resolution optical
+  image time series using prior knowledge about crop rotation and topography.
+\newblock In {\em 2013 IEEE International Geoscience and Remote Sensing
+  Symposium - IGARSS}, pages 2344--2347. IEEE, 2013.
+
+\bibitem{precision_farming_2}
+Gandhi~Prakash Panem, Garikipati Sivannarayana, R.~Venkata Lakshmi, and
+  Pamula~Narendra Babu.
+\newblock An analytical study of next-generation iot architectures for
+  precision agriculture.
+\newblock In {\em 2025 IEEE Pune Section International Conference (PuneCon)},
+  pages 1--6, 2025.
+
+\bibitem{pelletier_temporal_2019}
+Charlotte Pelletier, Geoffrey~I Webb, and Fran{\c{c}}ois Petitjean.
+\newblock Temporal convolutional neural network for the classification of
+  satellite image time series.
+\newblock {\em Remote Sensing}, 11(5):523, 2019.
+
+\bibitem{cnn_2}
+Charlotte Pelletier, Geoffrey~I. Webb, and François Petitjean.
+\newblock Temporal convolutional neural network for the classification of
+  satellite image time series.
+\newblock {\em Remote Sensing}, 11(5), 2019.
+
+\bibitem{perantoni_bayesian_2024}
+Gianmarco Perantoni, Giulio Weikmann, and Lorenzo Bruzzone.
+\newblock Bayesian modelling of multi-year crop type classification using deep
+  neural networks and hidden markov models.
+\newblock In {\em IGARSS 2024-2024 IEEE International Geoscience and Remote
+  Sensing Symposium}, pages 941--945. IEEE, 2024.
+
+\bibitem{pham_temporally_2024}
+Vu-Dong Pham, Gideon Tetteh, Fabian Thiel, Stefan Erasmi, Marcel Schwieder,
+  David Frantz, and Sebastian van~der Linden.
+\newblock Temporally transferable crop mapping with temporal encoding and deep
+  learning augmentations.
+\newblock {\em International Journal of Applied Earth Observation and
+  Geoinformation}, 129:103867, 2024.
+
+\bibitem{qin_knowledge_2024}
+Xiaolei Qin, Xin Su, and Liangpei Zhang.
+\newblock Knowledge-guided satellite image time series classification network
+  for crop mapping.
+\newblock In {\em IGARSS 2024-2024 IEEE International Geoscience and Remote
+  Sensing Symposium}, pages 4150--4153. IEEE, 2024.
+
+\bibitem{russwurm_self_attention_2020}
+Marc Ru{\ss}wurm and Marco K{\"o}rner.
+\newblock Self-attention for raw optical satellite time series classification.
+\newblock {\em ISPRS Journal of Photogrammetry and Remote Sensing},
+  169:421--435, 2020.
+
+\bibitem{sainte_fare_garnot_time_2019}
+Vivien Sainte Fare~Garnot, Loic Landrieu, S~Giordano, and Nesrine Chehata.
+\newblock Time-space tradeoff in deep learning models for crop classification
+  on satellite multi-spectral image time series.
+\newblock In {\em IGARSS 2019-2019 IEEE International Geoscience and Remote
+  Sensing Symposium}, pages 6247--6250. IEEE, 2019.
+
+\bibitem{garnot2020psetae}
+Vivien Sainte Fare~Garnot, Loic Landrieu, Sebastien Giordano, and Nesrine
+  Chehata.
+\newblock Satellite image time series classification with pixel-set encoders
+  and temporal self-attention.
+\newblock In {\em Proceedings of the IEEE/CVF Conference on Computer Vision and
+  Pattern Recognition (CVPR)}, pages 12325--12334, 2020.
+
+\bibitem{tucker_1979}
+Compton~J Tucker.
+\newblock Red and photographic infrared linear combinations for monitoring
+  vegetation.
+\newblock {\em Remote Sensing of Environment}, 8(2):127--150, 1979.
+
+\bibitem{attention_is_all_you_need}
+Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones,
+  Aidan~N Gomez, \L~ukasz Kaiser, and Illia Polosukhin.
+\newblock Attention is all you need.
+\newblock In I.~Guyon, U.~Von Luxburg, S.~Bengio, H.~Wallach, R.~Fergus,
+  S.~Vishwanathan, and R.~Garnett, editors, {\em Advances in Neural Information
+  Processing Systems}, volume~30. Curran Associates, Inc., 2017.
+
+\bibitem{zaharia2018accelerating}
+Matei Zaharia, Andrew Chen, Aaron Davidson, Ali Ghodsi, Sue~Ann Hong, Andy
+  Konwinski, Siddharth Murching, Tomas Nykodym, Paul Ogilvie, Mani Parkhe,
+  et~al.
+\newblock Accelerating the machine learning lifecycle with mlflow.
+\newblock {\em IEEE Data Eng. Bull.}, 41(4):39--45, 2018.
+
+\bibitem{zeng_phenology_2020}
+Linglin Zeng, Brian~D Wardlow, Daxing Xiang, Shiyin Hu, and Dailiang Li.
+\newblock A review of vegetation phenological metrics extraction using
+  time-series, multispectral satellite data.
+\newblock {\em Remote Sensing of Environment}, 237:111511, 2020.
+
+\bibitem{zhao_recurrent_2021}
+Zhuoyi Zhao, Zherong Wu, Yi~Zheng, and Peifeng Ma.
+\newblock Recurrent neural networks for atmospheric noise removal from insar
+  time series with missing values.
+\newblock {\em ISPRS Journal of Photogrammetry and Remote Sensing},
+  180:227--237, 2021.
+
+\bibitem{zhou_improved_2024}
+Zeya Zhou and Tangsen Zhan.
+\newblock The improved bi-lstm-transformer model and its application.
+\newblock In {\em 2024 5th International Conference on Computer, Big Data and
+  Artificial Intelligence (ICCBD+AI)}, pages 71--75. IEEE, 2024.
+
+\bibitem{zhu_exact_2025}
+Hao Zhu, Yan Zhu, Jiayu Xiao, Tianxiang Xiao, Yike Ma, Yucheng Zhang, and Feng
+  Dai.
+\newblock Exact: Exploring space-time perceptive clues for weakly supervised
+  satellite image time series semantic segmentation.
+\newblock In {\em 2025 IEEE/CVF Conference on Computer Vision and Pattern
+  Recognition (CVPR)}, pages 14036--14045. IEEE, 2025.
+
+\end{thebibliography}
