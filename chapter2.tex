@@ -124,8 +124,10 @@ Using standard sequential positional encodings would falsely inform the model th
 To address this, the architecture utilizes a custom \textbf{AgroDays Positional Encoding} module.
 Instead of simply indexing observations as sequential integer steps, this module adapts the standard sinusoidal positional
 encoding \cite{attention_is_all_you_need} by scaling the frequencies using the exact agricultural day of the acquisition.
-By calculating the encoding angles based on the absolute temporal position of the specific acquisition day, the model inherently understands the varying,
-irregular time gaps between observations, ensuring the network accurately aligns the spectral data with the correct stage of the crop's phenological cycle.
+Because sine and cosine are continuous periodic functions, mapping absolute day values onto these waves ensures that the mathematical distance
+between any two encoded time steps is proportional to the actual temporal gap between them.
+By calculating the encoding angles based on this absolute temporal position, the model inherently understands whether consecutive satellite acquisitions are 5 days apart or 30 days apart.
+This explicit temporal injection ensures the network accurately aligns the spectral data with the correct stage of the crop's phenological cycle.
 
 \begin{algorithm}[htpb]
     \caption{AgroDays Positional Encoding}
@@ -146,15 +148,28 @@ irregular time gaps between observations, ensuring the network accurately aligns
     \end{algorithmic}
 \end{algorithm}
 
+As detailed in Algorithm \ref{alg:agrodays}, the implementation relies on several key intermediate variables to achieve this projection.
+The $div\_term$ represents the frequency scaling tensor, calculated logarithmically to ensure a geometric progression
+of wavelengths across the network's core embedding dimension ($d\_model$, defined as 128 in this architecture).
+The input matrix $pos$, containing the absolute agricultural days, is broadcasted into $pos\_expanded$ and multiplied by the frequency scales to generate the $angles$ tensor.
+Finally, applying the sine and cosine operations to even and odd indices respectively yields the final positional encoding tensor, $PE$, which is added directly to the input sequence.
+
 \subsection{The Hierarchical Transformer-LSTM Model}
 \label{subsec:transformer_lstm}
 
+\begin{figure}[htpb]
+    \centering
+    \includegraphics[width=0.9\textwidth]{images/transformer_lstm_diagram.pdf}
+    \caption{Hierarchical overview of the Transformer-LSTM architecture, demonstrating the fusion of intra-year and inter-year components.}
+    \label{fig:hybrid_architecture}
+\end{figure}
+
 Once the position-aware embeddings are generated, the network processes the temporal scales using a two-stage hierarchical model. 
-In the first stage, the objective is to understand the intra-year phenological growth cycle.
-To optimize computational efficiency, the multi-year input tensor is reshaped, flattening the batch and year dimensions together.
-This allows an Intra-Year Transformer Encoder to process every year independently and in parallel across the GPUs.
-Driven by Multi-Head Self-Attention \cite{attention_is_all_you_need}, the Transformer evaluates the entire yearly sequence simultaneously,
-effectively capturing complex growth stages without being hindered by vanishing gradients \cite{russwurm_self_attention_2020}.
+In the first stage, the objective is to understand the intra-year phenological growth cycle. 
+Driven by Multi-Head Self-Attention \cite{attention_is_all_you_need}, an Intra-Year Transformer Encoder evaluates the entire yearly sequence simultaneously,
+effectively capturing complex growth stages without being hindered by vanishing gradients \cite{russwurm_self_attention_2020}. 
+In the second stage, the architecture transitions from intra-year phenology to inter-year crop dependencies
+by passing the extracted features into an Inter-Year Long Short-Term Memory (LSTM) network \cite{hochreiter_long_1997}.
 
 \begin{algorithm}[htpb]
     \caption{Hierarchical Transformer-LSTM Forward Pass}
@@ -184,16 +199,13 @@ effectively capturing complex growth stages without being hindered by vanishing 
     \end{algorithmic}
 \end{algorithm}
 
-The time steps for each year are then mean-pooled, collapsing the complex intra-year phenology into a single, dense feature vector per year.
-In the second stage, these extracted yearly embeddings are restored into their chronological, multi-year sequence.
-This sequence is then fed into an Inter-Year Long Short-Term Memory (LSTM) network \cite{hochreiter_long_1997} to transition from intra-year phenology to inter-year crop dependencies.
-
-\begin{figure}[htpb]
-    \centering
-    \includegraphics[width=0.9\textwidth]{images/transformer_lstm_diagram.pdf}
-    \caption{Hierarchical overview of the Transformer-LSTM architecture, demonstrating the fusion of intra-year and inter-year components.}
-    \label{fig:hybrid_architecture}
-\end{figure}
+Algorithm \ref{alg:hybrid_forward} outlines the exact tensor transformations required to bridge these two temporal scales. 
+To optimize hardware efficiency during the intra-year stage, the raw sequence $X$ is flattened into $X_{flat}$, temporarily merging the batch ($B$) and year ($Y$) dimensions. 
+This critical step allows the Transformer to process all years independently and in parallel across the GPUs. 
+The Transformer's output sequence, $T_{out}$, is then temporally mean-pooled into $Y_{emb}$,
+collapsing the complex intra-year phenology into a single, dense feature vector for each specific year. 
+Finally, the chronological sequence is restored ($Y_{seq}$) and passed to the LSTM, which outputs the deeply fused multi-year
+features $L_{out}$ alongside its final hidden and cell states ($h_n, c_n$).
 
 \subsection{Capturing Long-Term Crop Rotations}
 \label{subsec:crop_rotations}

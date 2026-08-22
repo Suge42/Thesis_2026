@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.5) (preloaded format=pdflatex 2026.8.17)  21 AUG 2026 22:27
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.5) (preloaded format=pdflatex 2026.8.17)  22 AUG 2026 03:19
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -425,37 +425,51 @@ pdfTeX warning: pdflatex (file ./images/transformer_lstm_diagram.pdf): PDF inclu
 <images/transformer_lstm_diagram.pdf, id=92, 631.39888pt x 326.17859pt>
 File: images/transformer_lstm_diagram.pdf Graphic file (type pdf)
 <use images/transformer_lstm_diagram.pdf>
-Package pdftex.def Info: images/transformer_lstm_diagram.pdf  used on input line 193.
+Package pdftex.def Info: images/transformer_lstm_diagram.pdf  used on input line 162.
 (pdftex.def)             Requested size: 435.32422pt x 224.89424pt.
-[11] [12 <./images/transformer_lstm_diagram.pdf>]) (chapter3.tex
+[11 <./images/transformer_lstm_diagram.pdf>]
+Underfull \vbox (badness 1394) has occurred while \output is active []
+
+ [12]) (chapter3.tex
 Chapter 3.
-[13]) (chapter4.tex
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [13]
+Underfull \vbox (badness 2951) has occurred while \output is active []
+
+ [14] [15]
+Overfull \hbox (16.6995pt too wide) in paragraph at lines 98--107
+ [][] 
+ []
+
+) (chapter4.tex
 Chapter 4.
-) (sandrini_leonardo_laurea_aa.bbl [14]
+) (sandrini_leonardo_laurea_aa.bbl [16]
 Underfull \hbox (badness 10000) in paragraph at lines 52--56
 []\OT1/cmr/m/n/10.95 William Fal-con et al.  Py-torch light-ning.  \OT1/cmr/m/it/10.95 GitHub. Note:
  []
 
-[15
+[17
 
-] [16]) [17] (sandrini_leonardo_laurea_aa.aux)
+] [18]) [19] (sandrini_leonardo_laurea_aa.aux)
  ***********
 LaTeX2e <2026-06-01>
 L3 programming layer <2026-07-20>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 6208 strings out of 467500
- 102255 string characters out of 5408529
- 541138 words of memory out of 5000000
- 35323 multiletter control sequences out of 15000+600000
+ 6217 strings out of 467500
+ 102477 string characters out of 5408529
+ 541718 words of memory out of 5000000
+ 35332 multiletter control sequences out of 15000+600000
  640588 words of font info for 88 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 72i,12n,79p,782b,468s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 72i,12n,79p,782b,522s stack positions out of 10000i,1000n,20000p,200000b,200000s
  <C:\Users\lsand\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm1095.pk><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmcsc10.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr9.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt10.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on sandrini_leonardo_laurea_aa.pdf (19 pages, 791530 bytes).
+Output written on sandrini_leonardo_laurea_aa.pdf (21 pages, 803891 bytes).
 PDF statistics:
- 217 PDF objects out of 1000 (max. 8388607)
+ 223 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  21 words of extra memory for PDF output out of 10000 (max. 10000000)
 
