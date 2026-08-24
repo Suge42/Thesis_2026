@@ -13,7 +13,7 @@
 \contentsline {chapter}{\numberline {2}Methodology and System Design}{8}{}%
 \contentsline {section}{\numberline {2.1}The INVEKOS Dataset}{8}{}%
 \contentsline {subsection}{\numberline {2.1.1}Data Acquisition (Spatial Patches vs. 1D Pixel Data)}{8}{}%
-\contentsline {subsection}{\numberline {2.1.2}Pre-processing and Handling Irregular Time Series}{9}{}%
+\contentsline {subsection}{\numberline {2.1.2}Pre-processing and Handling Irregular Time Series}{8}{}%
 \contentsline {section}{\numberline {2.2}Single-Year Non-Hybrid Baselines}{9}{}%
 \contentsline {subsection}{\numberline {2.2.1}Temporal 1D Convolutional Neural Network (CNN)}{9}{}%
 \contentsline {subsection}{\numberline {2.2.2}Temporal Gated Recurrent Unit (GRU RNN)}{9}{}%
@@ -27,16 +27,17 @@
 \contentsline {chapter}{\numberline {3}Experiments and Discussion}{14}{}%
 \contentsline {section}{\numberline {3.1}Experimental Setup}{14}{}%
 \contentsline {subsection}{\numberline {3.1.1}HPC Environment and I/O Bottleneck Mitigation}{14}{}%
-\contentsline {subsection}{\numberline {3.1.2}Evaluation Metrics}{14}{}%
+\contentsline {subsection}{\numberline {3.1.2}Data Loading Strategies}{14}{}%
+\contentsline {subsection}{\numberline {3.1.3}Evaluation Metrics}{15}{}%
 \contentsline {section}{\numberline {3.2}Baseline Results (Non-Hybrid Models)}{15}{}%
 \contentsline {subsection}{\numberline {3.2.1}Temporal CNN Performance}{15}{}%
 \contentsline {subsection}{\numberline {3.2.2}Temporal GRU RNN Performance}{15}{}%
-\contentsline {section}{\numberline {3.3}Proposed Architecture Results (Hybrid Model)}{15}{}%
-\contentsline {subsection}{\numberline {3.3.1}Hierarchical Transformer-LSTM Performance}{15}{}%
+\contentsline {section}{\numberline {3.3}Proposed Architecture Results (Hybrid Model)}{16}{}%
+\contentsline {subsection}{\numberline {3.3.1}Hierarchical Transformer-LSTM Performance}{16}{}%
 \contentsline {section}{\numberline {3.4}Discussion}{16}{}%
 \contentsline {subsection}{\numberline {3.4.1}Single-Year vs. Multi-Year Capabilities}{16}{}%
-\contentsline {subsection}{\numberline {3.4.2}The Impact of Class Imbalance}{16}{}%
-\contentsline {chapter}{\numberline {4}Conclusions and Future Work}{16}{}%
-\contentsline {section}{\numberline {4.1}Conclusions}{16}{}%
-\contentsline {section}{\numberline {4.2}Future Work}{16}{}%
-\contentsline {chapter}{Bibliography}{16}{}%
+\contentsline {subsection}{\numberline {3.4.2}The Impact of Class Imbalance}{17}{}%
+\contentsline {chapter}{\numberline {4}Conclusions and Future Work}{17}{}%
+\contentsline {section}{\numberline {4.1}Conclusions}{17}{}%
+\contentsline {section}{\numberline {4.2}Future Work}{17}{}%
+\contentsline {chapter}{Bibliography}{17}{}%

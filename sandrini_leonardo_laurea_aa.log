@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.5) (preloaded format=pdflatex 2026.8.17)  22 AUG 2026 03:19
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.5) (preloaded format=pdflatex 2026.8.17)  24 AUG 2026 01:59
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -398,18 +398,18 @@ Overfull \hbox (17.8498pt too wide) in paragraph at lines 72--75
 []\OT1/cmr/bx/n/10.95 Developing a Multi-Year Hy-brid Ar-chi-tec-ture: \OT1/cmr/m/n/10.95 To con-struct a novel Hi-er-ar-chi-cal Transformer-
  []
 
-[4] [5] [6]) (chapter2.tex [7]
+[4] [5] [6]) (chapter2.tex
 Chapter 2.
 
-Underfull \vbox (badness 4556) has occurred while \output is active []
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [8]
+ [7] [8]
 
 pdfTeX warning: pdflatex (file ./images/cnn_diagram.pdf): PDF inclusion: found PDF version <1.7>, but at most version <1.5> allowed
 <images/cnn_diagram.pdf, id=50, 499.8675pt x 243.79079pt>
 File: images/cnn_diagram.pdf Graphic file (type pdf)
 <use images/cnn_diagram.pdf>
-Package pdftex.def Info: images/cnn_diagram.pdf  used on input line 87.
+Package pdftex.def Info: images/cnn_diagram.pdf  used on input line 89.
 (pdftex.def)             Requested size: 386.95897pt x 188.73131pt.
 [9 <./images/cnn_diagram.pdf>]
 
@@ -417,7 +417,7 @@ pdfTeX warning: pdflatex (file ./images/gru_diagram.pdf): PDF inclusion: found P
 <images/gru_diagram.pdf, id=69, 220.9053pt x 210.7875pt>
 File: images/gru_diagram.pdf Graphic file (type pdf)
 <use images/gru_diagram.pdf>
-Package pdftex.def Info: images/gru_diagram.pdf  used on input line 103.
+Package pdftex.def Info: images/gru_diagram.pdf  used on input line 106.
 (pdftex.def)             Requested size: 386.95897pt x 369.28249pt.
 [10 <./images/gru_diagram.pdf>]
 
@@ -425,51 +425,45 @@ pdfTeX warning: pdflatex (file ./images/transformer_lstm_diagram.pdf): PDF inclu
 <images/transformer_lstm_diagram.pdf, id=92, 631.39888pt x 326.17859pt>
 File: images/transformer_lstm_diagram.pdf Graphic file (type pdf)
 <use images/transformer_lstm_diagram.pdf>
-Package pdftex.def Info: images/transformer_lstm_diagram.pdf  used on input line 162.
+Package pdftex.def Info: images/transformer_lstm_diagram.pdf  used on input line 169.
 (pdftex.def)             Requested size: 435.32422pt x 224.89424pt.
-[11 <./images/transformer_lstm_diagram.pdf>]
-Underfull \vbox (badness 1394) has occurred while \output is active []
-
- [12]) (chapter3.tex
+[11 <./images/transformer_lstm_diagram.pdf>] [12]) (chapter3.tex
 Chapter 3.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [13]
-Underfull \vbox (badness 2951) has occurred while \output is active []
-
- [14] [15]
-Overfull \hbox (16.6995pt too wide) in paragraph at lines 98--107
+ [13] [14] [15]
+Overfull \hbox (16.6995pt too wide) in paragraph at lines 120--129
  [][] 
  []
 
-) (chapter4.tex
+[16]) (chapter4.tex
 Chapter 4.
-) (sandrini_leonardo_laurea_aa.bbl [16]
+) (sandrini_leonardo_laurea_aa.bbl [17]
 Underfull \hbox (badness 10000) in paragraph at lines 52--56
 []\OT1/cmr/m/n/10.95 William Fal-con et al.  Py-torch light-ning.  \OT1/cmr/m/it/10.95 GitHub. Note:
  []
 
-[17
+[18
 
-] [18]) [19] (sandrini_leonardo_laurea_aa.aux)
+] [19]) [20] (sandrini_leonardo_laurea_aa.aux)
  ***********
 LaTeX2e <2026-06-01>
 L3 programming layer <2026-07-20>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 6217 strings out of 467500
- 102477 string characters out of 5408529
- 541718 words of memory out of 5000000
- 35332 multiletter control sequences out of 15000+600000
+ 6222 strings out of 467500
+ 102586 string characters out of 5408529
+ 542957 words of memory out of 5000000
+ 35337 multiletter control sequences out of 15000+600000
  640588 words of font info for 88 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 72i,12n,79p,782b,522s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 72i,12n,79p,782b,526s stack positions out of 10000i,1000n,20000p,200000b,200000s
  <C:\Users\lsand\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm1095.pk><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmcsc10.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr9.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt10.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on sandrini_leonardo_laurea_aa.pdf (21 pages, 803891 bytes).
+Output written on sandrini_leonardo_laurea_aa.pdf (22 pages, 808100 bytes).
 PDF statistics:
- 223 PDF objects out of 1000 (max. 8388607)
+ 226 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  21 words of extra memory for PDF output out of 10000 (max. 10000000)
 

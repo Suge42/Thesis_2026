@@ -75,10 +75,12 @@ These models process intra-year phenological data to provide a comparative stand
 \subsection{Temporal 1D Convolutional Neural Network (CNN)}
 The first baseline is a 1-Dimensional Convolutional Neural Network (1D-CNN) designed to extract temporal features by sliding convolutional
 filters across the time dimension, a methodology that has proven highly effective for satellite time series classification \cite{pelletier_temporal_2019}.
+
 The \textbf{encoder} consists of two sequential convolutional blocks.
 The initial layer maps the 13 input satellite bands to 64 channels using a kernel size of 3 and a padding of 1 to preserve the temporal sequence length.
 This is followed by a 1D Batch Normalization layer and an in-place ReLU activation to introduce non-linearity.
 The second layer further projects the features from 64 to 128 channels, utilizing the same kernel size, padding, normalization, and activation parameters.
+
 For \textbf{classification}, a point-wise convolution (kernel size of 1) is applied to map the extracted 128-dimensional features to the 47 crop classes.
 To generate the final field-level classification, the network executes a temporal majority vote by averaging the logit predictions across all time steps in the year.
 
@@ -91,6 +93,7 @@ To generate the final field-level classification, the network executes a tempora
 
 \subsection{Temporal Gated Recurrent Unit (GRU RNN)}
 The second baseline leverages a Gated Recurrent Unit (GRU) \cite{cho_learning_2014} to explicitly model the sequential dependencies of agricultural phenology.
+
 A \textbf{bidirectional GRU} architecture is utilized to process the temporal sequences in both forward and backward directions,
 yielding better performance than a standard unidirectional RNN. The input tensors are systematically permuted to align the time and channel dimensions for batch-first sequence processing.
 Instead of averaging predictions over time, the network isolates the final temporal output step.
@@ -121,9 +124,11 @@ The raw 1D pixel sequence, consisting of 13 spectral channels, is initially proj
 However, standard sequence models assume that data points arrive at regular, evenly spaced intervals.
 Agricultural satellite time series are inherently irregularly sampled due to cloud cover and varying satellite revisit times.
 Using standard sequential positional encodings would falsely inform the model that all observations are equidistant.
+
 To address this, the architecture utilizes a custom \textbf{AgroDays Positional Encoding} module.
 Instead of simply indexing observations as sequential integer steps, this module adapts the standard sinusoidal positional
 encoding \cite{attention_is_all_you_need} by scaling the frequencies using the exact agricultural day of the acquisition.
+
 Because sine and cosine are continuous periodic functions, mapping absolute day values onto these waves ensures that the mathematical distance
 between any two encoded time steps is proportional to the actual temporal gap between them.
 By calculating the encoding angles based on this absolute temporal position, the model inherently understands whether consecutive satellite acquisitions are 5 days apart or 30 days apart.
@@ -151,7 +156,9 @@ This explicit temporal injection ensures the network accurately aligns the spect
 As detailed in Algorithm \ref{alg:agrodays}, the implementation relies on several key intermediate variables to achieve this projection.
 The $div\_term$ represents the frequency scaling tensor, calculated logarithmically to ensure a geometric progression
 of wavelengths across the network's core embedding dimension ($d\_model$, defined as 128 in this architecture).
+
 The input matrix $pos$, containing the absolute agricultural days, is broadcasted into $pos\_expanded$ and multiplied by the frequency scales to generate the $angles$ tensor.
+
 Finally, applying the sine and cosine operations to even and odd indices respectively yields the final positional encoding tensor, $PE$, which is added directly to the input sequence.
 
 \subsection{The Hierarchical Transformer-LSTM Model}
@@ -166,8 +173,10 @@ Finally, applying the sine and cosine operations to even and odd indices respect
 
 Once the position-aware embeddings are generated, the network processes the temporal scales using a two-stage hierarchical model. 
 In the first stage, the objective is to understand the intra-year phenological growth cycle. 
+
 Driven by Multi-Head Self-Attention \cite{attention_is_all_you_need}, an Intra-Year Transformer Encoder evaluates the entire yearly sequence simultaneously,
 effectively capturing complex growth stages without being hindered by vanishing gradients \cite{russwurm_self_attention_2020}. 
+
 In the second stage, the architecture transitions from intra-year phenology to inter-year crop dependencies
 by passing the extracted features into an Inter-Year Long Short-Term Memory (LSTM) network \cite{hochreiter_long_1997}.
 
@@ -202,8 +211,10 @@ by passing the extracted features into an Inter-Year Long Short-Term Memory (LST
 Algorithm \ref{alg:hybrid_forward} outlines the exact tensor transformations required to bridge these two temporal scales. 
 To optimize hardware efficiency during the intra-year stage, the raw sequence $X$ is flattened into $X_{flat}$, temporarily merging the batch ($B$) and year ($Y$) dimensions. 
 This critical step allows the Transformer to process all years independently and in parallel across the GPUs. 
+
 The Transformer's output sequence, $T_{out}$, is then temporally mean-pooled into $Y_{emb}$,
-collapsing the complex intra-year phenology into a single, dense feature vector for each specific year. 
+collapsing the complex intra-year phenology into a single, dense feature vector for each specific year.
+
 Finally, the chronological sequence is restored ($Y_{seq}$) and passed to the LSTM, which outputs the deeply fused multi-year
 features $L_{out}$ alongside its final hidden and cell states ($h_n, c_n$).
 
@@ -212,13 +223,15 @@ features $L_{out}$ alongside its final hidden and cell states ($h_n, c_n$).
 
 The primary motivation for integrating the LSTM in the second stage is its exceptional ability to model strict, long-term sequential rules.
 Traditional crop mapping architectures primarily focus on extracting phenological features within a single growing season, discarding a vast amount of predictive temporal context.
-However, agricultural practices are heavily governed by multi-year crop rotation cycles designed to maintain soil health and comply with policies. 
+However, agricultural practices are heavily governed by multi-year crop rotation cycles designed to maintain soil health and comply with policies.
+
 To explicitly capture these long-term crop rotations, a bidirectional LSTM configuration is employed.
 This enables the network to analyze the rotation history in both the forward and backward temporal directions,
 effectively predicting a crop based on what was planted in previous years as well as what will be planted in subsequent years.
-By analyzing this bi-temporal history, the network learns deep inter-year transition probabilities. 
+By analyzing this bi-temporal history, the network learns deep inter-year transition probabilities.
+
 Finally, the bidirectional output---representing this deeply fused, multi-year context---is passed to a fully-connected classification block.
-Because the LSTM is bidirectional, the sequence dimension is explicitly doubled to accommodate the concatenated forward and backward hidden states.
+Because the LSTM is bidirectional, the hidden feature dimension is explicitly doubled to accommodate the concatenated forward and backward hidden states.
 These deep features are passed through a ReLU activation and a dropout regularization layer (set to 10\%) to prevent overfitting.
 A final linear projection maps the processed features into the unnormalized logit scores for the 47 target crop classes,
 outputting a highly informed prediction for each year in the sequence.

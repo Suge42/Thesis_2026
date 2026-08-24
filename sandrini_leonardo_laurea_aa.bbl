@@ -79,6 +79,11 @@ Sepp Hochreiter and J{\"u}rgen Schmidhuber.
 \newblock Long short-term memory.
 \newblock {\em Neural Computation}, 9(8):1735--1780, 1997.
 
+\bibitem{johnson2019survey}
+Justin~M Johnson and Taghi~M Khoshgoftaar.
+\newblock Survey on deep learning with class imbalance.
+\newblock {\em Journal of Big Data}, 6(1):1--54, 2019.
+
 \bibitem{kamilaris_deep_2018}
 Andreas Kamilaris and Francesc~X Prenafeta-Bold{\'u}.
 \newblock Deep learning in agriculture: A survey.
