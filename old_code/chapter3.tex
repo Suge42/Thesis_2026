@@ -31,7 +31,9 @@ Furthermore, all model executions, hyperparameter tuning trials via Ray Tune, an
 \subsection{Data Loading Strategies}
 \label{subsec:data_loading}
 
-To properly evaluate the impact of multi-year memory, the experimental framework utilized two distinct data loading strategies tailored to the architectural needs of the models.
+To properly evaluate the impact of multi-year memory, the experimental framework utilized two distinct data loading
+strategies tailored to the architectural needs of the models.
+
 For the single-year baseline models (1D-CNN and Bidirectional GRU), the dataset was structured using an intra-year loader.
 This loader effectively decoupled the temporal sequence of the dataset, extracting and serving only a single growing season (e.g., 2018) at a time.
 This constrained the baselines to rely entirely on localized, intra-year phenological signatures for classification.
@@ -48,7 +50,8 @@ a product of the Hybrid model's multi-year memory capabilities.
 \label{subsec:evaluation_metrics}
 
 Agricultural land cover datasets are inherently unbalanced; a few dominant crop types (such as maize or winter wheat) often account for the vast majority of cultivated land,
-while specialized crops represent a tiny fraction of the dataset. Consequently, relying solely on overall accuracy can yield highly misleading evaluations.
+while specialized crops represent a tiny fraction of the dataset.
+Consequently, relying solely on overall accuracy can yield highly misleading evaluations.
 To provide a comprehensive assessment, the models were evaluated using two primary metrics: \textbf{Overall Accuracy} and the \textbf{Macro F1-Score}.
 
 \textbf{Overall Accuracy (OA)} measures the total proportion of correctly classified agricultural parcels across all available classes. It is defined as:

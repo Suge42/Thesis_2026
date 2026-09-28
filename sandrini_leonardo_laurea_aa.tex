@@ -27,6 +27,7 @@
 \usepackage{amssymb}
 \usepackage{microtype}
 \usepackage{url}
+\raggedbottom
 
 %%%%%%%%%%%%%%
 % supporto lettere accentate
@@ -122,10 +123,12 @@
       %   X   Titolo capitolo
       
       \titleformat{\chapter}
-        {\normalfont\Huge\bfseries}{\thechapter}{1em}{}
+        %{\normalfont\Huge\bfseries}{\thechapter}{1em}{}
+        {\normalfont\Huge\bfseries\raggedright}{\thechapter}{1em}{}
         
       
-      \titlespacing*{\chapter}{0pt}{0.59in}{0.02in}
+      %\titlespacing*{\chapter}{0pt}{0.59in}{0.02in}
+      \titlespacing*{\chapter}{0pt}{0.59in}{20pt}
       \titlespacing*{\section}{0pt}{0.20in}{0.02in}
       \titlespacing*{\subsection}{0pt}{0.10in}{0.02in}
 

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.5) (preloaded format=pdflatex 2026.8.17)  27 SEP 2026 04:35
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.5) (preloaded format=pdflatex 2026.8.17)  29 SEP 2026 01:56
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -290,20 +290,20 @@ LaTeX Warning: Unused global option(s):
 (sandrini_leonardo_laurea_aa.aux)
 \openout1 = `sandrini_leonardo_laurea_aa.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 43.
-LaTeX Font Info:    ... okay on input line 43.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 43.
-LaTeX Font Info:    ... okay on input line 43.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 43.
-LaTeX Font Info:    ... okay on input line 43.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 43.
-LaTeX Font Info:    ... okay on input line 43.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 43.
-LaTeX Font Info:    ... okay on input line 43.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 43.
-LaTeX Font Info:    ... okay on input line 43.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 43.
-LaTeX Font Info:    ... okay on input line 43.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 44.
+LaTeX Font Info:    ... okay on input line 44.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 44.
+LaTeX Font Info:    ... okay on input line 44.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 44.
+LaTeX Font Info:    ... okay on input line 44.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 44.
+LaTeX Font Info:    ... okay on input line 44.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 44.
+LaTeX Font Info:    ... okay on input line 44.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 44.
+LaTeX Font Info:    ... okay on input line 44.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 44.
+LaTeX Font Info:    ... okay on input line 44.
  (C:\Users\lsand\AppData\Local\Programs\MiKTeX\tex/context/base/mkii\supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count319
@@ -378,13 +378,13 @@ File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-LaTeX Info: Redefining \microtypecontext on input line 43.
-Package microtype Info: Applying patch `item' on input line 43.
-Package microtype Info: Applying patch `toc' on input line 43.
-Package microtype Info: Applying patch `eqnum' on input line 43.
-Package microtype Info: Applying patch `footnote' on input line 43.
-Package microtype Info: Applying patch `verbatim' on input line 43.
-LaTeX Info: Redefining \microtypesetup on input line 43.
+LaTeX Info: Redefining \microtypecontext on input line 44.
+Package microtype Info: Applying patch `item' on input line 44.
+Package microtype Info: Applying patch `toc' on input line 44.
+Package microtype Info: Applying patch `eqnum' on input line 44.
+Package microtype Info: Applying patch `footnote' on input line 44.
+Package microtype Info: Applying patch `verbatim' on input line 44.
+LaTeX Info: Redefining \microtypesetup on input line 44.
 Package microtype Info: Generating PDF output.
 Package microtype Info: Character protrusion enabled (level 2).
 Package microtype Info: Using default protrusion set `alltext'.
@@ -485,18 +485,18 @@ Package pdftex.def Info: images/transformer_lstm_diagram.pdf  used on input line
 Chapter 3.
 [14
 
-] [15] [16]) (chapter4.tex [17]
+] [15] [16] [17]) (chapter4.tex [18]
 Chapter 4.
-) (sandrini_leonardo_laurea_aa.bbl [18
+[19
 
-] [19
+]) (sandrini_leonardo_laurea_aa.bbl [20] [21
 
-] [20]
+] [22]
 Underfull \hbox (badness 10000) in paragraph at lines 244--248
 []\OT1/cmr/m/n/10.95 (+20) William Fal-con et al.  Py-torch light-ning.  \OT1/cmr/m/it/10.95 (+20) GitHub. Note:
  []
 
-) [21] (sandrini_leonardo_laurea_aa.aux)
+) [23] (sandrini_leonardo_laurea_aa.aux)
  ***********
 LaTeX2e <2026-06-01>
 L3 programming layer <2026-07-20>
@@ -504,16 +504,16 @@ L3 programming layer <2026-07-20>
  ) 
 Here is how much of TeX's memory you used:
  8846 strings out of 467500
- 144771 string characters out of 5408529
- 622484 words of memory out of 5000000
- 37723 multiletter control sequences out of 15000+600000
- 647147 words of font info for 194 fonts, out of 8000000 for 9000
+ 144787 string characters out of 5408529
+ 622575 words of memory out of 5000000
+ 37725 multiletter control sequences out of 15000+600000
+ 647088 words of font info for 193 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 72i,8n,79p,1066b,512s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 72i,8n,79p,1066b,530s stack positions out of 10000i,1000n,20000p,200000b,200000s
  <C:\Users\lsand\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm1095.pk><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmcsc10.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr9.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt10.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on sandrini_leonardo_laurea_aa.pdf (23 pages, 1065194 bytes).
+Output written on sandrini_leonardo_laurea_aa.pdf (25 pages, 1072296 bytes).
 PDF statistics:
- 259 PDF objects out of 1000 (max. 8388607)
+ 266 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  35354 words of extra memory for PDF output out of 35830 (max. 10000000)
 

@@ -31,12 +31,13 @@ First, Satellite Image Time Series (SITS) are inherently irregular; optical sens
 leading to missing data and uneven temporal gaps that disrupt traditional machine learning models.
 Second, processing high-dimensional spatial-temporal datasets---such as tracking entire 2D image patches over a temporal sequence---creates
 severe computational and memory bottlenecks, particularly in High-Performance Computing (HPC) environments.
-Finally, most current state-of-the-art models suffer from "temporal myopia"; they analyze only a single year of weather and phenology,
-completely ignoring the fundamental agricultural practice of crop rotation,
+Finally, most current state-of-the-art models suffer from \textbf{"temporal myopia"}; they analyze only a single year of weather and phenology,
+completely ignoring the fundamental agricultural practice of \textbf{crop rotation},
 where farmers intentionally alternate crops across multiple years to maintain soil health \cite{crop_rotation}.
 
 This thesis aims to bridge these gaps. To overcome the hardware bottlenecks associated with heavy spatial-temporal grids,
-this work shifts to a highly optimized 1D pixel-based pipeline. By analyzing the temporal evolution of individual pixels rather than broad spatial patches,
+this work shifts to a highly optimized \textbf{1D pixel-based pipeline}.
+By analyzing the temporal evolution of individual pixels rather than broad spatial patches,
 the computational load is drastically reduced, enabling rapid prototyping and extensive hyperparameter optimization on an HPC cluster.
 Building upon this efficient infrastructure, the project establishes a comprehensive suite of robust baselines. 
 Single-year intra-year models---specifically 1D-CNNs and standalone Transformer Encoders---are tuned to serve as standard phenological benchmarks.
@@ -46,12 +47,13 @@ non-linear feature extractors are strictly necessary for sequence models---in pa
 the multi-year probabilistic smoothing performed by the HMM---to be able to effectively interpret raw satellite data.
 
 These baselines are systematically compared against two high-capacity, multi-year hybrid architectures. 
-The first is the Transformer-HMM cascade, an established state-of-the-art Bayesian framework \cite{perantoni_bayesian_2024} utilized here as an advanced reference model. 
+The first is the \textbf{Transformer-HMM cascade}, an established state-of-the-art Bayesian framework \cite{perantoni_bayesian_2024}
+utilized here as an advanced reference model. 
 To optimize the emission probabilities provided to the HMM transition layer, different backbone architectures are explicitly
 compared---including 1D-CNNs and both generative and discriminative variants of the Transformer backbone \cite{perantoni_bayesian_2024}.
 Although state-space models like Mamba \cite{gu_mamba_2023} were originally slated for this feature-extraction comparison,
 time constraints limited the executed backbones to convolutions and self-attention.
-The second is a novel, purely neural end-to-end architecture proposed by this thesis: the Hierarchical Transformer-LSTM. 
+The second is a novel, purely neural end-to-end architecture proposed by this thesis: the \textbf{Hierarchical Transformer-LSTM}. 
 By integrating the self-attention mechanism proven effective on satellite time series \cite{attention_is_all_you_need, garnot2020psetae}
 with the recurrent memory of an LSTM, this research systematically confronts Bayesian transition modeling against deep recurrent memory to answer
 whether neural networks can intrinsically learn and leverage the historical rules of multi-year crop rotation to significantly
