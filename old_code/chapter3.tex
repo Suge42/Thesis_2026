@@ -1,0 +1,181 @@
+\chapter{Experiments and Discussion}
+\label{cha:experiments_discussion}
+
+
+\section{Experimental Setup}
+\label{sec:experimental_setup}
+
+To rigorously evaluate the proposed multi-year architecture against single-year baselines, a standardized experimental framework was established.
+All models were trained, validated, and tested using identical data splits and evaluation metrics to ensure a fair comparative analysis.
+
+\subsection{HPC Environment and I/O Bottleneck Mitigation}
+\label{subsec:hpc_environment}
+
+Training deep sequence models on massive, high-dimensional satellite time series is computationally demanding.
+To facilitate this, all experiments were executed on a dedicated High-Performance Computing (HPC) node equipped with an AMD Ryzen 7 5800X processor,
+67GB of system RAM, and an NVIDIA GeForce RTX 3060 GPU, running on an Ubuntu 22.04 LTS environment.
+
+A primary challenge in processing the INVEKOS dataset is the severe input/output (I/O) bottleneck caused by loading thousands of multi-year temporal sequences.
+Initial exploratory experiments attempted to utilize the full 2D spatial patches of the agricultural parcels.
+However, loading continuous multi-year, multi-spectral spatial patches introduced an insurmountable I/O bottleneck.
+Because the 2D patch dataset was exceptionally large (approximately 1.3 TB), it could not be stored on the
+HPC node's local solid-state drive (SSD) and instead had to be hosted on a shared network folder.
+The immense volume of network-based disk reads required to process the 2D geometries caused severe GPU starvation,
+rendering the training process computationally infeasible despite the HPC infrastructure.
+
+To resolve this, the experimental framework was adapted to utilize the highly optimized 1D pixel LMDB dataset provided by Perantoni et al. \cite{perantoni_bayesian_2024}.
+As detailed in the methodology, adopting this memory-mapped structure effectively eliminated the I/O bottleneck.
+It allowed the PyTorch Lightning data loaders to rapidly access sequences directly from disk, sustaining high GPU utilization without the latency overhead of the 2D spatial patches.
+Furthermore, all model executions, hyperparameter tuning trials via Ray Tune, and resulting performance metrics were systematically tracked and versioned using a centralized MLflow server.
+
+\subsection{Data Loading Strategies}
+\label{subsec:data_loading}
+
+To properly evaluate the impact of multi-year memory, the experimental framework utilized two distinct data loading strategies tailored to the architectural needs of the models.
+For the single-year baseline models (1D-CNN and Bidirectional GRU), the dataset was structured using an intra-year loader.
+This loader effectively decoupled the temporal sequence of the dataset, extracting and serving only a single growing season (e.g., 2018) at a time.
+This constrained the baselines to rely entirely on localized, intra-year phenological signatures for classification.
+
+In contrast, the proposed Hybrid Transformer-LSTM required a full sequence view of the crop rotation cycle.
+To facilitate this, an inter-year data loader was engineered to serve the entire continuous multi-year sequence for a given agricultural parcel simultaneously.
+When passed to the Hybrid model, this multi-year tensor is first processed by the Intra-Year Transformer,
+which concurrently analyzes the phenology within each individual year.
+The summarized yearly representations are then passed to the Inter-Year LSTM to sequentially process the multi-year crop rotation.
+This explicit separation in data handling guarantees that the performance delta observed between the architectures is strictly
+a product of the Hybrid model's multi-year memory capabilities.
+
+\subsection{Evaluation Metrics}
+\label{subsec:evaluation_metrics}
+
+Agricultural land cover datasets are inherently unbalanced; a few dominant crop types (such as maize or winter wheat) often account for the vast majority of cultivated land,
+while specialized crops represent a tiny fraction of the dataset. Consequently, relying solely on overall accuracy can yield highly misleading evaluations.
+To provide a comprehensive assessment, the models were evaluated using two primary metrics: \textbf{Overall Accuracy} and the \textbf{Macro F1-Score}.
+
+\textbf{Overall Accuracy (OA)} measures the total proportion of correctly classified agricultural parcels across all available classes. It is defined as:
+$$ \text{OA} = \frac{\sum_{i=1}^{C} TP_i}{N} $$
+where $C$ is the total number of target classes (47 in this study), $TP_i$ represents the True Positives for class $i$, and $N$ is the total number of samples in the dataset.
+
+\textbf{Macro F1-Score} is the primary metric used to evaluate true model performance in this study. The F1-score for a single class is the harmonic mean of Precision and Recall.
+To compute the Macro F1-score, the F1-score is calculated independently for each of the 47 classes and then unweightedly averaged:
+$$ \text{Macro F1} = \frac{1}{C} \sum_{i=1}^{C} \left( 2 \times \frac{\text{Precision}_i \times \text{Recall}_i}{\text{Precision}_i + \text{Recall}_i} \right) $$
+Unlike a weighted F1-score, the Macro F1-score treats every class equally, regardless of its support size.
+A model can only achieve a high Macro F1-score if it successfully learns to identify both the dominant and the minority crop classes,
+making it the most rigorous benchmark for this highly imbalanced dataset.
+
+
+\section{Baseline Results (Non-Hybrid Models)}
+\label{sec:baseline_results}
+
+To quantify the value of modeling multi-year crop rotations, the performance of the proposed architecture must first be contextualized against established single-year models.
+To ensure statistical robustness and account for weight initialization variances, all baseline models were trained and evaluated across three distinct seeds.
+
+\subsection{Temporal CNN Performance}
+\label{subsec:cnn_performance}
+
+Following the hyperparameter tuning phase, the optimal Temporal 1D-CNN was configured with a batch size of 16, a learning rate of $2.66\mathrm{e}{-3}$,
+and a weight decay of $1.65\mathrm{e}{-6}$. The model was trained for 40 epochs.
+
+As shown in Table \ref{tab:hybrid_comparison}, the CNN achieved a mean overall test accuracy of 55.17 $\pm$0.00\%.
+However, the model struggled significantly with the class imbalance of the INVEKOS dataset, recording a mean test Macro F1-score of only 26.78 $\pm$0.00\%.
+The large discrepancy between the overall accuracy and the F1-score indicates that while the CNN can adequately identify majority crop classes based on local temporal convolutions,
+it fails to capture the defining phenological features of minority classes.
+
+\subsection{Temporal GRU RNN Performance}
+\label{subsec:gru_performance}
+
+The Bidirectional GRU baseline, designed to explicitly model sequential dependencies, was trained under similar conditions.
+The optimal configuration utilized a hidden dimension of 128 and a network depth of 3 stacked layers.
+The network was trained with a learning rate of $4.73\mathrm{e}{-4}$, a weight decay of $4.98\mathrm{e}{-6}$, and a batch size of 16.
+
+Across the three random seeds, the GRU achieved a mean overall test accuracy of 57.78 $\pm$0.00\% and a mean Macro F1-score of 34.95 $\pm$0.00\%.
+Compared to the local sliding window of the CNN, the recurrent memory of the GRU provided a measurable improvement in distinguishing the complex,
+irregular time gaps inherent in the Sentinel-2 acquisitions, raising the F1-score by approximately 8.17\%.
+Ultimately, however, both single-year baselines demonstrate a severe performance ceiling when isolated from historical crop rotation data.
+
+
+\section{Proposed Architecture Results (Hybrid Model)}
+\label{sec:hybrid_results}
+
+\subsection{Hierarchical Transformer-LSTM Performance}
+\label{subsec:transformer_lstm_performance}
+
+To evaluate the core hypothesis of this thesis---that integrating inter-year crop rotation memory improves classification over
+isolated single-year models---the Hierarchical Transformer-LSTM was evaluated under an identical experimental setup. 
+Following the Bayesian hyperparameter search, the optimal multi-year architecture was configured with a
+Transformer embedding dimension ($d\_model$) of 256, utilizing 2 encoder layers and 4 attention heads.
+The inter-year sequence was processed by a single-layer Bidirectional LSTM with a hidden dimension of 128.
+The model was trained using a batch size of 16, a learning rate of $1.57\mathrm{e}{-4}$, a weight decay of $2.91\mathrm{e}{-5}$, and a dropout rate of 10\% to prevent overfitting.
+
+Consistent with the baselines, the optimal configuration was trained across three distinct random seeds.
+As detailed in Table \ref{tab:hybrid_comparison}, the hybrid architecture achieved a remarkable mean overall test accuracy of 80.65 $\pm$0.51\%.
+More importantly, it achieved a mean Macro F1-score of 61.17 $\pm$0.50\%, vastly outperforming both single-year baselines. 
+
+This dramatic F1-score improvement of over 26\% compared to the GRU confirms that multi-year memory enables the network to correctly identify
+minority crop classes that were previously completely misclassified by the CNN and GRU. By understanding what was planted in the same field in previous years,
+the LSTM component effectively narrows down the probability distribution of current-year crops, breaking through the performance ceiling of intra-year models.
+
+\begin{table}[htpb]
+    \centering
+    \renewcommand{\arraystretch}{1.2}
+    \begin{tabular}{lccc}
+        \toprule
+        \textbf{Model} & \textbf{Test Accuracy (\%)} & \textbf{Test Macro F1 (\%)} & \textbf{Test Loss} \\
+        \midrule
+        Temporal 1D-CNN (Single-Year) & 55.17 $\pm$ 0.00 & 26.78 $\pm$ 0.00 & 1.46 $\pm$ 0.00 \\
+        Bidirectional GRU (Single-Year) & 57.78 $\pm$ 0.00 & 34.95 $\pm$ 0.00 & 1.40 $\pm$ 0.00 \\
+        \textbf{Transformer-LSTM (Multi-Year)} & \textbf{80.65 $\pm$ 0.51} & \textbf{61.17 $\pm$ 0.50} & \textbf{0.61 $\pm$ 0.01} \\
+        \bottomrule
+    \end{tabular}
+    \caption{Final performance comparison across all evaluated architectures. Results are averaged across 3 random seeds, displaying the mean and standard deviation.}
+    \label{tab:hybrid_comparison}
+\end{table}
+
+
+\section{Discussion}
+\label{sec:discussion}
+
+The experimental results validate the central premise of this research: relying solely on intra-year phenology severely limits crop
+classification performance, particularly on highly imbalanced datasets.
+The hierarchical multi-year architecture not only surpassed the performance ceiling of the baselines but also demonstrated unexpected computational efficiencies.
+
+\subsection{Single-Year vs. Multi-Year Capabilities}
+\label{subsec:single_vs_multi_year}
+
+The Hybrid Transformer-LSTM significantly outperforms the single-year baselines.
+While the Bidirectional GRU is theoretically better suited to capture complex temporal phenology than the CNN, it only achieved a Macro F1-score of 34.95\%.
+In contrast, the Hybrid model reached a mean F1-score of 61.17\%.
+This massive improvement highlights a fundamental limitation of single-year models: they evaluate each growing season in a vacuum.
+In agricultural reality, planting decisions are heavily governed by strict multi-year crop rotation practices designed
+to prevent soil depletion (e.g., alternating nitrogen-fixing legumes with demanding crops like maize).
+
+By feeding a sequence of yearly embeddings into the inter-year LSTM, the Hybrid model learns these transitional probabilities.
+If the network is uncertain about a crop's spectral signature in year $t$, it can infer the likely crop by analyzing the confident predictions from years $t-1$ and $t+1$. 
+Furthermore, despite its architectural complexity, the Hybrid model proved to be more computationally efficient during training,
+completing its required epochs across all three seeds faster than the single-year models.
+
+This efficiency can likely be attributed to the model's hierarchical design.
+As originally established by Vaswani et al. \cite{attention_is_all_you_need},
+self-attention mechanisms allow for significantly more parallelization than recurrent networks, which are bottlenecked by step-by-step sequential processing.
+While the baseline GRU must process hundreds of individual satellite acquisitions sequentially,
+the Hybrid model leverages the Intra-Year Transformer to evaluate the intra-year sequences concurrently.
+By pooling these outputs into dense, single-year vectors, the sequential computation burden on the inter-year LSTM is reduced
+to a sequence length of merely six steps (representing the six years of data).
+
+\subsection{The Impact of Class Imbalance}
+\label{subsec:class_imbalance}
+
+The INVEKOS dataset, like most real-world agricultural registries, suffers from severe long-tail class imbalance,
+dominated by staple crops such as winter wheat and maize \cite{perantoni_bayesian_2024}.
+This imbalance is fully exposed by the baseline models.
+The 1D-CNN achieved an overall accuracy of 55.17\%, but an F1-score of only 26.78\%.
+This nearly 30\% discrepancy indicates a "lazy" network: as is common in highly imbalanced datasets,
+the model minimizes its training loss by over-predicting the majority classes and effectively ignoring the minority crops \cite{johnson2019survey}.
+
+The Hybrid model significantly mitigates this failure mode. While its overall accuracy rose to 80.65\%, its F1-score jumped disproportionately higher to 61.17\%.
+This proves that the multi-year memory explicitly helps rescue minority classes.
+Rare or specialized crops are often planted as transitional phases within a longer crop rotation cycle to manage soil health \cite{crop_rotation, osman_crop_2013}.
+By recognizing the complete multi-year cycle, the LSTM is forced to predict the correct minority class to satisfy the learned rotational sequence,
+preventing the model from defaulting to the statistically safe, majority-class prediction.
+
+Ultimately, these findings demonstrate that treating crop mapping as an isolated, single-year computer vision problem discards critical agronomic context.
+Fusing intra-year attention with inter-year recurrence is essential for accurate, scalable, and computationally viable agricultural monitoring.

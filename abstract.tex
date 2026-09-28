@@ -1,22 +1,26 @@
-\chapter*{Abstract} % senza numerazione
-\label{abstract}
+\chapter*{Abstract}
 
-\addcontentsline{toc}{chapter}{Abstract} % da aggiungere comunque all'indice
+Precision agriculture relies on accurate, large-scale crop mapping derived from Earth Observation data, particularly Satellite Image Time Series (SITS).
+However, operationalizing deep learning for SITS presents severe challenges.
+First, tracking high-dimensional spatial-temporal grids creates critical memory bottlenecks in High-Performance Computing (HPC) environments.
+Second, most state-of-the-art models suffer from "temporal myopia"; they analyze single-year phenology while completely
+ignoring the fundamental agronomic practice of multi-year crop rotation. 
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed nunc orci. Aliquam nec nisl vitae sapien pulvinar dictum quis non urna. Suspendisse at dui a erat aliquam vestibulum. Quisque ultrices pellentesque pellentesque. Pellentesque egestas quam sed blandit tempus. Sed congue nec risus posuere euismod. Maecenas ut lacus id mauris sagittis egestas a eu dui. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Pellentesque at ultrices tellus. Ut eu purus eget sem iaculis ultricies sed non lorem. Curabitur gravida dui eget ex vestibulum venenatis. Phasellus gravida tellus velit, non eleifend justo lobortis eget.
+This thesis bridges these gaps by proposing a scalable machine learning framework designed to efficiently capture both intra-year phenology and inter-year crop dynamics.
+To solve hardware limitations, the data pipeline is transitioned to an optimized 1D pixel-based extraction method, enabling rapid,
+large-scale processing of a six-year Sentinel-2 dataset over Austria (INVEKOS). 
 
+The research systematically establishes robust single-year baselines, directly comparing a 1-Dimensional
+Convolutional Neural Network (1D-CNN) against standalone Transformer Encoders.
+Furthermore, structural control tests utilizing a simplified linear backbone are executed to definitively prove the
+mathematical necessity of non-linear feature extractors when processing raw SITS.
+To model long-term agricultural dynamics, these feature extractors are integrated into two distinct multi-year architectures:
+the established Transformer-HMM Bayesian cascade---which smooths temporal predictions using explicit,
+fixed transition matrices---and a novel, purely neural Hierarchical Transformer-LSTM. 
 
-  Sommario è un breve riassunto del lavoro svolto dove si descrive l'obiettivo, l'oggetto della tesi, le 
-metodologie e le tecniche usate, i dati elaborati e la spiegazione delle conclusioni alle quali siete arrivati.  
-
-Il sommario dell’elaborato consiste al massimo di 3 pagine e deve contenere le seguenti informazioni:
-\begin{itemize}
-  \item contesto e motivazioni 
-  \item breve riassunto del problema affrontato
-  \item tecniche utilizzate e/o sviluppate
-  \item risultati raggiunti, sottolineando il contributo personale del laureando/a
-\end{itemize}
-
-
-
-
+Experimental results demonstrate that multi-year architectures vastly outperform traditional single-year phenological models.
+Crucially, the novel Transformer-LSTM proves that deep recurrent memory can intrinsically learn complex,
+non-linear multi-year crop rotation rules end-to-end without relying on predefined agronomic matrices,
+achieving classification performance competitive with the state-of-the-art HMM cascade.
+By delivering this optimized, automated MLOps framework, this thesis provides both a highly scalable software
+solution for operational crop mapping and critical insights into the capacity of deep neural networks to decode long-term agricultural history.

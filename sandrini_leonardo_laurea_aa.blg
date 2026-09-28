@@ -2,47 +2,47 @@ This is BibTeX, Version 0.99e
 Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: sandrini_leonardo_laurea_aa.aux
 Reallocating 'name_of_file' (item size: 1) to 6 items.
-The style file: plain.bst
+The style file: unsrt.bst
 Reallocating 'name_of_file' (item size: 1) to 7 items.
 Database file #1: biblio.bib
-You've used 38 entries,
-            2118 wiz_defined-function locations,
-            711 strings with 12712 characters,
-and the built_in function-call counts, 16436 in all, are:
-= -- 1604
-> -- 944
+You've used 41 entries,
+            1791 wiz_defined-function locations,
+            678 strings with 12770 characters,
+and the built_in function-call counts, 11863 in all, are:
+= -- 1064
+> -- 598
 < -- 14
-+ -- 374
-- -- 331
-* -- 1235
-:= -- 2672
-add.period$ -- 123
-call.type$ -- 38
-change.case$ -- 272
++ -- 214
+- -- 173
+* -- 820
+:= -- 1813
+add.period$ -- 133
+call.type$ -- 41
+change.case$ -- 40
 chr.to.int$ -- 0
-cite$ -- 38
-duplicate$ -- 583
-empty$ -- 1147
-format.name$ -- 331
-if$ -- 3448
+cite$ -- 41
+duplicate$ -- 529
+empty$ -- 1089
+format.name$ -- 173
+if$ -- 2697
 int.to.chr$ -- 0
-int.to.str$ -- 38
-missing$ -- 39
-newline$ -- 193
-num.names$ -- 78
-pop$ -- 275
+int.to.str$ -- 41
+missing$ -- 41
+newline$ -- 209
+num.names$ -- 43
+pop$ -- 126
 preamble$ -- 1
-purify$ -- 235
+purify$ -- 0
 quote$ -- 0
-skip$ -- 445
+skip$ -- 299
 stack$ -- 0
-substring$ -- 1022
-swap$ -- 180
+substring$ -- 852
+swap$ -- 183
 text.length$ -- 14
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 150
+type$ -- 0
 warning$ -- 0
-while$ -- 145
-width$ -- 40
-write$ -- 427
+while$ -- 112
+width$ -- 43
+write$ -- 460

@@ -25,6 +25,8 @@
 \usepackage{algpseudocode}
 \usepackage{amsmath}
 \usepackage{amssymb}
+\usepackage{microtype}
+\usepackage{url}
 
 %%%%%%%%%%%%%%
 % supporto lettere accentate
@@ -110,8 +112,8 @@
     \begingroup
       % nessuna interruzione di pagina tra capitoli
       % ridefinizione dei comandi di clear page
-      \renewcommand{\cleardoublepage}{\par}
-      \renewcommand{\clearpage}{\par}
+      %\renewcommand{\cleardoublepage}{\par}
+      %\renewcommand{\clearpage}{\par}
       % redefinizione del formato del titolo del capitolo
       % da formato
       %   Capitolo X
@@ -146,7 +148,8 @@
     % aggiunta del capitolo nell'indice
     \addcontentsline{toc}{chapter}{Bibliography}
     % stile con ordinamento alfabetico in funzione degli autori
-    \bibliographystyle{plain}
+    %\bibliographystyle{plain}
+    \bibliographystyle{unsrt}
     \bibliography{biblio}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
