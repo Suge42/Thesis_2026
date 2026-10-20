@@ -12,43 +12,133 @@ and tested using identical data splits to ensure a strictly fair comparative ana
 \subsection{The INVEKOS Dataset and Sentinel-2}
 \label{subsec:invekos_sentinel2}
 
-To evaluate the proposed sequence-modeling architectures, experiments were conducted using the
-Austrian \textbf{INVEKOS} (Integrated Administration and Control System) dataset \cite{invekos_austria}.
-INVEKOS serves as the European Union's official spatial registry for agricultural parcel identification, providing rich,
-multi-year ground-truth vector data based on farmers' declarations.
-To facilitate multi-year sequence modeling, the dataset was preprocessed to isolate a strict temporal sequence,
-tracking crop rotations across six consecutive harvest years (2017 to 2022).
-Fields that did not maintain a consistent presence across all six years were discarded, ensuring a continuous temporal footprint.
-After filtering, the dataset encompasses \textbf{47 distinct crop classes}, ranging from dominant cereals (e.g., winter wheat, maize) to specialized regional vegetation.
+To evaluate the proposed sequence-modeling architectures, experiments were conducted using data
+derived from the Austrian \textbf{INVEKOS} (Integrated Administration and Control System) registry \cite{invekos_austria}.
+INVEKOS serves as the European Union's official spatial registry for agricultural parcel identification.
+It is important to clarify that this dataset provides administrative reference data based on farmers' declarations,
+which inherently contains a degree of declarative noise and administrative boundary shifts,
+rather than representing a flawless, pixel-perfect ground truth.
+To focus the analysis, the dataset extracts data specifically from the Military Grid Reference System (MGRS) tile 33UVP,
+chosen for its consistent orbital coverage and highly diverse crop distribution \cite{perantoni_bayesian_2024}.
 
-The input features are constructed from Earth Observation data provided by the European Space Agency's \textbf{Sentinel-2}mission \cite{drusch_sentinel2_2012}.
-Sentinel-2 provides 13 multi-spectral bands with a spatial resolution of up to 10 meters and a frequent 5-day revisit time.
-However, operationalizing this data presents severe challenges due to persistent cloud cover and atmospheric interference over the Austrian Alps,
-resulting in highly irregular temporal sampling.
+The input features are constructed from Earth Observation data provided by the European Space Agency's \textbf{Sentinel-2} mission \cite{drusch_sentinel2_2012}.
+The study utilizes 805 Level-1C (L1C) Top-of-Atmosphere acquisitions \cite{perantoni_bayesian_2024}.
+While the 13 native multi-spectral bands possess varying spatial resolutions (10m, 20m, and 60m),
+the lower-resolution channels were spatially resampled to a consistent 10m resolution using a nearest neighbour approach \cite{perantoni_bayesian_2024}.
+In this process, the larger 20m and 60m pixels are subdivided to fit the 10m spatial grid,
+and each new 10m pixel is simply assigned the exact spectral reflectance value of its closest original parent pixel.
+This specific technique is utilized because it perfectly preserves the original, raw radiometric data
+without mathematically interpolating or inventing new intermediate values that could distort a crop's true spectral signature.
+To convert the raw digital numbers into a standardized Top-of-Atmosphere (TOA) reflectance scale,
+the pixel values were mathematically divided by the sensor's absolute quantification value (typically 10,000) extracted directly from the Sentinel-2 metadata.
+This ensures the neural networks process normalized, physically meaningful radiometric signals.
+No cloud screening was applied, maintaining the raw sequence with its natural atmospheric occlusions \cite{perantoni_bayesian_2024}.
 
-It is important to explicitly state that the data extraction and pre-processing pipeline utilized in this thesis was originally designed and
-implemented by Perantoni et al. \cite{perantoni_bayesian_2024}. By adopting their highly optimized dataset structure,
-this research was able to bypass standard preprocessing bottlenecks and focus entirely on the architectural development of neural network sequence models. 
+To facilitate multi-year sequence modeling, the dataset was preprocessed to isolate a strict temporal sequence across six consecutive agronomic years.
+An agronomic year in this context is defined as the continuous observation period from September 1st of the preceding year to September 1st of the harvest year.
+Consequently, the temporal sequence of satellite images acquired between September 1, 2016, and September 1, 2017, is strictly associated with the final 2017 harvest label.
+To construct the final dataset, strict filters were applied: fields were required to have a minimum size of 400 $\text{m}^2$ \cite{perantoni_bayesian_2024}.
+Crucially, an inward erosion buffer of 15 meters was applied to all parcel geometries before extracting the spectral signatures.
+Because Sentinel-2's highest spatial resolution is 10m per pixel, pixels located at the absolute edge of a field often
+capture a mixture of the target crop and adjacent land covers, such as roads or neighboring parcels.
+By shrinking the polygon boundary inward by 15 meters, the extraction pipeline guarantees that only pure,
+unmixed pixels strictly residing within the field's interior are aggregated into the spatial mean.
+
+Furthermore, the dataset was filtered to retain only fields that maintained a consistent geometric presence across all six target years \cite{perantoni_bayesian_2024}.
+In agricultural administrative registries, parcels are frequently merged or subdivided by farmers between seasons;
+selecting only stable geometries ensures that the multi-year sequence models are analyzing
+the exact same plot of land over time without artificial spectral shifts caused by changing borders.
+Additionally, the retained fields were filtered to include only those whose declared crop types
+possessed a dataset occurrence greater than 0.05\% \cite{perantoni_bayesian_2024}.
+While this strict temporal footprint deliberately excludes intermittent fields, shifting borders,
+and extremely rare crops, it is mathematically necessary to establish a stable population for sequence evaluation.
+After filtering, the dataset encompasses \textbf{47 distinct crop classes} across approximately \textbf{300,000 crop fields} \cite{perantoni_bayesian_2024}.
+
+Crucially, rather than processing memory-intensive 2D spatial patches, each resulting crop field is collapsed into a
+single 1D entry representing the \textbf{spatial mean value} of the pixels belonging to that specific field on every acquisition date.
+Therefore, the unit of analysis and classification for all models in this study is the individual field.
+The data extraction and pre-processing pipeline utilized in this thesis was originally designed and implemented by Perantoni et al.,
+allowing this research to bypass standard preprocessing bottlenecks and focus entirely on architectural development.
+
+To rigorously evaluate the architectures without data leakage, the approximately 300,000 filtered
+fields were partitioned into Training (60\%), Validation (20\%), and Test (20\%) splits.
+Rather than utilizing a naive random split, a stratified random sampling approach was employed based on the
+uniqueness of the multi-year label sequences.
+An agglomerative hierarchical clustering algorithm (utilizing average linkage) was
+applied to group agricultural fields that exhibited similar crop rotation patterns \cite{perantoni_bayesian_2024}.
+To account for identical crop rotations that are simply out of phase (e.g., a "Wheat-Maize-Soy" rotation started in 2016 versus 2017),
+a rotating Hamming distance metric was utilized, building upon the foundational sequence alignment logic established by Hamming \cite{hamming1950error}.
+This metric calculates the minimum distance across all possible circular shifts of the multi-year time series,
+effectively recognizing temporally shifted sequences as the same core agricultural strategy.
+The 60/20/20 split was subsequently executed across the resulting clusters.
+This prevents data leakage by ensuring the Test set contains proportionally representative, yet strictly unseen, multi-year rotation patterns.
+
+\begin{figure}[htpb]
+    \centering
+    \includegraphics[width=0.9\textwidth]{images/map_33UVP.pdf}
+    \caption{Geographic extent of Sentinel-2 MGRS Tile 33UVP over eastern Austria.}
+    \label{fig:map_33UVP}
+\end{figure}
+
+Geographically, the selected MGRS tile 33UVP covers a standard $100 \times 100$ km extent ($10,000 \text{ km}^2$) over
+eastern Austria (encompassing regions such as Lower Austria and Vienna) as shown in Fig \ref{fig:map_33UVP}.
+This specific tile was selected because it guarantees consistent orbital coverage and contains a highly diverse distribution of crops.
+Following the filtering processes, the dataset encompasses the 47 distinct crop classes detailed in Table \ref{tab:crop_classes}.
+
+\begin{table}[htbp]
+    \centering
+    \caption{The 47 distinct crop classes present in the filtered MGRS 33UVP dataset, listed alphabetically.}
+    \label{tab:crop_classes}
+    \resizebox{\textwidth}{!}{
+        \begin{tabular}{lll}
+            \toprule
+            \textbf{Crop Class} & \textbf{Crop Class} & \textbf{Crop Class} \\
+            \midrule
+            Alfalfa Forage & Onions & Summer Common Wheat \\
+            Alternating Meadow & Other Arable Land & Summer Mixed Cereals \\
+            Beet & Pastures & Summer Oats \\
+            Broad Beans & Peas/Cereals Mixture & Summer Peas \\
+            Buckwheat & Perennial Pasture & Sunflowers \\
+            Clover & Rangeland & Table Apples \\
+            Corn Cob Mix & Seed Maize Multiplication & Table Pumpkins \\
+            Elephant Grass & Silage Maize & Two/Multi-Row Spring Barley \\
+            Energy Wood & Single Culture Field Vegetables & Winter Common Wheat \\
+            Forage Grasses & Single Mown Meadow & Winter Cumin \\
+            Grain Maize & Soybeans & Winter Durum Wheat \\
+            Grain Peas & Spelt & Winter Mixed Cereals \\
+            Grassland Fallow & Spring Barley & Winter Rape \\
+            Green Fallow & Starch/Industrial Potatoes & Winter Rye \\
+            Miscellaneous Field Fodder & Strawberries & Winter Triticale \\
+            Oil Pumpkin & Sugar Beet & \\
+            \bottomrule
+        \end{tabular}
+    }
+\end{table}
+
 
 \subsection{HPC Environment and 1D Pixel-Based Extraction}
 \label{subsec:hpc_environment}
 
 Training deep sequence models on massive, high-dimensional satellite time series is computationally demanding.
 To facilitate this, all experiments were executed on a dedicated High-Performance Computing (HPC) node equipped with an AMD Ryzen 7 5800X processor,
-67GB of system RAM, and an NVIDIA GeForce RTX 3060 GPU, running on an Ubuntu 22.04 LTS environment.
+64GB of system RAM, and an NVIDIA GeForce RTX 3060 GPU, running on an Ubuntu 22.04 LTS environment.
 
 A primary challenge in processing the INVEKOS dataset is the severe input/output (I/O) bottleneck caused by loading thousands of multi-year temporal sequences.
-Initial exploratory experiments attempted to utilize the full 2D spatial patches (e.g., $32 \times 32$ pixels across time) of the agricultural parcels.
-Because the dataset was exceptionally large (approximately 1.3 TB), it could not be stored on the
-HPC node's local solid-state drive (SSD) and instead had to be hosted on a shared network folder.
-The immense volume of network-based disk reads required to process these 2D geometries caused severe GPU starvation,
-rendering the training process computationally infeasible in a reasonable amount of time.
+Initial exploratory experiments attempted to utilize the full 2D spatial patches of the agricultural parcels.
+Because the massive dataset could not be stored on the local solid-state drive (SSD) and had to be hosted on a shared network folder,
+the immense volume of network-based disk reads caused severe GPU starvation.
+This rendered the 2D training process computationally infeasible within the available time constraints of this research.
+Consequently, this exploratory phase was aborted before a formal comparative benchmark could be established;
+exact performance metrics (such as peak VRAM, specific loading times, or precise per-epoch durations) for the 2D pipeline were not rigorously recorded. 
 
-To resolve this, the experimental framework was adapted to utilize an optimized \textbf{1D pixel-based data pipeline} provided by Perantoni et al. \cite{perantoni_bayesian_2024}.
-Rather than processing broad spatial context, the dataset extraction focuses entirely on the deep temporal evolution of individual pixels.
-Each sample is shaped as a 1D sequence containing the 13 spectral bands measured across the specific agricultural days of the year.
-This aggressive dimensionality reduction completely bypasses hardware memory limits,
-sustaining high GPU utilization without the latency overhead of 2D spatial patches.
+To bypass this severe observed limitation, the experimental framework was forced to pivot to an optimized \textbf{1D pixel-based data pipeline}
+provided by Perantoni et al. \cite{perantoni_bayesian_2024}.
+Rather than processing broad spatial context, each sample is shaped as a 1D sequence containing the 13 spectral
+bands measured across the specific agricultural days of the year.
+This aggressive dimensionality reduction completely bypasses the network I/O limits,
+rendering the multi-year SITS training executable on a single computing node.
+Therefore, the utilization of the 1D pipeline is presented here not as a benchmarked computational contribution of this work,
+but rather as a strict engineering prerequisite to make the architectural comparisons possible.
 
 \subsection{Data Loading Strategies}
 \label{subsec:data_loading}
@@ -60,10 +150,14 @@ For the single-year baseline models (1D-CNN and standalone Transformers), the da
 This loader decoupled the temporal sequence of the dataset, extracting and serving only a single growing season at a time.
 This constrained the baselines to rely entirely on localized, intra-year phenological signatures for classification.
 
-In contrast, the hybrid architectures required a full sequence view of the crop rotation cycle.
-To facilitate this, an \textbf{inter-year data loader} was engineered to serve the entire continuous six-year sequence simultaneously.
-This explicit separation in data handling guarantees that any performance delta observed between the architectures is strictly a product
-of the hybrid models' multi-year memory capabilities.
+In contrast, the standalone Generative Variant yielded a lower predictive performance (TBD\% F1).
+This drop is an expected consequence of its mathematical formulation.
+By utilizing a low temperature scalar ($T=0.05$) inside the normalized generative layer,
+the output distribution is deliberately sharpened.
+Rather than preventing overconfidence, this strict concentration forces the generative backbone to produce highly decisive, sharp emission likelihoods $p(x|c)$.
+While this makes it a less forgiving standalone classifier, it is a mathematically necessary design choice
+for the cascade architecture \cite{perantoni_bayesian_2024}: it prevents the downstream HMM transition layer from being flooded with ambiguous,
+flat probabilistic noise, allowing the Markov model to clearly distinguish states based on these concentrated emission signals.
 
 \subsection{Evaluation Metrics}
 \label{subsec:evaluation_metrics}
@@ -78,7 +172,7 @@ $$ \text{OA} = \frac{\sum_{i=1}^{C} TP_i}{N} $$
 where $C$ is the total number of target classes (47 in this study), $TP_i$ represents the True Positives for class $i$, and $N$ is the total number of samples.
 
 \textbf{Macro F1-Score} is the primary metric used to evaluate true model performance. The F1-score for a single class is the harmonic mean of Precision and Recall.
-To compute the Macro F1-score, the F1-score is calculated independently for each of the 47 classes and then unweightedly averaged:
+To compute the Macro F1-score, the F1-score is calculated independently for each of the 47 classes and then averaged with equal weight across classes:
 $$ \text{Macro F1} = \frac{1}{C} \sum_{i=1}^{C} \left( 2 \times \frac{\text{Precision}_i \times \text{Recall}_i}{\text{Precision}_i + \text{Recall}_i} \right) $$
 Unlike a weighted average, the Macro F1-score treats every class equally, regardless of its support size.
 A model can only achieve a high Macro F1-score if it successfully identifies both the dominant and the minority crop classes,
@@ -88,31 +182,31 @@ making it a rigorous benchmark for this highly imbalanced dataset.
 \section{Infrastructure and MLOps}
 \label{sec:infrastructure_mlops}
 
-The complexity of simultaneously training intra-year feature extractors and inter-year sequence heads required a robust, highly parallelized infrastructure.
+The complexity of simultaneously training intra-year feature extractors and inter-year sequence heads required
+a robust software infrastructure to manage the workflow efficiently on the available hardware.
 
 \subsection{Training Framework and Optimization}
 The entire experimental codebase was developed in Python utilizing the \textbf{PyTorch} deep learning framework,
 wrapped within \textbf{PyTorch Lightning} \cite{falcon2019pytorch}.
-PyTorch Lightning was selected to streamline the development process;
-it automatically manages the underlying complexities of distributed training,
-safely handling hardware scaling and the synchronization of multi-GPU workloads.
+PyTorch Lightning was selected to streamline the development process and ensure code reproducibility.
+While the framework natively supports distributed multi-node and multi-GPU training,
+all experiments in this thesis were executed concurrently as independent trials on a single NVIDIA GeForce RTX 3060 GPU.
 
 The networks were trained using the \textbf{AdamW optimizer} \cite{loshchilov2017decoupled},
 which explicitly decouples weight decay from the gradient updates to improve generalization.
-A crucial optimization strategy for the Transformer-HMM cascade was the implementation of decoupled learning rates.
+A crucial optimization strategy for the Transformer-HMM was the implementation of decoupled learning rates.
 By assigning independent learning rates to the neural backbone and the sequence head, the automated tuner could independently scale the weight updates,
 ensuring the neural network learned effectively without destabilizing the HMM's probabilistic transition matrices.
 All models were optimized against a Categorical Cross-Entropy (CCE) loss function.
 
 \subsection{Automated Hyperparameter Tuning}
-To ensure all baseline and hybrid models were compared fairly at their absolute peak capacity, manual tuning was abandoned in favor
-of an automated Machine Learning Operations (MLOps) pipeline.
+To ensure all baseline and hybrid models were compared fairly, an automated Machine Learning Operations (MLOps) pipeline was utilized.
 \textbf{Ray Tune} \cite{liaw2018tune}, integrated with the \textbf{Optuna} search algorithm \cite{akiba2019optuna},
-was deployed to conduct distributed hyperparameter sweeps.
-This combination utilized Bayesian optimization to intelligently search the hyperparameter space (learning rates, dropout ratios,
-hidden dimensions, and attention heads), aggressively pruning unpromising configurations.
-Furthermore, all model executions, configurations, and resulting performance metrics were systematically tracked and versioned
-using a centralized \textbf{MLflow} server \cite{zaharia2018accelerating}.
+was deployed to conduct hyperparameter sweeps across concurrent trials on the same machine.
+This combination utilized Bayesian optimization to intelligently search the parameter space (specifically learning rates),
+aggressively pruning unpromising configurations.
+Furthermore, all model executions, configurations, and resulting performance metrics were systematically tracked and
+versioned using a centralized \textbf{MLflow} server \cite{zaharia2018accelerating}.
 
 
 \section{Baseline Results (Intra-Year and Structural Controls)}
@@ -142,28 +236,36 @@ To ensure statistical robustness and account for weight initialization variances
 \end{table}
 
 \subsection{Temporal 1D-CNN vs. Transformer Encoders}
+
 The \textbf{1D-CNN} established a strong baseline by effectively mapping local spectral variations.
 However, as shown in Table \ref{tab:baseline_comparison}, it achieved a moderate overall accuracy of 55.30\% but
 struggled significantly with class imbalance, recording a mean Macro F1-score of only 30.17\%.
-The model's sliding receptive field likely struggled to bridge the massive temporal gaps caused by prolonged winter cloud cover.
+The model's sliding receptive field of five observations likely struggled to bridge the temporal gaps caused by prolonged winter cloud cover.
 
-The standalone \textbf{Transformer Encoders} successfully overcame these localized limitations.
-By leveraging the AgroDays Positional Encoding and full self-attention, the Transformers mapped global dependencies across the entire growing season.
+Under the evaluated protocol, the discriminative Transformer achieved a mean Macro F1
+of 33.18\%, compared with 30.17\% for the 1D-CNN.
+However, it is necessary to declare a structural limitation in this comparison: the Transformer models received
+explicit temporal information (the acquisition dates) via the positional encoding, whereas the 1D-CNN received no
+explicit time information and relied entirely on the implicit order of the irregular sequence.
+Consequently, this baseline experiment evaluates two systems with different information baselines,
+isolating the combined effect of self-attention and temporal encoding rather than self-attention alone.
+
 Furthermore, the explicit comparison between the two Transformer formulations yielded critical insights.
-The \textbf{Discriminative Variant} achieved the highest standalone classification performance (33.18\% F1). 
-In contrast, the standalone \textbf{Generative Variant} yielded a lower predictive performance (TBD\% F1). 
+The \textbf{Discriminative Variant} achieved the highest standalone classification performance (33.18\% F1).
+In contrast, the standalone \textbf{Generative Variant} yielded a lower predictive performance (TBD\% F1).
 This drop is an expected consequence of its mathematical formulation.
-By removing the bias terms and enforcing a strict, normalized probability space,
-the Generative Transformer cannot default to predicting majority classes to inflate its accuracy.
-While this makes it a less effective standalone classifier, this strict normalization prevents the model from generating overconfident predictions,
-theoretically making it the optimal, unbiased emission model for downstream probabilistic networks.
+By removing the bias terms and enforcing a strict, normalized probability space, the Generative Transformer cannot
+default to predicting majority classes to inflate its accuracy.
+While this makes it a less effective standalone classifier, this strict normalization prevents the model from
+generating overconfident predictions, theoretically making it the optimal, unbiased emission model for downstream probabilistic networks.
 
 \subsection{The Necessity of Non-Linearity: Linear Controls}
-To validate the architectural necessity of the deep neural backbones, the multi-year sequence heads were deliberately paired with a \textbf{simplistic linear backbone}.
+To validate the architectural necessity of the deep neural backbones, the multi-year sequence heads were deliberately paired with a \textbf{zero-memory linear backbone}.
 In these control configurations, the raw 1D SITS data was processed through a single linear projection before being passed to either the HMM or the LSTM. 
 
-As hypothesized, replacing the non-linear feature extractors caused a massive degradation in performance,
-but it also revealed a disparity between how the two sequence heads handle low-quality inputs.
+The evaluated Linear-HMM configuration obtained a Macro F1 of 5.23\%.
+This result motivates investigating the role of the feature extractor,
+but does not establish a general requirement for deep nonlinear backbones.
 The \textbf{Linear-HMM} configuration managed to maintain a baseline level of predictive power (5.23\% F1-score and 41.52\% Accuracy).
 Because the HMM relies on an explicit, mathematically rigid transition matrix, this agronomic "safety net" allowed it to partially smooth over the highly overlapping,
 low-confidence emission probabilities generated by the linear layer. 
@@ -211,12 +313,18 @@ Overconfident predictions from the discriminative softmax effectively bypass the
 However, even at peak performance, the HMM's reliance on fixed probabilities slightly restricted its ability to adapt to anomalous
 or unconventional rotation strategies employed by individual farmers.
 
-In contrast, the \textbf{Hierarchical Transformer-LSTM} demonstrated highly competitive capabilities. Reaching a peak Macro F1-score of TBD\%,
-the LSTM proved capable of processing both backbone types, though the [Generative/Discriminative] variant yielded the optimal configuration.
-Without relying on predefined agronomic matrices, the deep recurrent memory of the bidirectional LSTM successfully learned the intrinsic,
-non-linear rules of multi-year agricultural cycles end-to-end.
-By analyzing both the past and future planting contexts simultaneously, the LSTM contextually predicted crop transitions with an accuracy
-that rivaled the probabilistic smoothing of the HMM.
+In contrast, the \textbf{Hierarchical Transformer-LSTM} demonstrated highly competitive capabilities.
+Reaching a peak Macro F1-score of TBD\%, the LSTM proved capable of processing both backbone types,
+though the [Generative/Discriminative] variant yielded the optimal configuration.
+While the network's learning rates were heavily optimized via hyperparameter tuning,
+the Bidirectional LSTM was deployed with a fixed structural configuration utilizing 1 recurrent layer,
+a hidden dimension of 64, and a dropout rate of 0.2 applied to the recurrent outputs.
+By analyzing both the past and future planting contexts simultaneously, the LSTM contextually predicted crop transitions
+with an accuracy that rivaled the probabilistic smoothing of the HMM.
+However, while the recurrent memory significantly improves predictive metrics,
+it does not strictly guarantee that the network has extracted interpretable agronomic rules.
+The performance gains may partially stem from the network exploiting simple crop persistence (consecutive replanting)
+or geographical correlations, requiring further targeted interpretability analysis to definitively isolate learned crop rotations.
 
 
 \section{Discussion}
@@ -228,25 +336,26 @@ limits crop classification performance, particularly on highly imbalanced datase
 \subsection{Single-Year vs. Multi-Year Capabilities}
 \label{subsec:single_vs_multi_year}
 
-The massive improvement from the single-year Transformers to the multi-year hybrids highlights a fundamental limitation
+The improvement from the single-year Transformers to the multi-year hybrids highlights a fundamental limitation
 of traditional models: they evaluate each growing season in a vacuum.
 In agricultural reality, planting decisions are heavily governed by strict multi-year crop rotation practices designed to prevent soil depletion.
 By feeding a sequence of yearly embeddings into the inter-year sequence heads (LSTM or HMM), the network learns these transitional probabilities.
 If the network is uncertain about a crop's spectral signature in year $t$, it can mathematically infer the likely crop by analyzing the confident
-predictions from years $t-1$ and $t+1$.
+predictions from years $t-1$ and $t+1$. 
+The bidirectional models perform retrospective classification using observations from the full six-year sequence.
 
 \subsection{The Impact of Class Imbalance}
 \label{subsec:class_imbalance}
 
 The INVEKOS dataset suffers from severe long-tail class imbalance, dominated by staple crops. This imbalance is fully exposed by the baseline models.
 The 1D-CNN achieved an overall accuracy of 55.30\%, but an F1-score of only 30.17\%.
-This discrepancy indicates a "lazy" network: the model minimizes its training loss by over-predicting the majority classes
-and effectively ignoring the minority crops \cite{johnson2019survey}.
+This discrepancy indicates a network exhibiting high prediction frequencies for majority classes and significant error rates on minority crops \cite{johnson2019survey}.
 
 The hybrid multi-year models significantly mitigate this failure mode.
-While the LSTM's overall accuracy rose to TBD\%, its F1-score jumped disproportionately higher to TBD\%. This proves that
-multi-year memory explicitly helps rescue minority classes. Rare crops are often planted as transitional phases within a longer crop rotation cycle.
-By recognizing the complete multi-year cycle, the LSTM is forced to predict the correct minority class to satisfy the learned rotational sequence,
+While the LSTM's overall accuracy rose to [TBD]\%, its F1-score jumped disproportionately higher to [TBD]\%.
+This suggests that multi-year memory explicitly helps rescue minority classes.
+Rare crops are often planted as transitional phases within a longer crop rotation cycle.
+By recognizing the complete multi-year cycle, the LSTM predictions are probabilistically conditioned on the learned rotational sequence,
 preventing the model from defaulting to the statistically safe, majority-class prediction.
 
 \subsection{Computational Efficiency}

@@ -15,14 +15,18 @@ The first phenological baseline is a 1-Dimensional Convolutional Neural Network 
 By sliding convolutional filters across the time dimension of a pixel's spectral profile, the network efficiently extracts localized
 temporal features and phenological shifts, a methodology that has proven highly effective for satellite time series classification \cite{pelletier_temporal_2019}.
 
-The \textbf{encoder} consists of two sequential convolutional blocks.
+The encoder consists of two sequential convolutional blocks.
 The initial layer maps the 13 input satellite bands to 64 channels using a kernel size of 3 and a padding of 1 to preserve the temporal sequence length.
 This is followed by a 1D Batch Normalization layer and an in-place ReLU activation to introduce non-linearity.
 The second layer further projects the features from 64 to 128 channels, utilizing the same kernel size, padding, normalization, and activation parameters.
 
-For \textbf{classification}, a point-wise convolution (kernel size of 1) is applied to map the extracted 128-dimensional features to the 47 target crop classes.
-Because the network produces predictions for each time step, a temporal majority vote is executed by averaging the unnormalized logit
-scores across all time steps in the year to generate the final field-level classification.
+For classification, a point-wise convolution (kernel size of 1) is applied to map the extracted 128-dimensional features to the target crop classes.
+Because the network produces predictions for each time step, a temporal mean pooling of the unnormalized logits
+is executed across all time steps in the year to generate the final field-level classification.
+It is important to note that with two convolutional layers utilizing a kernel size of 3, a stride of 1, and a padding of 1,
+the local receptive field spans exactly five consecutive observations.
+Because the input sequence is irregularly sampled due to cloud cover, these five observations do not correspond
+to a fixed number of days, meaning the CNN relies strictly on sequence order rather than exact temporal distances.
 
 \begin{figure}[htpb]
     \centering
@@ -59,36 +63,19 @@ their efficacy as both standalone classifiers and future emission models:
         by the HMM to effectively map sequence transitions \cite{perantoni_bayesian_2024}.
 \end{itemize}
 
-\subsection{Linear Structural Controls}
-\label{subsec:linear_controls}
-
-To scientifically validate the necessity of the aforementioned non-linear backbones, standalone multi-year controls utilizing a \textbf{simplistic linear backbone} were evaluated.
-In these configurations, the raw 13-band spectral time series is projected through a single,
-uninitialized linear layer ($W x + b$) directly into the sequence-modeling heads (LSTM and HMM).
-
-These linear models serve as a deliberate \textbf{structural simplification}. Because a single linear layer cannot mathematically separate complex,
-non-linear phenological profiles, it outputs near-random temporal features.
-Testing the sequence heads on these impoverished features isolates the capabilities of the recurrent and probabilistic networks,
-demonstrating that multi-year sequence smoothing fundamentally requires a high-capacity, non-linear feature extractor to function effectively.
-
-
-\section{Multi-Year Architectures}
-\label{sec:multi_year_architectures}
-
-The core focus of this thesis is the development and evaluation of hybrid, multi-scale neural architectures capable of simultaneously
-modeling intra-year phenological dynamics and inter-year crop rotation patterns. 
-
 \subsection{AgroDays Positional Encoding}
 \label{subsec:agrodays_encoding}
 
 Agricultural satellite time series are inherently irregularly sampled due to cloud cover and varying satellite revisit times.
 Standard sequential positional encodings would falsely inform a self-attention mechanism that all observations are equidistant.
-To address this, the architecture utilizes a custom \textbf{AgroDays Positional Encoding} module.
+To address this, all Transformer variants in this study (both the single-year baselines and the multi-year hybrid architectures)
+utilize an AgroDays Positional Encoding module.
 
 Instead of indexing observations as sequential integer steps, this module adapts the standard sinusoidal positional
-encoding \cite{attention_is_all_you_need} by scaling the frequencies using the exact agricultural day of the acquisition.
-Mapping absolute day values onto continuous periodic functions ensures that the mathematical distance between any two
-encoded time steps is strictly proportional to the actual temporal gap between them.
+encoding \cite{attention_is_all_you_need} by substituting the sequence index with the exact agricultural day of the acquisition.
+This adaptation is a well-established technique in remote sensing time series analysis \cite{russwurm_self_attention_2020, garnot2020psetae}.
+While the Euclidean distance between two sinusoidal encodings is a periodic function and therefore does not guarantee a strictly linear,
+proportional preservation of temporal distance, this mapping effectively makes the actual acquisition dates explicitly available to the model.
 
 \begin{algorithm}[htpb]
     \caption{AgroDays Positional Encoding (Lookup Table)}
@@ -123,27 +110,69 @@ a frozen lookup table \cite{attention_is_all_you_need}.
 During the forward pass, the model simply uses the input matrix $pos$ as indices to extract the correct sine and cosine vectors
 for each specific agricultural day, injecting this explicit temporal signal directly into the spectral embeddings.
 
-\subsection{The Reference Transformer-HMM Cascade}
+\subsection{Linear Structural Controls}
+\label{subsec:linear_controls}
+
+To scientifically validate the necessity of the aforementioned non-linear backbones,
+standalone multi-year controls utilizing a zero-memory linear baseline were evaluated.
+Rather than relying on randomly initialized weights, this control relies on a fully trainable linear layer devoid of intermediate non-linearities.
+
+Specifically, the raw 13-band SITS data is temporally mean-pooled across the growing season to completely
+collapse the intra-year temporal sequence into a static feature vector.
+A single trained linear layer then maps these 13 features directly to the 47 output classes.
+This projection is jointly optimized alongside the sequence heads (LSTM and HMM) utilizing a standard Categorical Cross-Entropy loss.
+Because a single linear layer applied to temporally pooled data cannot mathematically disentangle highly overlapping,
+non-linear phenological profiles, it outputs near-random temporal features.
+Testing the sequence heads on these impoverished inputs isolates their transition-modeling capabilities,
+explicitly evaluating whether multi-year sequence smoothing requires a high-capacity, non-linear feature extractor to function.
+
+
+\section{Multi-Year Architectures}
+\label{sec:multi_year_architectures}
+
+The core focus of this thesis is the development and evaluation of hybrid, multi-scale neural architectures capable of simultaneously
+modeling intra-year phenological dynamics and inter-year crop rotation patterns. 
+
+\subsection{The Reference Transformer-HMM}
 \label{subsec:transformer_hmm}
 
 To evaluate purely neural multi-year models, an established state-of-the-art framework is required for comparison.
 This research implements the Bayesian cascade architecture proposed by Perantoni et al. \cite{perantoni_bayesian_2024},
-which integrates a Transformer Encoder with a \textbf{Hidden Markov Model} (HMM).
+which integrates a Transformer Encoder with a Hidden Markov Model (HMM).
 
 \begin{figure}[htpb]
     \centering
     \includegraphics[width=0.9\textwidth]{images/transformer_hmm_diagram.pdf}
-    \caption{Hierarchical overview of the Transformer-HMM cascade, demonstrating the fusion of intra-year attention and inter-year transition modeling.}
+    \caption{Hierarchical overview of the Transformer-HMM approach, demonstrating the fusion of intra-year attention and inter-year transition modeling.}
     \label{fig:transformer_hmm_cascade}
 \end{figure}
 
-In this hierarchical setup, the Transformer acts exclusively as the \textbf{emission model},
-processing the intra-year SITS to estimate the likelihood of each crop class for a given year.
-The generated class probabilities are then passed into the HMM transition layer.
-The HMM models the temporal correlation of the labels across the multi-year sequence utilizing explicit \textbf{transition
-matrices}, probabilistic grids that mathematically quantify the likelihood of a farmer rotating from one specific crop type to another.
-By performing cascade classification in both the forward and backward temporal directions, the HMM smooths the Transformer's emission predictions,
-ensuring the final predicted sequence adheres to logical agronomic rotation practices \cite{perantoni_bayesian_2024}.
+In this hierarchical setup, the Transformer acts exclusively as the emission model,
+processing the intra-year SITS to estimate the emission likelihoods of each crop class for a given year.
+These likelihoods are then passed into the HMM transition layer.
+To ensure a scientifically rigorous comparison against the purely neural recurrent baseline,
+it is crucial to detail the exact formulation of the HMM implemented in this thesis \cite{perantoni_bayesian_2024}. 
+
+Rather than relying on frozen, manually defined agronomic rules, the HMM's explicit probabilistic
+transition matrices are jointly optimized during training alongside the neural backbone \cite{perantoni_bayesian_2024}.
+The transition model is formulated as a first-order, time-variant Markov chain;
+this means a distinct transition matrix is utilized for each specific yearly interval
+(e.g., $T_{2016 \rightarrow 2017}$ is independent of $T_{2017 \rightarrow 2018}$) to account for inter-annual
+climate or policy shifts \cite{perantoni_bayesian_2024}.
+To ensure realistic starting conditions, the matrices and initial prior distributions are empirically initialized
+using the exact crop co-occurrence frequencies computed from the training dataset \cite{perantoni_bayesian_2024}.
+To handle completely unobserved rotations and guarantee numerical stability, a smoothing constant ($1\times10^{-20}$)
+is added to all transition counts before mapping them into log-space.
+This prevents zero-probability transitions from causing catastrophic $-\infty$ log-likelihoods during training.
+All subsequent computations are executed in log-space using the numerically stable log-sum-exp trick \cite{perantoni_bayesian_2024}.
+
+During training and inference, the architecture employs a forward-backward algorithm to perform marginal smoothing;
+it computes the posterior probability of each crop class at year $t$ given the entire multi-year sequence of observations $x_{1:T}$.
+The network's final output logits are derived by averaging the forward and backward log-posteriors \cite{perantoni_bayesian_2024}.
+While Viterbi decoding (which seeks the single maximum probability sequence $\arg\max_{s_{1:T}} P(s_{1:T} | x_{1:T})$)
+is also computed as a supplementary metric, the primary sequence optimization relies on the smoothed marginals.
+Consequently, while the HMM heavily penalizes unlikely crop rotations, it does not enforce rigid, deterministic agronomic constraints;
+rather, it balances the Transformer's emission likelihoods with maximum statistical temporal coherence.
 
 \subsection{The Novel Hierarchical Transformer-LSTM}
 \label{subsec:transformer_lstm}
@@ -161,9 +190,16 @@ without relying on fixed, explicit transition matrices.
 
 The architecture processes the temporal scales using a two-stage approach.
 In the first stage, the sequence is flattened to merge the batch and year dimensions,
-allowing the \textbf{Intra-Year Transformer Encoder} to evaluate all years independently and in parallel across the hardware.
+allowing the Intra-Year Transformer Encoder to evaluate all years independently and in parallel across the hardware.
 The Transformer's complex phenological outputs are temporally mean-pooled and passed through an intra-year classifier,
-collapsing the dense feature extraction into a sequence of unnormalized class probabilities (logits) for each specific year.
+collapsing the dense $d\_model$ feature extraction into a sequence of real-valued scores (logits) for the 47 specific target classes.
+Crucially, this intermediate 47-dimensional vector is not merely a latent representation;
+the Intra-Year Transformer is explicitly optimized using an auxiliary intra-year classification loss during training.
+This forces the intermediate outputs to represent calibrated semantic class predictions.
+Furthermore, compressing the high-dimensional embeddings down to 47 semantic logits before recurrence drastically
+reduces the LSTM's parameter footprint, forcing it to act strictly as an inter-year transition model rather than a redundant feature extractor.
+While passing the full $d\_model$ embedding to the LSTM represents a valuable future ablation study,
+this bottleneck isolates the evaluation strictly to class-level transition dynamics.
 
 In the second stage, this chronological sequence of yearly predictions is restored and passed into an \textbf{Inter-Year Bidirectional LSTM} \cite{hochreiter_long_1997}. 
 
@@ -183,14 +219,15 @@ In the second stage, this chronological sequence of yearly predictions is restor
         \State $X_{emb} \gets \text{AgroDaysPositionalEncoding}(X_{emb}, pos_{flat})$
         \State $T_{out} \gets \text{TransformerEncoder}(X_{emb})$ \Comment{Self-Attention over time steps}
         \State $Y_{emb} \gets \text{mean}(T_{out}, \text{dim}=1)$ \Comment{Temporal pooling: $[B \cdot Y, d\_model]$}
-        \State $Y_{logits} \gets \text{IntraYearClassifier}(Y_{emb})$ \Comment{Map to logits: $[B \cdot Y, n\_classes]$}
+        \State $Y_{logits} \gets \text{IntraYearClassifier}(Y_{emb})$ \Comment{Map to real-valued logits: $[B \cdot Y, n\_classes]$}
         \vspace{1.5mm}
         \State \textbf{Stage 2: Inter-Year Processing (LSTM)}
         \State $Y_{seq} \gets \text{reshape}(Y_{logits}, [B, Y, n\_classes])$ \Comment{Restore sequence of years}
-        \State $L_{out}, (h_n, c_n) \gets \text{BidirectionalLSTM}(Y_{seq})$ \Comment{Model crop rotations}
+        \State $L_{out}, (h_n, c_n) \gets \text{BidirectionalLSTM}(Y_{seq})$ \Comment{Model crop transitions}
+        \State $L_{drop} \gets \text{Dropout}(L_{out})$ \Comment{Apply temporal regularization}
         \vspace{1.5mm}
         \State \textbf{Stage 3: Multi-Year Classification}
-        \State $L_{logits} \gets \text{InterYearClassifier}(L_{out})$ \Comment{Map LSTM hidden states to target classes}
+        \State $L_{logits} \gets \text{InterYearClassifier}(L_{drop})$ \Comment{Map LSTM hidden states to final classes}
         \State $Y_{pred} \gets \text{permute}(L_{logits}, [0, 2, 1])$ \Comment{Final shape: $[B, n\_classes, Y]$}
         \State \textbf{return} $Y_{pred}$
     \end{algorithmic}
