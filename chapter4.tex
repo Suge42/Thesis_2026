@@ -4,55 +4,77 @@
 \section{Conclusions}
 \label{sec:conclusions}
 
-This thesis addressed the critical bottlenecks of operationalizing deep learning for large-scale agricultural mapping,
-transitioning from traditional single-year phenological analysis to complex, multi-year crop rotation modeling.
-By shifting the data representation of the INVEKOS Sentinel-2 dataset from memory-intensive spatial patches to an optimized 1D pixel-based pipeline,
-the severe High-Performance Computing (HPC) constraints that typically hinder longitudinal Satellite Image Time Series (SITS) analysis were successfully bypassed.
-This engineering optimization enabled the deployment of a highly automated, distributed Machine Learning Operations (MLOps) pipeline
-leveraging PyTorch Lightning and Ray Tune, ensuring all architectural variants were evaluated fairly at their peak capacity.
+This thesis addressed the technical challenges of operationalizing deep learning for large-scale agricultural mapping,
+transitioning from single-year phenological analysis to multi-year crop rotation modeling.
+By shifting the INVEKOS Sentinel-2 dataset to an optimized 1D parcel-aggregated pipeline,
+the severe I/O constraints that typically hinder longitudinal SITS analysis were bypassed.
+This engineering optimization enabled the deployment of an automated MLOps pipeline leveraging PyTorch Lightning to fairly evaluate all architectural variants.
 
-The systematic evaluation of single-year baselines confirmed that self-attention mechanisms (Transformers) provide
-superior feature extraction capabilities over traditional convolutions (1D-CNNs) when handling the irregular temporal dynamics of satellite data.
-Furthermore, structural control tests explicitly proved the mathematical necessity of these deep, non-linear feature extractors.
-When the neural backbones were replaced with simplistic linear projections, the sequence models suffered catastrophic performance degradation.
-This explicitly demonstrated that raw SITS data must be cleanly untangled by a high-capacity
-neural backbone before any multi-year sequence modeling can be effectively applied.
+The systematic evaluation answered the primary research questions with quantitative evidence.
+Single-year baselines confirmed the limitations of analyzing growing seasons in isolation;
+the Temporal 1D-CNN and standalone Discriminative Transformer achieved limited Macro F1-scores of 30.17\% and 33.18\%, respectively.
+Furthermore, structural control tests explicitly motivated investigating the role of non-linear feature extractors:
+when the neural backbones were replaced with linear projections, the HMM cascade's performance dropped to a 5.23\% Macro F1,
+demonstrating that raw SITS data must be cleanly untangled before transition modeling can occur.
 
-Ultimately, the comparison between the established Transformer-HMM Bayesian cascade and the novel Hierarchical Transformer-LSTM
-architecture answered the primary research question: multi-year architectures vastly outperform models restricted by single-year "temporal myopia."
-Both hybrid models successfully captured long-term crop rotation dependencies.
-Crucially, the Hierarchical Transformer-LSTM demonstrated that deep recurrent memory cells can intrinsically learn the highly complex,
-non-linear rules of agricultural crop rotation directly from the data end-to-end.
-By matching the performance of the state-of-the-art HMM cascade without requiring manually initialized, predefined probabilistic transition matrices,
-the proposed LSTM framework offers a highly scalable, purely neural solution for long-term agricultural monitoring.
+Ultimately, the multi-year architectures significantly improved classification performance by leveraging historical crop rotation context.
+Both the established Transformer-HMM Bayesian approach and the novel Hierarchical Transformer-LSTM successfully captured inter-year dependencies,
+reaching competitive Macro F1-scores of [TBD]\% and [TBD]\%, respectively.
+Crucially, the Transformer-LSTM demonstrated that deep recurrent memory cells can intrinsically model complex
+inter-year temporal dependencies end-to-end directly from the data, without requiring manually initialized probabilistic transition matrices.
 
 
-\section{Future Work}
+\section{Limitations and Future Work}
 \label{sec:future_work}
 
 While the optimized 1D pipeline and the Hierarchical Transformer-LSTM framework successfully mapped inter-year crop dynamics,
-several promising avenues remain for advancing this research:
+several direct limitations emerged from this study, guiding the direction of future research.
+
+\subsection{Observed Limitations}
+\label{subsec:limitations}
+
+\begin{itemize}
+    \item \textbf{Loss of Spatial Context:}
+        The necessary shift to a 1D spatial-mean pipeline to resolve hardware bottlenecks completely discarded field-level spatial textures,
+        boundaries, and neighborhood planting contexts.
+    \item \textbf{Restricted Temporal Population:}
+        The sequence evaluation required filtering the dataset to include only fields with a consistent geometric presence across all six years.
+        This explicitly excluded intermittent fields, shifting borders, and the inherent declarative noise of administrative registries.
+    \item \textbf{Information Baselines:}
+        The explicit temporal distances injected into the Transformer models via the AgroDays Positional Encoding created
+        an uneven information baseline when compared to the implicit sequential ordering of the 1D-CNN.
+\end{itemize}
+
+\subsection{Future Work}
+\label{subsec:future_directions}
+
+Building upon these findings and acknowledging the aforementioned constraints, several promising avenues remain for advancing agricultural remote sensing:
 
 \begin{itemize}
     \item \textbf{Integration of State Space Models (SSMs):}
         Time and computational constraints limited the backbones evaluated in this thesis to convolutions and self-attention.
         Recent advancements in State Space Models, particularly the Mamba architecture, offer the potential to process extraordinarily
         long temporal sequences with linear scaling rather than the quadratic complexity of Transformers.
-        Evaluating a Mamba-LSTM or Mamba-HMM cascade could further reduce training times and memory overhead while maintaining high feature extraction fidelity.
+        Evaluating a Mamba-LSTM or Mamba-HMM cascade could further reduce training times and memory overhead.
     
     \item \textbf{Reintroducing Spatial Context:}
-        The shift to a 1D pixel-based pipeline was necessary to resolve HPC memory bottlenecks over a six-year temporal window.
         With the temporal sequence modeling now optimized, future work should explore lightweight methods to reintroduce spatial context.
         Utilizing Graph Neural Networks (GNNs) or localized 2D super-pixels could allow the model to capture field boundaries and
         neighborhood planting patterns without incurring the massive computational cost of full 3D spatiotemporal convolutions.
     
     \item \textbf{Multimodal Data Fusion:}
         Optical Sentinel-2 time series are inherently irregular due to cloud cover, requiring interpolation or attention-based masking.
-        Fusing these optical sequences with Synthetic Aperture Radar (SAR) data from Sentinel-1 would provide a continuous, weather-independent data stream.
+        Fusing these optical sequences with Synthetic Aperture Radar (SAR) data from Sentinel-1 would provide weather-independent observations to help mitigate cloud occlusions, though this would not guarantee a completely uninterrupted observation stream.
         Future iterations of the Hierarchical Transformer-LSTM could leverage parallel cross-attention mechanisms to seamlessly integrate these modalities.
     
     \item \textbf{Large-Scale Domain Adaptation:}
         The multi-year sequence rules learned by the recurrent models were intrinsically tied to the climatic and agronomic practices of the Austrian INVEKOS dataset.
-        Investigating transfer learning techniques to adapt these pre-trained crop rotation memories to entirely different geographical regions or climates,
-        utilizing weakly supervised or unsupervised domain adaptation, represents a critical next step toward global precision agriculture.
+        Investigating transfer learning techniques to adapt these pre-trained crop rotation memories to entirely different geographical regions or climates represents a critical next step toward global precision agriculture.
+
+    \item \textbf{Recurrent Interpretability and Agronomic Validation:}
+        While the Bidirectional LSTM successfully improved multi-year mapping accuracy,
+        further analytical studies are required to determine exactly \textit{what} the memory cells learned.
+        Future work should implement targeted interpretability methods (such as analyzing the LSTM gating mechanisms
+        or executing ablation studies on transition matrices) to verify whether the network extracts true agronomic rotation rules,
+        or simply exploits label persistence and geographical redundancies.
 \end{itemize}

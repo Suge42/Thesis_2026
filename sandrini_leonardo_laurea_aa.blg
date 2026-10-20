@@ -1,48 +1,53 @@
 This is BibTeX, Version 0.99e
 Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: sandrini_leonardo_laurea_aa.aux
-Reallocating 'name_of_file' (item size: 1) to 6 items.
-The style file: unsrt.bst
+Reallocating 'name_of_file' (item size: 1) to 9 items.
+The style file: unsrturl.bst
 Reallocating 'name_of_file' (item size: 1) to 7 items.
+Reallocating 'glb_str_end' (item size: 4) to 20 items.
+Reallocating 'glb_str_ptr' (item size: 4) to 20 items.
+Reallocating 'global_strs' (item size: 1) to 4000000 items.
+Reallocating 'singl_function' (item size: 4) to 100 items.
+Reallocating 'singl_function' (item size: 4) to 100 items.
 Database file #1: biblio.bib
-You've used 41 entries,
-            1791 wiz_defined-function locations,
-            678 strings with 12770 characters,
-and the built_in function-call counts, 11863 in all, are:
-= -- 1064
-> -- 598
-< -- 14
-+ -- 214
-- -- 173
-* -- 820
-:= -- 1813
-add.period$ -- 133
-call.type$ -- 41
-change.case$ -- 40
+You've used 40 entries,
+            2616 wiz_defined-function locations,
+            866 strings with 15100 characters,
+and the built_in function-call counts, 18293 in all, are:
+= -- 2002
+> -- 616
+< -- 15
++ -- 200
+- -- 160
+* -- 1076
+:= -- 2355
+add.period$ -- 173
+call.type$ -- 40
+change.case$ -- 39
 chr.to.int$ -- 0
-cite$ -- 41
-duplicate$ -- 529
-empty$ -- 1089
-format.name$ -- 173
-if$ -- 2697
+cite$ -- 40
+duplicate$ -- 540
+empty$ -- 1830
+format.name$ -- 160
+if$ -- 5032
 int.to.chr$ -- 0
-int.to.str$ -- 41
-missing$ -- 41
-newline$ -- 209
-num.names$ -- 43
-pop$ -- 126
+int.to.str$ -- 40
+missing$ -- 39
+newline$ -- 242
+num.names$ -- 40
+pop$ -- 321
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 0
-skip$ -- 299
+skip$ -- 1309
 stack$ -- 0
-substring$ -- 852
-swap$ -- 183
-text.length$ -- 14
+substring$ -- 986
+swap$ -- 249
+text.length$ -- 85
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 0
 warning$ -- 0
-while$ -- 112
-width$ -- 43
-write$ -- 460
+while$ -- 117
+width$ -- 42
+write$ -- 544

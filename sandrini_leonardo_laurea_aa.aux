@@ -1,16 +1,20 @@
 \relax 
+\providecommand\hyper@newdestlabel[2]{}
+\providecommand\HyField@AuxAddToFields[1]{}
+\providecommand\HyField@AuxAddToCoFields[2]{}
 \providecommand \babel@aux [2]{\global \let \babel@toc \@gobbletwo }
 \@nameuse{bbl@beforestart}
 \babel@aux{english}{}
 \@writefile{toc}{\enlargethispage {3\baselineskip }}
+\newlabel{cha:abstract}{{}{2}{Abstract}{chapter*.2}{}}
 \citation{fao_2017_future}
 \citation{precision_farming_1}
 \citation{precision_farming_2}
 \citation{drusch_sentinel2_2012}
 \citation{tucker_1979}
 \citation{zeng_phenology_2020}
-\citation{cnn_1}
-\citation{cnn_2}
+\citation{kussul_deep_2017}
+\citation{pelletier_temporal_2019}
 \citation{rnn_1}
 \citation{crop_rotation}
 \citation{hochreiter_long_1997}
@@ -20,16 +24,18 @@
 \citation{gu_mamba_2023}
 \citation{attention_is_all_you_need}
 \citation{garnot2020psetae}
-\@writefile{toc}{\contentsline {chapter}{\numberline {1}Introduction and Background}{3}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{\numberline {1}Introduction and Background}{4}{chapter.1}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\newlabel{cha:intro}{{1}{3}{}{chapter.1}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {1.1}Introduction}{3}{}\protected@file@percent }
-\newlabel{sec:context}{{1.1}{3}{Introduction}{section.1.1}{}}
+\newlabel{cha:intro}{{1}{4}{Introduction and Background}{chapter.1}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {1.1}Introduction}{4}{section.1.1}\protected@file@percent }
+\newlabel{sec:context}{{1.1}{4}{Introduction}{section.1.1}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1.1}{\ignorespaces Conceptual illustration of a Satellite Image Time Series (SITS) capturing crop phenology. The dashed line represents the continuous, ideal growth cycle of the crop on the ground. In contrast, the points represent the discrete Sentinel-2 acquisitions. Cloud cover frequently occludes the optical sensor, creating irregular temporal gaps and noisy measurements that sequence models must navigate.}}{5}{figure.1.1}\protected@file@percent }
+\newlabel{fig:sits_irregularity}{{1.1}{5}{Conceptual illustration of a Satellite Image Time Series (SITS) capturing crop phenology. The dashed line represents the continuous, ideal growth cycle of the crop on the ground. In contrast, the points represent the discrete Sentinel-2 acquisitions. Cloud cover frequently occludes the optical sensor, creating irregular temporal gaps and noisy measurements that sequence models must navigate}{figure.1.1}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {1.2}Research Question and Objectives}{5}{section.1.2}\protected@file@percent }
+\newlabel{sec:question_objectives}{{1.2}{5}{Research Question and Objectives}{section.1.2}{}}
 \citation{precision_farming_1}
 \citation{precision_farming_2}
-\@writefile{toc}{\contentsline {section}{\numberline {1.2}Research Question and Objectives}{4}{}\protected@file@percent }
-\newlabel{sec:question_objectives}{{1.2}{4}{Research Question and Objectives}{section.1.2}{}}
 \citation{osman_crop_2013}
 \citation{brickner_field_2025}
 \citation{kamilaris_deep_2018}
@@ -37,15 +43,15 @@
 \citation{kussul_deep_2017}
 \citation{sainte_fare_garnot_time_2019}
 \citation{sainte_fare_garnot_time_2019}
+\@writefile{toc}{\contentsline {section}{\numberline {1.3}State of the Art}{6}{section.1.3}\protected@file@percent }
+\newlabel{sec:sota}{{1.3}{6}{State of the Art}{section.1.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.3.1}Deep Learning for Precision Agriculture}{6}{subsection.1.3.1}\protected@file@percent }
+\newlabel{subsec:dl_precision_ag}{{1.3.1}{6}{Deep Learning for Precision Agriculture}{subsection.1.3.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.3.2}Remote Sensing and Sentinel-2 Time Series}{6}{subsection.1.3.2}\protected@file@percent }
+\newlabel{subsec:rs_sentinel2}{{1.3.2}{6}{Remote Sensing and Sentinel-2 Time Series}{subsection.1.3.2}{}}
 \citation{dias_image_2020}
 \citation{zhou_improved_2024}
 \citation{follath_multimodal_2024}
-\@writefile{toc}{\contentsline {section}{\numberline {1.3}State of the Art}{5}{}\protected@file@percent }
-\newlabel{sec:sota}{{1.3}{5}{State of the Art}{section.1.3}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {1.3.1}Deep Learning for Precision Agriculture}{5}{}\protected@file@percent }
-\newlabel{subsec:dl_precision_ag}{{1.3.1}{5}{Deep Learning for Precision Agriculture}{subsection.1.3.1}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {1.3.2}Remote Sensing and Sentinel-2 Time Series}{5}{}\protected@file@percent }
-\newlabel{subsec:rs_sentinel2}{{1.3.2}{5}{Remote Sensing and Sentinel-2 Time Series}{subsection.1.3.2}{}}
 \citation{qin_knowledge_2024}
 \citation{zhu_exact_2025}
 \citation{abbas_multimodal_2025}
@@ -56,131 +62,159 @@
 \citation{zhou_improved_2024}
 \citation{zhou_improved_2024}
 \citation{pham_temporally_2024}
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.3.3}Sequence Modeling: From CNNs to Hybrid Architectures}{7}{subsection.1.3.3}\protected@file@percent }
+\newlabel{subsec:sequence_modeling}{{1.3.3}{7}{Sequence Modeling: From CNNs to Hybrid Architectures}{subsection.1.3.3}{}}
 \citation{perantoni_bayesian_2024}
 \citation{perantoni_bayesian_2024}
 \citation{sainte_fare_garnot_time_2019}
 \citation{guo_dual_2025}
 \citation{zhou_improved_2024}
-\@writefile{toc}{\contentsline {subsection}{\numberline {1.3.3}Sequence Modeling: From CNNs to Hybrid Architectures}{6}{}\protected@file@percent }
-\newlabel{subsec:sequence_modeling}{{1.3.3}{6}{Sequence Modeling: From CNNs to Hybrid Architectures}{subsection.1.3.3}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1.2}{\ignorespaces Conceptual comparison between single-year sequence processing and hierarchical multi-year architectures. The shared horizontal layer illustrates the integration of inter-year transition modeling.}}{8}{figure.1.2}\protected@file@percent }
+\newlabel{fig:paradigm_shift}{{1.2}{8}{Conceptual comparison between single-year sequence processing and hierarchical multi-year architectures. The shared horizontal layer illustrates the integration of inter-year transition modeling}{figure.1.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.3.4}Multi-Year Crop Rotation Modeling}{8}{subsection.1.3.4}\protected@file@percent }
+\newlabel{subsec:crop_rotation}{{1.3.4}{8}{Multi-Year Crop Rotation Modeling}{subsection.1.3.4}{}}
 \citation{osman_crop_2013}
-\citation{sainte_fare_garnot_time_2019}
 \citation{brickner_field_2025}
 \citation{pham_temporally_2024}
 \citation{perantoni_bayesian_2024}
-\citation{rabiner_tutorial_1989}
-\citation{perantoni_bayesian_2024}
-\@writefile{toc}{\contentsline {subsection}{\numberline {1.3.4}Multi-Year Crop Rotation Modeling}{7}{}\protected@file@percent }
-\newlabel{subsec:crop_rotation}{{1.3.4}{7}{Multi-Year Crop Rotation Modeling}{subsection.1.3.4}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {1.4}Contributions}{8}{}\protected@file@percent }
-\newlabel{sec:contributions}{{1.4}{8}{Contributions}{section.1.4}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1.3}{\ignorespaces Crop rotation represented as a probabilistic state transition graph. Multi-year sequence models aim to intrinsically learn these transitional dependencies (edges) to improve classification accuracy when emission likelihoods (nodes) are uncertain.}}{9}{figure.1.3}\protected@file@percent }
+\newlabel{fig:markov_rotation}{{1.3}{9}{Crop rotation represented as a probabilistic state transition graph. Multi-year sequence models aim to intrinsically learn these transitional dependencies (edges) to improve classification accuracy when emission likelihoods (nodes) are uncertain}{figure.1.3}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {1.4}Contributions}{10}{section.1.4}\protected@file@percent }
+\newlabel{sec:contributions}{{1.4}{10}{Contributions}{section.1.4}{}}
 \citation{pelletier_temporal_2019}
 \citation{attention_is_all_you_need}
 \citation{russwurm_self_attention_2020}
-\@writefile{toc}{\contentsline {chapter}{\numberline {2}Methodology and Architectural Design}{9}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{\numberline {2}Methodology and Architectural Design}{11}{chapter.2}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\newlabel{cha:methodology_sys_design}{{2}{9}{Contributions}{chapter.2}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {2.1}Single-Year and Structural Baselines}{9}{}\protected@file@percent }
-\newlabel{sec:single_year_baselines}{{2.1}{9}{Single-Year and Structural Baselines}{section.2.1}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.1.1}Temporal 1D Convolutional Neural Network (1D-CNN)}{9}{}\protected@file@percent }
-\newlabel{subsec:cnn_baseline}{{2.1.1}{9}{Temporal 1D Convolutional Neural Network (1D-CNN)}{subsection.2.1.1}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {2.1}{\ignorespaces Architectural block diagram of the Temporal 1D-CNN baseline.}}{9}{}\protected@file@percent }
-\newlabel{fig:cnn_architecture}{{2.1}{9}{Temporal 1D Convolutional Neural Network (1D-CNN)}{figure.2.1}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.1.2}Standalone Transformer Encoders (Generative and Discriminative)}{9}{}\protected@file@percent }
-\newlabel{subsec:transformer_baseline}{{2.1.2}{9}{Standalone Transformer Encoders (Generative and Discriminative)}{subsection.2.1.2}{}}
+\newlabel{cha:methodology_sys_design}{{2}{11}{Methodology and Architectural Design}{chapter.2}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {2.1}Single-Year and Structural Baselines}{11}{section.2.1}\protected@file@percent }
+\newlabel{sec:single_year_baselines}{{2.1}{11}{Single-Year and Structural Baselines}{section.2.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.1.1}Temporal 1D Convolutional Neural Network (1D-CNN)}{11}{subsection.2.1.1}\protected@file@percent }
+\newlabel{subsec:cnn_baseline}{{2.1.1}{11}{Temporal 1D Convolutional Neural Network (1D-CNN)}{subsection.2.1.1}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2.1}{\ignorespaces Architectural block diagram of the Temporal 1D-CNN baseline.}}{11}{figure.2.1}\protected@file@percent }
+\newlabel{fig:cnn_architecture}{{2.1}{11}{Architectural block diagram of the Temporal 1D-CNN baseline}{figure.2.1}{}}
 \citation{perantoni_bayesian_2024}
 \citation{perantoni_bayesian_2024}
-\@writefile{lof}{\contentsline {figure}{\numberline {2.2}{\ignorespaces Architectural block diagram of the standalone Transformer Encoder (Generative and Discriminative variants).}}{10}{}\protected@file@percent }
-\newlabel{fig:transformer_architecture}{{2.2}{10}{Standalone Transformer Encoders (Generative and Discriminative)}{figure.2.2}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.1.3}Linear Structural Controls}{10}{}\protected@file@percent }
-\newlabel{subsec:linear_controls}{{2.1.3}{10}{Linear Structural Controls}{subsection.2.1.3}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {2.2}Multi-Year Architectures}{10}{}\protected@file@percent }
-\newlabel{sec:multi_year_architectures}{{2.2}{10}{Multi-Year Architectures}{section.2.2}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.2.1}AgroDays Positional Encoding}{10}{}\protected@file@percent }
-\newlabel{subsec:agrodays_encoding}{{2.2.1}{10}{AgroDays Positional Encoding}{subsection.2.2.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.1.2}Standalone Transformer Encoders (Generative and Discriminative)}{12}{subsection.2.1.2}\protected@file@percent }
+\newlabel{subsec:transformer_baseline}{{2.1.2}{12}{Standalone Transformer Encoders (Generative and Discriminative)}{subsection.2.1.2}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2.2}{\ignorespaces Architectural block diagram of the standalone Transformer Encoder (Generative and Discriminative variants).}}{12}{figure.2.2}\protected@file@percent }
+\newlabel{fig:transformer_architecture}{{2.2}{12}{Architectural block diagram of the standalone Transformer Encoder (Generative and Discriminative variants)}{figure.2.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.1.3}AgroDays Positional Encoding}{12}{subsection.2.1.3}\protected@file@percent }
+\newlabel{subsec:agrodays_encoding}{{2.1.3}{12}{AgroDays Positional Encoding}{subsection.2.1.3}{}}
 \citation{attention_is_all_you_need}
+\citation{russwurm_self_attention_2020}
+\citation{garnot2020psetae}
 \citation{attention_is_all_you_need}
+\@writefile{loa}{\contentsline {algorithm}{\numberline {1}{\ignorespaces AgroDays Positional Encoding (Lookup Table)}}{13}{algorithm.1}\protected@file@percent }
+\newlabel{alg:agrodays}{{1}{13}{AgroDays Positional Encoding}{algorithm.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.1.4}Linear Structural Controls}{13}{subsection.2.1.4}\protected@file@percent }
+\newlabel{subsec:linear_controls}{{2.1.4}{13}{Linear Structural Controls}{subsection.2.1.4}{}}
 \citation{perantoni_bayesian_2024}
 \citation{perantoni_bayesian_2024}
-\@writefile{loa}{\contentsline {algorithm}{\numberline {1}{\ignorespaces AgroDays Positional Encoding (Lookup Table)}}{11}{}\protected@file@percent }
-\newlabel{alg:agrodays}{{1}{11}{AgroDays Positional Encoding}{algorithm.1}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.2.2}The Reference Transformer-HMM Cascade}{11}{}\protected@file@percent }
-\newlabel{subsec:transformer_hmm}{{2.2.2}{11}{The Reference Transformer-HMM Cascade}{subsection.2.2.2}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.2.3}The Novel Hierarchical Transformer-LSTM}{11}{}\protected@file@percent }
-\newlabel{subsec:transformer_lstm}{{2.2.3}{11}{The Novel Hierarchical Transformer-LSTM}{subsection.2.2.3}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {2.3}{\ignorespaces Hierarchical overview of the Transformer-HMM cascade, demonstrating the fusion of intra-year attention and inter-year transition modeling.}}{12}{}\protected@file@percent }
-\newlabel{fig:transformer_hmm_cascade}{{2.3}{12}{The Reference Transformer-HMM Cascade}{figure.2.3}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {2.4}{\ignorespaces Hierarchical overview of the Transformer-LSTM architecture, demonstrating the fusion of intra-year attention and inter-year recurrence.}}{12}{}\protected@file@percent }
-\newlabel{fig:hybrid_architecture}{{2.4}{12}{The Novel Hierarchical Transformer-LSTM}{figure.2.4}{}}
+\citation{perantoni_bayesian_2024}
+\citation{perantoni_bayesian_2024}
+\citation{perantoni_bayesian_2024}
+\citation{perantoni_bayesian_2024}
+\citation{perantoni_bayesian_2024}
+\@writefile{toc}{\contentsline {section}{\numberline {2.2}Multi-Year Architectures}{14}{section.2.2}\protected@file@percent }
+\newlabel{sec:multi_year_architectures}{{2.2}{14}{Multi-Year Architectures}{section.2.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2.1}The Reference Transformer-HMM}{14}{subsection.2.2.1}\protected@file@percent }
+\newlabel{subsec:transformer_hmm}{{2.2.1}{14}{The Reference Transformer-HMM}{subsection.2.2.1}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2.3}{\ignorespaces Hierarchical overview of the Transformer-HMM approach, demonstrating the fusion of intra-year attention and inter-year transition modeling.}}{14}{figure.2.3}\protected@file@percent }
+\newlabel{fig:transformer_hmm_cascade}{{2.3}{14}{Hierarchical overview of the Transformer-HMM approach, demonstrating the fusion of intra-year attention and inter-year transition modeling}{figure.2.3}{}}
 \citation{hochreiter_long_1997}
-\@writefile{loa}{\contentsline {algorithm}{\numberline {2}{\ignorespaces Hierarchical Transformer-LSTM Forward Pass}}{13}{}\protected@file@percent }
-\newlabel{alg:hybrid_forward}{{2}{13}{The Novel Hierarchical Transformer-LSTM}{algorithm.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2.2}The Novel Hierarchical Transformer-LSTM}{15}{subsection.2.2.2}\protected@file@percent }
+\newlabel{subsec:transformer_lstm}{{2.2.2}{15}{The Novel Hierarchical Transformer-LSTM}{subsection.2.2.2}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2.4}{\ignorespaces Hierarchical overview of the Transformer-LSTM architecture, demonstrating the fusion of intra-year attention and inter-year recurrence.}}{15}{figure.2.4}\protected@file@percent }
+\newlabel{fig:hybrid_architecture}{{2.4}{15}{Hierarchical overview of the Transformer-LSTM architecture, demonstrating the fusion of intra-year attention and inter-year recurrence}{figure.2.4}{}}
+\@writefile{loa}{\contentsline {algorithm}{\numberline {2}{\ignorespaces Hierarchical Transformer-LSTM Forward Pass}}{16}{algorithm.2}\protected@file@percent }
+\newlabel{alg:hybrid_forward}{{2}{16}{The Novel Hierarchical Transformer-LSTM}{algorithm.2}{}}
 \citation{invekos_austria}
+\citation{perantoni_bayesian_2024}
 \citation{drusch_sentinel2_2012}
 \citation{perantoni_bayesian_2024}
 \citation{perantoni_bayesian_2024}
-\@writefile{toc}{\contentsline {chapter}{\numberline {3}Experiments, Datasets, and Infrastructure}{14}{}\protected@file@percent }
+\citation{perantoni_bayesian_2024}
+\citation{perantoni_bayesian_2024}
+\citation{perantoni_bayesian_2024}
+\citation{perantoni_bayesian_2024}
+\citation{perantoni_bayesian_2024}
+\@writefile{toc}{\contentsline {chapter}{\numberline {3}Experiments, Datasets, and Infrastructure}{17}{chapter.3}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\newlabel{cha:experiments}{{3}{14}{The Novel Hierarchical Transformer-LSTM}{chapter.3}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {3.1}Experimental Setup and Datasets}{14}{}\protected@file@percent }
-\newlabel{sec:experimental_setup}{{3.1}{14}{Experimental Setup and Datasets}{section.3.1}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.1.1}The INVEKOS Dataset and Sentinel-2}{14}{}\protected@file@percent }
-\newlabel{subsec:invekos_sentinel2}{{3.1.1}{14}{The INVEKOS Dataset and Sentinel-2}{subsection.3.1.1}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.1.2}HPC Environment and 1D Pixel-Based Extraction}{14}{}\protected@file@percent }
-\newlabel{subsec:hpc_environment}{{3.1.2}{14}{HPC Environment and 1D Pixel-Based Extraction}{subsection.3.1.2}{}}
+\newlabel{cha:experiments}{{3}{17}{Experiments, Datasets, and Infrastructure}{chapter.3}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.1}Experimental Setup and Datasets}{17}{section.3.1}\protected@file@percent }
+\newlabel{sec:experimental_setup}{{3.1}{17}{Experimental Setup and Datasets}{section.3.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1.1}The INVEKOS Dataset and Sentinel-2}{17}{subsection.3.1.1}\protected@file@percent }
+\newlabel{subsec:invekos_sentinel2}{{3.1.1}{17}{The INVEKOS Dataset and Sentinel-2}{subsection.3.1.1}{}}
+\citation{perantoni_bayesian_2024}
+\citation{hamming1950error}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.1}{\ignorespaces Geographic extent of Sentinel-2 MGRS Tile 33UVP over eastern Austria.}}{18}{figure.3.1}\protected@file@percent }
+\newlabel{fig:map_33UVP}{{3.1}{18}{Geographic extent of Sentinel-2 MGRS Tile 33UVP over eastern Austria}{figure.3.1}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {3.1}{\ignorespaces The 47 distinct crop classes present in the filtered MGRS 33UVP dataset, listed alphabetically.}}{19}{table.3.1}\protected@file@percent }
+\newlabel{tab:crop_classes}{{3.1}{19}{The 47 distinct crop classes present in the filtered MGRS 33UVP dataset, listed alphabetically}{table.3.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1.2}HPC Environment and 1D Pixel-Based Extraction}{19}{subsection.3.1.2}\protected@file@percent }
+\newlabel{subsec:hpc_environment}{{3.1.2}{19}{HPC Environment and 1D Pixel-Based Extraction}{subsection.3.1.2}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.2}{\ignorespaces Detailed data preprocessing pipeline. To bypass I/O bottlenecks and mixed-pixel noise, field boundaries undergo a 15m inward erosion buffer. The remaining pure interior pixels are aggregated via a spatial mean into a 1D vector for each acquisition day, constructing the final $T \times C$ temporal sequence.}}{19}{figure.3.2}\protected@file@percent }
+\newlabel{fig:dim_reduction_detailed}{{3.2}{19}{Detailed data preprocessing pipeline. To bypass I/O bottlenecks and mixed-pixel noise, field boundaries undergo a 15m inward erosion buffer. The remaining pure interior pixels are aggregated via a spatial mean into a 1D vector for each acquisition day, constructing the final $T \times C$ temporal sequence}{figure.3.2}{}}
+\citation{perantoni_bayesian_2024}
+\citation{perantoni_bayesian_2024}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1.3}Data Loading Strategies}{20}{subsection.3.1.3}\protected@file@percent }
+\newlabel{subsec:data_loading}{{3.1.3}{20}{Data Loading Strategies}{subsection.3.1.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1.4}Evaluation Metrics}{20}{subsection.3.1.4}\protected@file@percent }
+\newlabel{subsec:evaluation_metrics}{{3.1.4}{20}{Evaluation Metrics}{subsection.3.1.4}{}}
 \citation{falcon2019pytorch}
 \citation{loshchilov2017decoupled}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.1.3}Data Loading Strategies}{15}{}\protected@file@percent }
-\newlabel{subsec:data_loading}{{3.1.3}{15}{Data Loading Strategies}{subsection.3.1.3}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.1.4}Evaluation Metrics}{15}{}\protected@file@percent }
-\newlabel{subsec:evaluation_metrics}{{3.1.4}{15}{Evaluation Metrics}{subsection.3.1.4}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {3.2}Infrastructure and MLOps}{15}{}\protected@file@percent }
-\newlabel{sec:infrastructure_mlops}{{3.2}{15}{Infrastructure and MLOps}{section.3.2}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.2.1}Training Framework and Optimization}{15}{}\protected@file@percent }
 \citation{liaw2018tune}
 \citation{akiba2019optuna}
 \citation{zaharia2018accelerating}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.2.2}Automated Hyperparameter Tuning}{16}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {3.3}Baseline Results (Intra-Year and Structural Controls)}{16}{}\protected@file@percent }
-\newlabel{sec:baseline_results}{{3.3}{16}{Baseline Results (Intra-Year and Structural Controls)}{section.3.3}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {3.1}{\ignorespaces Performance comparison of the intra-year baselines and linear structural controls. Results are averaged across random seeds, displaying the mean and standard deviation.}}{16}{}\protected@file@percent }
-\newlabel{tab:baseline_comparison}{{3.1}{16}{Baseline Results (Intra-Year and Structural Controls)}{table.3.1}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.3.1}Temporal 1D-CNN vs. Transformer Encoders}{16}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.3.2}The Necessity of Non-Linearity: Linear Controls}{16}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {3.4}Multi-Year Architecture Results}{17}{}\protected@file@percent }
-\newlabel{sec:hybrid_results}{{3.4}{17}{Multi-Year Architecture Results}{section.3.4}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {3.2}{\ignorespaces Final performance comparison of the multi-year hybrid architectures across both backbone variants. Results are averaged across random seeds.}}{17}{}\protected@file@percent }
-\newlabel{tab:hybrid_comparison}{{3.2}{17}{Multi-Year Architecture Results}{table.3.2}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {3.5}Discussion}{17}{}\protected@file@percent }
-\newlabel{sec:discussion}{{3.5}{17}{Discussion}{section.3.5}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.2}Infrastructure and MLOps}{21}{section.3.2}\protected@file@percent }
+\newlabel{sec:infrastructure_mlops}{{3.2}{21}{Infrastructure and MLOps}{section.3.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2.1}Training Framework and Optimization}{21}{subsection.3.2.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2.2}Automated Hyperparameter Tuning}{21}{subsection.3.2.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3.3}Baseline Results (Intra-Year and Structural Controls)}{21}{section.3.3}\protected@file@percent }
+\newlabel{sec:baseline_results}{{3.3}{21}{Baseline Results (Intra-Year and Structural Controls)}{section.3.3}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {3.2}{\ignorespaces Performance comparison of the intra-year baselines and linear structural controls. Results are averaged across random seeds, displaying the mean and standard deviation.}}{21}{table.3.2}\protected@file@percent }
+\newlabel{tab:baseline_comparison}{{3.2}{21}{Performance comparison of the intra-year baselines and linear structural controls. Results are averaged across random seeds, displaying the mean and standard deviation}{table.3.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3.1}Temporal 1D-CNN vs. Transformer Encoders}{21}{subsection.3.3.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3.2}The Necessity of Non-Linearity: Linear Controls}{22}{subsection.3.3.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3.4}Multi-Year Architecture Results}{22}{section.3.4}\protected@file@percent }
+\newlabel{sec:hybrid_results}{{3.4}{22}{Multi-Year Architecture Results}{section.3.4}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {3.3}{\ignorespaces Final performance comparison of the multi-year hybrid architectures across both backbone variants. Results are averaged across random seeds.}}{22}{table.3.3}\protected@file@percent }
+\newlabel{tab:hybrid_comparison}{{3.3}{22}{Final performance comparison of the multi-year hybrid architectures across both backbone variants. Results are averaged across random seeds}{table.3.3}{}}
 \citation{johnson2019survey}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.5.1}Single-Year vs. Multi-Year Capabilities}{18}{}\protected@file@percent }
-\newlabel{subsec:single_vs_multi_year}{{3.5.1}{18}{Single-Year vs. Multi-Year Capabilities}{subsection.3.5.1}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.5.2}The Impact of Class Imbalance}{18}{}\protected@file@percent }
-\newlabel{subsec:class_imbalance}{{3.5.2}{18}{The Impact of Class Imbalance}{subsection.3.5.2}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.5.3}Computational Efficiency}{18}{}\protected@file@percent }
-\newlabel{subsec:comp_efficiency}{{3.5.3}{18}{Computational Efficiency}{subsection.3.5.3}{}}
-\@writefile{toc}{\contentsline {chapter}{\numberline {4}Conclusions and Future Work}{19}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3.5}Discussion}{23}{section.3.5}\protected@file@percent }
+\newlabel{sec:discussion}{{3.5}{23}{Discussion}{section.3.5}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.5.1}Single-Year vs. Multi-Year Capabilities}{23}{subsection.3.5.1}\protected@file@percent }
+\newlabel{subsec:single_vs_multi_year}{{3.5.1}{23}{Single-Year vs. Multi-Year Capabilities}{subsection.3.5.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.5.2}The Impact of Class Imbalance}{23}{subsection.3.5.2}\protected@file@percent }
+\newlabel{subsec:class_imbalance}{{3.5.2}{23}{The Impact of Class Imbalance}{subsection.3.5.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.5.3}Computational Efficiency}{23}{subsection.3.5.3}\protected@file@percent }
+\newlabel{subsec:comp_efficiency}{{3.5.3}{23}{Computational Efficiency}{subsection.3.5.3}{}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {4}Conclusions and Future Work}{25}{chapter.4}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\newlabel{cha:conclusion}{{4}{19}{Computational Efficiency}{chapter.4}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {4.1}Conclusions}{19}{}\protected@file@percent }
-\newlabel{sec:conclusions}{{4.1}{19}{Conclusions}{section.4.1}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {4.2}Future Work}{19}{}\protected@file@percent }
-\newlabel{sec:future_work}{{4.2}{19}{Future Work}{section.4.2}{}}
-\bibstyle{unsrt}
+\newlabel{cha:conclusion}{{4}{25}{Conclusions and Future Work}{chapter.4}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4.1}Conclusions}{25}{section.4.1}\protected@file@percent }
+\newlabel{sec:conclusions}{{4.1}{25}{Conclusions}{section.4.1}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4.2}Limitations and Future Work}{25}{section.4.2}\protected@file@percent }
+\newlabel{sec:future_work}{{4.2}{25}{Limitations and Future Work}{section.4.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.1}Observed Limitations}{25}{subsection.4.2.1}\protected@file@percent }
+\newlabel{subsec:limitations}{{4.2.1}{25}{Observed Limitations}{subsection.4.2.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.2}Future Work}{25}{subsection.4.2.2}\protected@file@percent }
+\newlabel{subsec:future_directions}{{4.2.2}{25}{Future Work}{subsection.4.2.2}{}}
+\bibstyle{unsrturl}
 \bibdata{biblio}
-\@writefile{toc}{\contentsline {chapter}{Bibliography}{20}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{Bibliography}{26}{subsection.4.2.2}\protected@file@percent }
 \bibcite{fao_2017_future}{1}
 \bibcite{precision_farming_1}{2}
 \bibcite{precision_farming_2}{3}
 \bibcite{drusch_sentinel2_2012}{4}
 \bibcite{tucker_1979}{5}
 \bibcite{zeng_phenology_2020}{6}
-\bibcite{cnn_1}{7}
-\bibcite{cnn_2}{8}
+\bibcite{kussul_deep_2017}{7}
+\bibcite{pelletier_temporal_2019}{8}
 \bibcite{rnn_1}{9}
 \bibcite{crop_rotation}{10}
 \bibcite{hochreiter_long_1997}{11}
@@ -193,25 +227,24 @@
 \bibcite{brickner_field_2025}{18}
 \bibcite{kamilaris_deep_2018}{19}
 \bibcite{kattenborn_review_2021}{20}
-\bibcite{kussul_deep_2017}{21}
-\bibcite{sainte_fare_garnot_time_2019}{22}
-\bibcite{dias_image_2020}{23}
-\bibcite{zhou_improved_2024}{24}
-\bibcite{follath_multimodal_2024}{25}
-\bibcite{qin_knowledge_2024}{26}
-\bibcite{zhu_exact_2025}{27}
-\bibcite{abbas_multimodal_2025}{28}
-\bibcite{cho_learning_2014}{29}
-\bibcite{zhao_recurrent_2021}{30}
-\bibcite{pham_temporally_2024}{31}
-\bibcite{guo_dual_2025}{32}
-\bibcite{pelletier_temporal_2019}{33}
-\bibcite{russwurm_self_attention_2020}{34}
-\bibcite{invekos_austria}{35}
-\bibcite{falcon2019pytorch}{36}
-\bibcite{loshchilov2017decoupled}{37}
-\bibcite{liaw2018tune}{38}
-\bibcite{akiba2019optuna}{39}
-\bibcite{zaharia2018accelerating}{40}
-\bibcite{johnson2019survey}{41}
-\gdef \@abspage@last{25}
+\bibcite{sainte_fare_garnot_time_2019}{21}
+\bibcite{dias_image_2020}{22}
+\bibcite{zhou_improved_2024}{23}
+\bibcite{follath_multimodal_2024}{24}
+\bibcite{qin_knowledge_2024}{25}
+\bibcite{zhu_exact_2025}{26}
+\bibcite{abbas_multimodal_2025}{27}
+\bibcite{cho_learning_2014}{28}
+\bibcite{zhao_recurrent_2021}{29}
+\bibcite{pham_temporally_2024}{30}
+\bibcite{guo_dual_2025}{31}
+\bibcite{russwurm_self_attention_2020}{32}
+\bibcite{invekos_austria}{33}
+\bibcite{hamming1950error}{34}
+\bibcite{falcon2019pytorch}{35}
+\bibcite{loshchilov2017decoupled}{36}
+\bibcite{liaw2018tune}{37}
+\bibcite{akiba2019optuna}{38}
+\bibcite{zaharia2018accelerating}{39}
+\bibcite{johnson2019survey}{40}
+\gdef \@abspage@last{32}
