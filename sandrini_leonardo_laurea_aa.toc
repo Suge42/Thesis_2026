@@ -8,36 +8,36 @@
 \contentsline {subsection}{\numberline {1.3.2}Remote Sensing and Sentinel-2 Time Series}{6}{subsection.1.3.2}%
 \contentsline {subsection}{\numberline {1.3.3}Sequence Modeling: From CNNs to Hybrid Architectures}{7}{subsection.1.3.3}%
 \contentsline {subsection}{\numberline {1.3.4}Multi-Year Crop Rotation Modeling}{8}{subsection.1.3.4}%
-\contentsline {section}{\numberline {1.4}Contributions}{9}{section.1.4}%
-\contentsline {chapter}{\numberline {2}Methodology and Architectural Design}{10}{chapter.2}%
-\contentsline {section}{\numberline {2.1}Single-Year and Structural Baselines}{10}{section.2.1}%
-\contentsline {subsection}{\numberline {2.1.1}Temporal 1D Convolutional Neural Network (1D-CNN)}{10}{subsection.2.1.1}%
-\contentsline {subsection}{\numberline {2.1.2}Standalone Transformer Encoders (Generative and Discriminative)}{11}{subsection.2.1.2}%
-\contentsline {subsection}{\numberline {2.1.3}AgroDays Positional Encoding}{11}{subsection.2.1.3}%
-\contentsline {subsection}{\numberline {2.1.4}Linear Structural Controls}{12}{subsection.2.1.4}%
-\contentsline {section}{\numberline {2.2}Multi-Year Architectures}{12}{section.2.2}%
-\contentsline {subsection}{\numberline {2.2.1}The Reference Transformer-HMM}{12}{subsection.2.2.1}%
-\contentsline {subsection}{\numberline {2.2.2}The Novel Hierarchical Transformer-LSTM}{13}{subsection.2.2.2}%
-\contentsline {chapter}{\numberline {3}Experiments, Datasets, and Infrastructure}{16}{chapter.3}%
-\contentsline {section}{\numberline {3.1}Experimental Setup and Datasets}{16}{section.3.1}%
-\contentsline {subsection}{\numberline {3.1.1}The INVEKOS Dataset and Sentinel-2}{16}{subsection.3.1.1}%
-\contentsline {subsection}{\numberline {3.1.2}HPC Environment and 1D Pixel-Based Extraction}{18}{subsection.3.1.2}%
-\contentsline {subsection}{\numberline {3.1.3}Data Loading Strategies}{18}{subsection.3.1.3}%
-\contentsline {subsection}{\numberline {3.1.4}Evaluation Metrics}{19}{subsection.3.1.4}%
-\contentsline {section}{\numberline {3.2}Infrastructure and MLOps}{19}{section.3.2}%
-\contentsline {subsection}{\numberline {3.2.1}Training Framework and Optimization}{19}{subsection.3.2.1}%
-\contentsline {subsection}{\numberline {3.2.2}Automated Hyperparameter Tuning}{19}{subsection.3.2.2}%
-\contentsline {section}{\numberline {3.3}Baseline Results (Intra-Year and Structural Controls)}{20}{section.3.3}%
-\contentsline {subsection}{\numberline {3.3.1}Temporal 1D-CNN vs. Transformer Encoders}{20}{subsection.3.3.1}%
-\contentsline {subsection}{\numberline {3.3.2}The Necessity of Non-Linearity: Linear Controls}{20}{subsection.3.3.2}%
-\contentsline {section}{\numberline {3.4}Multi-Year Architecture Results}{21}{section.3.4}%
-\contentsline {section}{\numberline {3.5}Discussion}{22}{section.3.5}%
-\contentsline {subsection}{\numberline {3.5.1}Single-Year vs. Multi-Year Capabilities}{22}{subsection.3.5.1}%
-\contentsline {subsection}{\numberline {3.5.2}The Impact of Class Imbalance}{22}{subsection.3.5.2}%
-\contentsline {subsection}{\numberline {3.5.3}Computational Efficiency}{22}{subsection.3.5.3}%
-\contentsline {chapter}{\numberline {4}Conclusions and Future Work}{23}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Conclusions}{23}{section.4.1}%
-\contentsline {section}{\numberline {4.2}Limitations and Future Work}{23}{section.4.2}%
-\contentsline {subsection}{\numberline {4.2.1}Observed Limitations}{23}{subsection.4.2.1}%
-\contentsline {subsection}{\numberline {4.2.2}Future Work}{23}{subsection.4.2.2}%
-\contentsline {chapter}{Bibliography}{24}{subsection.4.2.2}%
+\contentsline {section}{\numberline {1.4}Contributions}{10}{section.1.4}%
+\contentsline {chapter}{\numberline {2}Methodology and Architectural Design}{11}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Single-Year and Structural Baselines}{11}{section.2.1}%
+\contentsline {subsection}{\numberline {2.1.1}Temporal 1D Convolutional Neural Network (1D-CNN)}{11}{subsection.2.1.1}%
+\contentsline {subsection}{\numberline {2.1.2}Standalone Transformer Encoders (Generative and Discriminative)}{12}{subsection.2.1.2}%
+\contentsline {subsection}{\numberline {2.1.3}AgroDays Positional Encoding}{12}{subsection.2.1.3}%
+\contentsline {subsection}{\numberline {2.1.4}Linear Structural Controls}{13}{subsection.2.1.4}%
+\contentsline {section}{\numberline {2.2}Multi-Year Architectures}{14}{section.2.2}%
+\contentsline {subsection}{\numberline {2.2.1}The Reference Transformer-HMM}{14}{subsection.2.2.1}%
+\contentsline {subsection}{\numberline {2.2.2}The Novel Hierarchical Transformer-LSTM}{15}{subsection.2.2.2}%
+\contentsline {chapter}{\numberline {3}Experiments, Datasets, and Infrastructure}{17}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Experimental Setup and Datasets}{17}{section.3.1}%
+\contentsline {subsection}{\numberline {3.1.1}The INVEKOS Dataset and Sentinel-2}{17}{subsection.3.1.1}%
+\contentsline {subsection}{\numberline {3.1.2}HPC Environment and 1D Pixel-Based Extraction}{19}{subsection.3.1.2}%
+\contentsline {subsection}{\numberline {3.1.3}Data Loading Strategies}{20}{subsection.3.1.3}%
+\contentsline {subsection}{\numberline {3.1.4}Evaluation Metrics}{20}{subsection.3.1.4}%
+\contentsline {section}{\numberline {3.2}Infrastructure and MLOps}{21}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}Training Framework and Optimization}{21}{subsection.3.2.1}%
+\contentsline {subsection}{\numberline {3.2.2}Automated Hyperparameter Tuning}{21}{subsection.3.2.2}%
+\contentsline {section}{\numberline {3.3}Baseline Results (Intra-Year and Structural Controls)}{21}{section.3.3}%
+\contentsline {subsection}{\numberline {3.3.1}Temporal 1D-CNN vs. Transformer Encoders}{21}{subsection.3.3.1}%
+\contentsline {subsection}{\numberline {3.3.2}The Necessity of Non-Linearity: Linear Controls}{22}{subsection.3.3.2}%
+\contentsline {section}{\numberline {3.4}Multi-Year Architecture Results}{22}{section.3.4}%
+\contentsline {section}{\numberline {3.5}Discussion}{23}{section.3.5}%
+\contentsline {subsection}{\numberline {3.5.1}Single-Year vs. Multi-Year Capabilities}{23}{subsection.3.5.1}%
+\contentsline {subsection}{\numberline {3.5.2}The Impact of Class Imbalance}{23}{subsection.3.5.2}%
+\contentsline {subsection}{\numberline {3.5.3}Computational Efficiency}{23}{subsection.3.5.3}%
+\contentsline {chapter}{\numberline {4}Conclusions and Future Work}{25}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Conclusions}{25}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Limitations and Future Work}{25}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}Observed Limitations}{25}{subsection.4.2.1}%
+\contentsline {subsection}{\numberline {4.2.2}Future Work}{25}{subsection.4.2.2}%
+\contentsline {chapter}{Bibliography}{26}{subsection.4.2.2}%

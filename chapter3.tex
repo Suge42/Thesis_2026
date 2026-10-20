@@ -119,6 +119,81 @@ Following the filtering processes, the dataset encompasses the 47 distinct crop 
 \subsection{HPC Environment and 1D Pixel-Based Extraction}
 \label{subsec:hpc_environment}
 
+\begin{figure}[htpb]
+    \centering
+    \resizebox{\textwidth}{!}{%
+    \begin{tikzpicture}[
+        >=stealth',
+        font=\sffamily,
+        arrow/.style={thick, ->, >=stealth', shorten >=2pt, shorten <=2pt}
+    ]
+
+    % --- Geometry & Buffer ---
+    \node[align=center, font=\bfseries] (title1) at (0, 3) {Parcel Extraction \& Buffer};
+    
+    % Sentinel-2 Grid (representing 10m pixels)
+    \draw[step=0.4, gray!40, thin] (-2, -2) grid (2, 2);
+    
+    % Original Field Boundary (Perfectly aligned rectangle)
+    \node[draw=black, thick, minimum width=3.4cm, minimum height=2.8cm, rotate=12] at (0,0) {};
+    
+    % 15m Inward Buffer Boundary (Perfectly parallel, exactly 0.5cm inward padding)
+    \node[draw=red, thick, dashed, minimum width=2.4cm, minimum height=1.8cm, rotate=12] at (0,0) {};
+    
+    % Fill "Pure" Interior Pixels
+    \fill[green!50!black, opacity=0.5] (-0.8,-0.4) rectangle (-0.4,0);
+    \fill[green!50!black, opacity=0.5] (-0.4,-0.4) rectangle (0,0);
+    \fill[green!50!black, opacity=0.5] (0,-0.4) rectangle (0.4,0);
+    \fill[green!50!black, opacity=0.5] (0.4,-0.4) rectangle (0.8,0);
+    \fill[green!50!black, opacity=0.5] (-0.4,0) rectangle (0,0.4);
+    \fill[green!50!black, opacity=0.5] (0,0) rectangle (0.4,0.4);
+    \fill[green!50!black, opacity=0.5] (0.4,0) rectangle (0.8,0.4);
+    \fill[green!50!black, opacity=0.5] (-0.4,-0.8) rectangle (0,-0.4);
+    \fill[green!50!black, opacity=0.5] (0,-0.8) rectangle (0.4,-0.4);
+    \fill[green!50!black, opacity=0.5] (0.4,-0.8) rectangle (0.8,-0.4);
+
+    % Annotations (Stacked Vertically for no overlaps)
+    \node[anchor=west, font=\scriptsize] at (-2.0, -2.4) {\textbf{---} Original Boundary};
+    \node[anchor=west, font=\scriptsize, text=red] at (-2.0, -2.8) {\textbf{- -} 15m Inward Buffer};
+    \node[anchor=west, font=\scriptsize, text=green!50!black] at (-2.0, -3.2) {$\blacksquare$ Pure Interior Pixels};
+
+    % --- Arrow 1 ---
+    \draw[arrow] (2.2, 0) -- (4.2, 0) node[midway, above, align=center, font=\small] {Spatial Mean \\ $\mu = \frac{1}{N} \sum p_i$};
+
+    % --- Aggregation ---
+    \node[align=center, font=\bfseries] (title2) at (5.5, 3) {1D Spatial Mean};
+    
+    % 1D Vector (13 Bands)
+    \draw[fill=blue!10, draw=black, thick] (4.8, -1.5) rectangle (6.2, 1.5);
+    \draw[step=0.23, gray] (4.8, -1.5) grid (6.2, 1.49);
+    
+    \node[rotate=90, font=\small] at (4.5, 0) {13 Spectral Bands ($C$)};
+    \node[align=center, font=\scriptsize] at (5.5, -2.4) {Single observation \\ at day $t$};
+
+    % --- Arrow 2 ---
+    \draw[arrow] (6.8, 0) -- (8.8, 0) node[midway, above, align=center, font=\small] {Aggregate over \\ $T$ acquisitions};
+
+    % --- Sequence ---
+    \node[align=center, font=\bfseries] (title3) at (11.0, 3) {Final 1D SITS};
+    
+    % Stacked vectors representing the time series
+    \foreach \x in {0, 0.2, 0.4, 0.6, 0.8, 1.0, 1.2, 1.4, 1.6} {
+        \draw[fill=orange!20, draw=black, thin] (9.5+\x, -1.5+\x*0.15) rectangle (10.9+\x, 1.5+\x*0.15);
+    }
+    
+    \node[rotate=90, font=\small] at (9.2, 0) {13 Spectral Bands ($C$)};
+    \node[font=\small] at (11.2, -1.8) {Time Steps ($T$)};
+    \node[align=center, font=\scriptsize] at (11.2, -2.4) {Input Tensor: $T \times C$};
+    
+    \end{tikzpicture}
+    }
+    \caption{Detailed data preprocessing pipeline.
+        To bypass I/O bottlenecks and mixed-pixel noise, field boundaries undergo a 15m inward erosion buffer.
+        The remaining pure interior pixels are aggregated via a spatial mean into a 1D vector for each acquisition day,
+        constructing the final $T \times C$ temporal sequence.}
+    \label{fig:dim_reduction_detailed}
+\end{figure}
+
 Training deep sequence models on massive, high-dimensional satellite time series is computationally demanding.
 To facilitate this, all experiments were executed on a dedicated High-Performance Computing (HPC) node equipped with an AMD Ryzen 7 5800X processor,
 64GB of system RAM, and an NVIDIA GeForce RTX 3060 GPU, running on an Ubuntu 22.04 LTS environment.
@@ -139,6 +214,7 @@ This aggressive dimensionality reduction completely bypasses the network I/O lim
 rendering the multi-year SITS training executable on a single computing node.
 Therefore, the utilization of the 1D pipeline is presented here not as a benchmarked computational contribution of this work,
 but rather as a strict engineering prerequisite to make the architectural comparisons possible.
+
 
 \subsection{Data Loading Strategies}
 \label{subsec:data_loading}

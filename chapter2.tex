@@ -54,13 +54,21 @@ Crucially, the output formulation of the Transformer is evaluated in two distinc
 their efficacy as both standalone classifiers and future emission models:
 \begin{itemize}
     \item \textbf{Discriminative Variant:}
-        Employs a standard classification layer to directly predict the probability of each crop class based on the input sequence.
+        Employs a standard classification layer to directly predict the posterior probability $P(c|x)$ of
+        each crop class $c$ based on the input sequence representation $h$.
+        This is formulated using a standard linear projection with bias, followed by a softmax function:
+        $$ P(c|x) = \frac{\exp(w_c^T h + b_c)}{\sum_{k=1}^{K} \exp(w_k^T h + b_k)} $$
+        where $w_c$ and $b_c$ are the weights and bias for class $c$, and $K$ is the total number of classes.
+
     \item \textbf{Generative Variant:}
         Utilizes a specifically modified, normalized output layer.
         This design treats all crop types as equally likely by default, which prevents the network
         from unfairly favoring the most common crops in the dataset \cite{perantoni_bayesian_2024}.
-        More importantly, it generates these probabilities in the exact mathematical format required
-        by the HMM to effectively map sequence transitions \cite{perantoni_bayesian_2024}.
+        It achieves this by removing the bias term $b_c$ and normalizing the weights, often incorporating a
+        temperature scalar $\tau$ to sharpen the emission likelihoods:
+        $$ P(c|x) \propto \frac{\exp(\frac{1}{\tau} w_c^T h)}{\sum_{k=1}^{K} \exp(\frac{1}{\tau} w_k^T h)} $$
+        More importantly, generating these probabilities without prior bias matches the exact mathematical
+        format required by the HMM to effectively map sequence transitions \cite{perantoni_bayesian_2024}.
 \end{itemize}
 
 \subsection{AgroDays Positional Encoding}
@@ -190,7 +198,7 @@ without relying on fixed, explicit transition matrices.
 
 The architecture processes the temporal scales using a two-stage approach.
 In the first stage, the sequence is flattened to merge the batch and year dimensions,
-allowing the Intra-Year Transformer Encoder to evaluate all years independently and in parallel across the hardware.
+allowing the Intra-Year Transformer Encoder to evaluate all years independently and concurrently by flattening the temporal sequences into the batch dimension.
 The Transformer's complex phenological outputs are temporally mean-pooled and passed through an intra-year classifier,
 collapsing the dense $d\_model$ feature extraction into a sequence of real-valued scores (logits) for the 47 specific target classes.
 Crucially, this intermediate 47-dimensional vector is not merely a latent representation;

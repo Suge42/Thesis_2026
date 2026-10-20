@@ -36,6 +36,59 @@ Finally, most current state-of-the-art models suffer from \textit{"temporal myop
 completely ignoring the fundamental agricultural practice of crop rotation,
 where farmers intentionally alternate crops across multiple years to maintain soil health \cite{crop_rotation}.
 
+\begin{figure}[htpb]
+    \centering
+    \resizebox{0.9\textwidth}{!}{
+    \begin{tikzpicture}[
+        >=stealth',
+        font=\sffamily,
+        dot/.style={circle, fill=blue!80, inner sep=2.5pt},
+        noisydot/.style={circle, fill=red!80, inner sep=2.5pt},
+        mycloud/.style={cloud, cloud puffs=11, cloud puff arc=120, aspect=2.5, draw=gray!80, fill=gray!20, minimum width=2cm, minimum height=1cm},
+        axis/.style={thick, ->, >=stealth'}
+    ]
+
+    % Axes
+    \draw[axis] (0,0) -- (11.5,0) node[right] {Time (Growing Season)};
+    \draw[axis] (0,0) -- (0,5.5) node[above] {Vegetation Index (e.g., NDVI)};
+
+    % Continuous Phenology Curve
+    \draw[thick, green!60!black, dashed] (0.5, 0.5) .. controls (3, 1) and (4, 4.5) .. (5, 4.5) .. controls (6, 4.5) and (7, 1.5) .. (9.5, 0.8);
+    
+    % Label for the curve
+    \node[text=green!60!black, font=\small, anchor=south] at (5.0, 4.6) {Continuous Crop Phenology (Ideal)};
+
+    % Clear Satellite Acquisitions
+    \node[dot, label=below:\scriptsize Clear] at (1, 0.6) {};
+    \node[dot, label=below:\scriptsize Clear] at (2.5, 1.2) {};
+    \node[dot, label=above:\scriptsize Clear] at (4.5, 4.2) {};
+    \node[dot, label=above:\scriptsize Clear] at (8.5, 1.2) {};
+
+    % Cloud Occlusions 1
+    \node[mycloud] (c1) at (3.2, 3.2) {};
+    \node[noisydot, label=below:\scriptsize Noise] (n1) at (3.2, 1.3) {}; 
+    \draw[->, red, dashed, thin] (3.2, 2.6) -- (n1); 
+    \node[font=\scriptsize, text=red, align=center] at (3.2, 4.0) {Atmospheric \\ Interference};
+
+    % Cloud Occlusions 2
+    \node[mycloud] (c2) at (6.2, 3.8) {};
+    \node[noisydot, label=below:\scriptsize Noise] (n2) at (6.2, 1.8) {};
+    \draw[->, red, dashed, thin] (6.2, 3.2) -- (n2);
+
+    % Legend Box (Moved to top right, safe from curve and clouds)
+    \draw[gray, thin, rounded corners] (8.2, 3.8) rectangle (11.2, 5.0);
+    \node[dot, label=right:\footnotesize Valid Observation] at (8.5, 4.6) {};
+    \node[noisydot, label=right:\footnotesize Cloud-Occluded] at (8.5, 4.1) {};
+
+    \end{tikzpicture}
+    }
+    \caption{Conceptual illustration of a Satellite Image Time Series (SITS) capturing crop phenology.
+    The dashed line represents the continuous, ideal growth cycle of the crop on the ground.
+    In contrast, the points represent the discrete Sentinel-2 acquisitions.
+    Cloud cover frequently occludes the optical sensor, creating irregular temporal gaps and noisy measurements that sequence models must navigate.}
+    \label{fig:sits_irregularity}
+\end{figure}
+
 This thesis aims to bridge these gaps. To overcome the hardware bottlenecks associated with heavy spatial-temporal grids,
 this work shifts to a highly optimized 1D pixel-based pipeline.
 By analyzing the temporal evolution of the spatial mean of entire agricultural fields rather than broad 2D spatial patches,
@@ -223,6 +276,71 @@ Rather than using both networks on the same sequence, the proposed architecture 
 intra-year phenological features, while Bidirectional LSTMs (as proposed by this thesis) or
 Hidden Markov Models (as established by recent literature) are subsequently deployed to capture the long-term, inter-year sequential dependencies of crop rotations.
 
+\begin{figure}[htpb]
+    \centering
+    \begin{tikzpicture}[
+        node distance=1.5cm and 1cm,
+        data/.style={rectangle, draw, fill=green!10, text width=1.5cm, text centered, minimum height=0.8cm},
+        encoder/.style={rectangle, draw, fill=blue!10, text width=2cm, text centered, rounded corners, minimum height=1cm},
+        memory/.style={rectangle, draw, fill=orange!15, text width=7.5cm, text centered, rounded corners, minimum height=1.2cm},
+        output/.style={rectangle, draw, fill=red!10, text width=1.5cm, text centered, minimum height=0.8cm},
+        arrow/.style={thick, -{Stealth[scale=1.2]}}
+    ]
+
+    % --- Left Side: Single-Year Paradigm ---
+    \node (title1) at (0, 3.5) {\textbf{Single-Year Paradigm}};
+    \node[data] (x_sy) at (0, 2) {SITS $X_{t}$};
+    \node[encoder] (enc_sy) at (0, 0.5) {Intra-Year Encoder};
+    \node[output] (y_sy) at (0, -1.5) {Class $Y_{t}$};
+
+    \draw[arrow] (x_sy) -- (enc_sy);
+    \draw[arrow] (enc_sy) -- (y_sy);
+
+    % --- Divider ---
+    \draw[dashed, thick, gray] (2.5, 4) -- (2.5, -2.5);
+
+    % --- Right Side: Multi-Year Paradigm ---
+    \node (title2) at (7, 3.5) {\textbf{Multi-Year Hierarchical Paradigm}};
+    
+    % Data nodes
+    \node[data] (x_t1) at (4.5, 2) {SITS $X_{t-1}$};
+    \node[data] (x_t) at (7, 2) {SITS $X_{t}$};
+    \node[data] (x_t2) at (9.5, 2) {SITS $X_{t+1}$};
+    
+    % Encoders (Shared)
+    \node[encoder] (enc_t1) at (4.5, 0.5) {Encoder};
+    \node[encoder] (enc_t) at (7, 0.5) {Encoder};
+    \node[encoder] (enc_t2) at (9.5, 0.5) {Encoder};
+    
+    % Inter-Year Memory Layer (Text centered, no internal arrows)
+    \node[memory] (mem) at (7, -1) {Inter-Year Sequence Model (LSTM / HMM)};
+    
+    % Outputs
+    \node[output] (y_t1) at (4.5, -2.5) {Class $Y_{t-1}$};
+    \node[output] (y_t) at (7, -2.5) {Class $Y_{t}$};
+    \node[output] (y_t2) at (9.5, -2.5) {Class $Y_{t+1}$};
+
+    % Connections
+    \draw[arrow] (x_t1) -- (enc_t1);
+    \draw[arrow] (x_t) -- (enc_t);
+    \draw[arrow] (x_t2) -- (enc_t2);
+    
+    % Arrows from Encoders to Memory
+    \draw[arrow] (enc_t1) -- (4.5, -0.4);
+    \draw[arrow] (enc_t) -- (7, -0.4);
+    \draw[arrow] (enc_t2) -- (9.5, -0.4);
+    
+    % Arrows from Memory to Outputs
+    \draw[arrow] (4.5, -1.6) -- (y_t1);
+    \draw[arrow] (7, -1.6) -- (y_t);
+    \draw[arrow] (9.5, -1.6) -- (y_t2);
+
+    \end{tikzpicture}
+    \caption{Conceptual comparison between single-year sequence processing and hierarchical multi-year architectures.
+        The shared horizontal layer illustrates the integration of inter-year transition modeling.}
+    \label{fig:paradigm_shift}
+\end{figure}
+
 \subsection{Multi-Year Crop Rotation Modeling}
 \label{subsec:crop_rotation}
 
@@ -231,6 +349,45 @@ Crop rotation is a fundamental agricultural practice wherein farmers alternate t
 This strategy is essential for maintaining soil health, preventing nutrient depletion, and breaking pest and disease cycles.
 Despite its agronomic importance, most remote sensing models suffer from "temporal myopia,"
 i.e., analyzing single-year phenology while ignoring inter-annual historical dependencies.
+
+\begin{figure}[htpb]
+    \centering
+    \begin{tikzpicture}[
+        ->, >=stealth', auto, node distance=3.5cm,
+        thick,
+        cropnode/.style={circle, draw, fill=blue!5, font=\sffamily\bfseries, minimum size=2.2cm, text centered, text width=2cm},
+        highprob/.style={draw=black, thick},
+        lowprob/.style={draw=gray, dashed, thin}
+    ]
+
+    % Nodes
+    \node[cropnode] (soy) {Soybean};
+    \node[cropnode] (corn) [right of=soy, node distance=4.5cm] {Maize};
+    \node[cropnode] (wheat) [below of=soy] {Winter Wheat};
+    \node[cropnode] (fallow) [right of=wheat, node distance=4.5cm] {Fallow / Cover Crop};
+
+    % Edges with transition labels
+    \path[every node/.style={font=\sffamily\small}]
+        % High probability standard rotations
+        (soy) edge[highprob, bend left=20] node[above] {$P = 0.65$} (corn)
+        (corn) edge[highprob, bend left=20] node[right] {$P = 0.50$} (fallow)
+        (fallow) edge[highprob, bend left=20] node[below] {$P = 0.70$} (wheat)
+        (wheat) edge[highprob, bend left=20] node[left] {$P = 0.80$} (soy)
+        
+        % Low probability / irregular transitions
+        (corn) edge[lowprob, bend left=20] node[above] {$P = 0.15$} (soy)
+        (wheat) edge[lowprob, bend left=15] node[pos=0.3, right] {$P = 0.10$} (corn)
+        
+        % Self-loops (monoculture)
+        (corn) edge[lowprob, loop above] node {$P = 0.20$} (corn)
+        (wheat) edge[lowprob, loop below] node {$P = 0.05$} (wheat);
+
+    \end{tikzpicture}
+    \caption{Crop rotation represented as a probabilistic state transition graph.
+        Multi-year sequence models aim to intrinsically learn these transitional dependencies (edges) to improve
+        classification accuracy when emission likelihoods (nodes) are uncertain.}
+    \label{fig:markov_rotation}
+\end{figure}
 
 \textbf{Traditional and Knowledge-Based Approaches} \\
 Early attempts to map multi-year dynamics relied on explicitly injecting prior agronomic knowledge into the classification pipeline.
