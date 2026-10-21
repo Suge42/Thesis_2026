@@ -152,46 +152,46 @@
 \citation{hamming1950error}
 \@writefile{lof}{\contentsline {figure}{\numberline {3.1}{\ignorespaces Geographic extent of Sentinel-2 MGRS Tile 33UVP over eastern Austria.}}{18}{figure.3.1}\protected@file@percent }
 \newlabel{fig:map_33UVP}{{3.1}{18}{Geographic extent of Sentinel-2 MGRS Tile 33UVP over eastern Austria}{figure.3.1}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {3.1}{\ignorespaces The 47 distinct crop classes present in the filtered MGRS 33UVP dataset, listed alphabetically.}}{19}{table.3.1}\protected@file@percent }
-\newlabel{tab:crop_classes}{{3.1}{19}{The 47 distinct crop classes present in the filtered MGRS 33UVP dataset, listed alphabetically}{table.3.1}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.1.2}HPC Environment and 1D Pixel-Based Extraction}{19}{subsection.3.1.2}\protected@file@percent }
-\newlabel{subsec:hpc_environment}{{3.1.2}{19}{HPC Environment and 1D Pixel-Based Extraction}{subsection.3.1.2}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.2}{\ignorespaces Detailed data preprocessing pipeline. To bypass I/O bottlenecks and mixed-pixel noise, field boundaries undergo a 15m inward erosion buffer. The remaining pure interior pixels are aggregated via a spatial mean into a 1D vector for each acquisition day, constructing the final $T \times C$ temporal sequence.}}{19}{figure.3.2}\protected@file@percent }
-\newlabel{fig:dim_reduction_detailed}{{3.2}{19}{Detailed data preprocessing pipeline. To bypass I/O bottlenecks and mixed-pixel noise, field boundaries undergo a 15m inward erosion buffer. The remaining pure interior pixels are aggregated via a spatial mean into a 1D vector for each acquisition day, constructing the final $T \times C$ temporal sequence}{figure.3.2}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {3.1}{\ignorespaces Training set class distribution of the 47 crop classes, sorted by descending frequency.}}{19}{table.3.1}\protected@file@percent }
+\newlabel{tab:train_class_distribution}{{3.1}{19}{Training set class distribution of the 47 crop classes, sorted by descending frequency}{table.3.1}{}}
 \citation{perantoni_bayesian_2024}
 \citation{perantoni_bayesian_2024}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1.2}HPC Environment and 1D Pixel-Based Extraction}{20}{subsection.3.1.2}\protected@file@percent }
+\newlabel{subsec:hpc_environment}{{3.1.2}{20}{HPC Environment and 1D Pixel-Based Extraction}{subsection.3.1.2}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.2}{\ignorespaces Detailed data preprocessing pipeline. To bypass I/O bottlenecks and mixed-pixel noise, field boundaries undergo a 15m inward erosion buffer. The remaining pure interior pixels are aggregated via a spatial mean into a 1D vector for each acquisition day, constructing the final $T \times C$ temporal sequence.}}{20}{figure.3.2}\protected@file@percent }
+\newlabel{fig:dim_reduction_detailed}{{3.2}{20}{Detailed data preprocessing pipeline. To bypass I/O bottlenecks and mixed-pixel noise, field boundaries undergo a 15m inward erosion buffer. The remaining pure interior pixels are aggregated via a spatial mean into a 1D vector for each acquisition day, constructing the final $T \times C$ temporal sequence}{figure.3.2}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.1.3}Data Loading Strategies}{20}{subsection.3.1.3}\protected@file@percent }
 \newlabel{subsec:data_loading}{{3.1.3}{20}{Data Loading Strategies}{subsection.3.1.3}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.1.4}Evaluation Metrics}{20}{subsection.3.1.4}\protected@file@percent }
-\newlabel{subsec:evaluation_metrics}{{3.1.4}{20}{Evaluation Metrics}{subsection.3.1.4}{}}
 \citation{falcon2019pytorch}
 \citation{loshchilov2017decoupled}
 \citation{liaw2018tune}
 \citation{akiba2019optuna}
 \citation{zaharia2018accelerating}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1.4}Evaluation Metrics}{21}{subsection.3.1.4}\protected@file@percent }
+\newlabel{subsec:evaluation_metrics}{{3.1.4}{21}{Evaluation Metrics}{subsection.3.1.4}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {3.2}Infrastructure and MLOps}{21}{section.3.2}\protected@file@percent }
 \newlabel{sec:infrastructure_mlops}{{3.2}{21}{Infrastructure and MLOps}{section.3.2}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.2.1}Training Framework and Optimization}{21}{subsection.3.2.1}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.2.2}Automated Hyperparameter Tuning}{21}{subsection.3.2.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {3.3}Baseline Results (Intra-Year and Structural Controls)}{21}{section.3.3}\protected@file@percent }
-\newlabel{sec:baseline_results}{{3.3}{21}{Baseline Results (Intra-Year and Structural Controls)}{section.3.3}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {3.2}{\ignorespaces Performance comparison of the intra-year baselines and linear structural controls. Results are averaged across random seeds, displaying the mean and standard deviation.}}{21}{table.3.2}\protected@file@percent }
-\newlabel{tab:baseline_comparison}{{3.2}{21}{Performance comparison of the intra-year baselines and linear structural controls. Results are averaged across random seeds, displaying the mean and standard deviation}{table.3.2}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.3.1}Temporal 1D-CNN vs. Transformer Encoders}{21}{subsection.3.3.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3.3}Baseline Results (Intra-Year and Structural Controls)}{22}{section.3.3}\protected@file@percent }
+\newlabel{sec:baseline_results}{{3.3}{22}{Baseline Results (Intra-Year and Structural Controls)}{section.3.3}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {3.2}{\ignorespaces Performance comparison of the intra-year baselines and linear structural controls. Results are averaged across random seeds, displaying the mean and standard deviation.}}{22}{table.3.2}\protected@file@percent }
+\newlabel{tab:baseline_comparison}{{3.2}{22}{Performance comparison of the intra-year baselines and linear structural controls. Results are averaged across random seeds, displaying the mean and standard deviation}{table.3.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3.1}Temporal 1D-CNN vs. Transformer Encoders}{22}{subsection.3.3.1}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.3.2}The Necessity of Non-Linearity: Linear Controls}{22}{subsection.3.3.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {3.4}Multi-Year Architecture Results}{22}{section.3.4}\protected@file@percent }
-\newlabel{sec:hybrid_results}{{3.4}{22}{Multi-Year Architecture Results}{section.3.4}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {3.3}{\ignorespaces Final performance comparison of the multi-year hybrid architectures across both backbone variants. Results are averaged across random seeds.}}{22}{table.3.3}\protected@file@percent }
-\newlabel{tab:hybrid_comparison}{{3.3}{22}{Final performance comparison of the multi-year hybrid architectures across both backbone variants. Results are averaged across random seeds}{table.3.3}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.4}Multi-Year Architecture Results}{23}{section.3.4}\protected@file@percent }
+\newlabel{sec:hybrid_results}{{3.4}{23}{Multi-Year Architecture Results}{section.3.4}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {3.3}{\ignorespaces Final performance comparison of the multi-year hybrid architectures across both backbone variants. Results are averaged across random seeds.}}{23}{table.3.3}\protected@file@percent }
+\newlabel{tab:hybrid_comparison}{{3.3}{23}{Final performance comparison of the multi-year hybrid architectures across both backbone variants. Results are averaged across random seeds}{table.3.3}{}}
 \citation{johnson2019survey}
-\@writefile{toc}{\contentsline {section}{\numberline {3.5}Discussion}{23}{section.3.5}\protected@file@percent }
-\newlabel{sec:discussion}{{3.5}{23}{Discussion}{section.3.5}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.5.1}Single-Year vs. Multi-Year Capabilities}{23}{subsection.3.5.1}\protected@file@percent }
-\newlabel{subsec:single_vs_multi_year}{{3.5.1}{23}{Single-Year vs. Multi-Year Capabilities}{subsection.3.5.1}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.5.2}The Impact of Class Imbalance}{23}{subsection.3.5.2}\protected@file@percent }
-\newlabel{subsec:class_imbalance}{{3.5.2}{23}{The Impact of Class Imbalance}{subsection.3.5.2}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.5.3}Computational Efficiency}{23}{subsection.3.5.3}\protected@file@percent }
-\newlabel{subsec:comp_efficiency}{{3.5.3}{23}{Computational Efficiency}{subsection.3.5.3}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.5}Discussion}{24}{section.3.5}\protected@file@percent }
+\newlabel{sec:discussion}{{3.5}{24}{Discussion}{section.3.5}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.5.1}Single-Year vs. Multi-Year Capabilities}{24}{subsection.3.5.1}\protected@file@percent }
+\newlabel{subsec:single_vs_multi_year}{{3.5.1}{24}{Single-Year vs. Multi-Year Capabilities}{subsection.3.5.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.5.2}The Impact of Class Imbalance}{24}{subsection.3.5.2}\protected@file@percent }
+\newlabel{subsec:class_imbalance}{{3.5.2}{24}{The Impact of Class Imbalance}{subsection.3.5.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.5.3}Computational Efficiency}{24}{subsection.3.5.3}\protected@file@percent }
+\newlabel{subsec:comp_efficiency}{{3.5.3}{24}{Computational Efficiency}{subsection.3.5.3}{}}
 \@writefile{toc}{\contentsline {chapter}{\numberline {4}Conclusions and Future Work}{25}{chapter.4}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}

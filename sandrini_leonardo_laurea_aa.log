@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.5) (preloaded format=pdflatex 2026.8.17)  20 OCT 2026 20:37
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.5) (preloaded format=pdflatex 2026.8.17)  21 OCT 2026 22:55
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -759,7 +759,7 @@ Chapter 2.
 
 
 pdfTeX warning: pdflatex (file ./images/cnn_diagram.pdf): PDF inclusion: found PDF version <1.7>, but at most version <1.5> allowed
-<images/cnn_diagram.pdf, id=368, 499.8675pt x 243.79079pt>
+<images/cnn_diagram.pdf, id=369, 499.8675pt x 243.79079pt>
 File: images/cnn_diagram.pdf Graphic file (type pdf)
 <use images/cnn_diagram.pdf>
 Package pdftex.def Info: images/cnn_diagram.pdf  used on input line 33.
@@ -769,7 +769,7 @@ Package pdftex.def Info: images/cnn_diagram.pdf  used on input line 33.
  <./images/cnn_diagram.pdf>]
 
 pdfTeX warning: pdflatex (file ./images/transformer_diagram.pdf): PDF inclusion: found PDF version <1.7>, but at most version <1.5> allowed
-<images/transformer_diagram.pdf, id=391, 630.43526pt x 391.4625pt>
+<images/transformer_diagram.pdf, id=392, 630.43526pt x 391.4625pt>
 File: images/transformer_diagram.pdf Graphic file (type pdf)
 <use images/transformer_diagram.pdf>
 Package pdftex.def Info: images/transformer_diagram.pdf  used on input line 48.
@@ -779,7 +779,7 @@ Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on inp
  [13]
 
 pdfTeX warning: pdflatex (file ./images/transformer_hmm_diagram.pdf): PDF inclusion: found PDF version <1.7>, but at most version <1.5> allowed
-<images/transformer_hmm_diagram.pdf, id=439, 759.79855pt x 365.44528pt>
+<images/transformer_hmm_diagram.pdf, id=440, 759.79855pt x 365.44528pt>
 File: images/transformer_hmm_diagram.pdf Graphic file (type pdf)
 <use images/transformer_hmm_diagram.pdf>
 Package pdftex.def Info: images/transformer_hmm_diagram.pdf  used on input line 153.
@@ -787,7 +787,7 @@ Package pdftex.def Info: images/transformer_hmm_diagram.pdf  used on input line 
 [14 <./images/transformer_hmm_diagram.pdf>]
 
 pdfTeX warning: pdflatex (file ./images/transformer_lstm_diagram.pdf): PDF inclusion: found PDF version <1.7>, but at most version <1.5> allowed
-<images/transformer_lstm_diagram.pdf, id=477, 759.79855pt x 340.3917pt>
+<images/transformer_lstm_diagram.pdf, id=478, 759.79855pt x 340.3917pt>
 File: images/transformer_lstm_diagram.pdf Graphic file (type pdf)
 <use images/transformer_lstm_diagram.pdf>
 Package pdftex.def Info: images/transformer_lstm_diagram.pdf  used on input line 194.
@@ -799,12 +799,12 @@ Chapter 3.
 ]
 
 pdfTeX warning: pdflatex (file ./images/map_33UVP.pdf): PDF inclusion: found PDF version <1.7>, but at most version <1.5> allowed
-<images/map_33UVP.pdf, id=531, 810.4679pt x 472.88669pt>
+<images/map_33UVP.pdf, id=532, 810.4679pt x 472.88669pt>
 File: images/map_33UVP.pdf Graphic file (type pdf)
 <use images/map_33UVP.pdf>
 Package pdftex.def Info: images/map_33UVP.pdf  used on input line 78.
 (pdftex.def)             Requested size: 435.32422pt x 254.00568pt.
-[18 <./images/map_33UVP.pdf>] [19] [20] [21] [22]) (chapter4.tex [23] [24]
+[18 <./images/map_33UVP.pdf>] [19] [20] [21] [22] [23]) (chapter4.tex [24]
 Chapter 4.
 [25
 
@@ -824,17 +824,17 @@ Package rerunfilecheck Info: File `sandrini_leonardo_laurea_aa.out' has not chan
 (rerunfilecheck)             Checksum: 0C0853390159F93A544E4EF9C64C996E;8994.
  ) 
 Here is how much of TeX's memory you used:
- 28041 strings out of 467500
- 531964 string characters out of 5408529
- 982221 words of memory out of 5000000
- 56444 multiletter control sequences out of 15000+600000
- 651813 words of font info for 227 fonts, out of 8000000 for 9000
+ 28022 strings out of 467500
+ 531550 string characters out of 5408529
+ 984490 words of memory out of 5000000
+ 56424 multiletter control sequences out of 15000+600000
+ 649483 words of font info for 217 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  92i,10n,104p,1066b,1173s stack positions out of 10000i,1000n,20000p,200000b,200000s
- <C:\Users\lsand\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm1095.pk><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx8.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmcsc10.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi6.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr6.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr9.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmss10.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmss8.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmss9.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmssbx10.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt10.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msam10.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on sandrini_leonardo_laurea_aa.pdf (32 pages, 1735703 bytes).
+ <C:\Users\lsand\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm1095.pk><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx8.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmcsc10.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi6.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr6.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr9.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmss10.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmss8.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmss9.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmssbx10.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti12.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt10.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msam10.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
+Output written on sandrini_leonardo_laurea_aa.pdf (32 pages, 1752418 bytes).
 PDF statistics:
- 844 PDF objects out of 1000 (max. 8388607)
+ 849 PDF objects out of 1000 (max. 8388607)
  129 named destinations out of 1000 (max. 500000)
  54131 words of extra memory for PDF output out of 61914 (max. 10000000)
 

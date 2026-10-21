@@ -83,33 +83,64 @@ This prevents data leakage by ensuring the Test set contains proportionally repr
 Geographically, the selected MGRS tile 33UVP covers a standard $100 \times 100$ km extent ($10,000 \text{ km}^2$) over
 eastern Austria (encompassing regions such as Lower Austria and Vienna) as shown in Fig \ref{fig:map_33UVP}.
 This specific tile was selected because it guarantees consistent orbital coverage and contains a highly diverse distribution of crops.
-Following the filtering processes, the dataset encompasses the 47 distinct crop classes detailed in Table \ref{tab:crop_classes}.
+Following the filtering processes, the dataset encompasses the 47 distinct crop classes detailed in Table \ref{tab:train_class_distribution}.
 
 \begin{table}[htbp]
     \centering
-    \caption{The 47 distinct crop classes present in the filtered MGRS 33UVP dataset, listed alphabetically.}
-    \label{tab:crop_classes}
-    \resizebox{\textwidth}{!}{
-        \begin{tabular}{lll}
+    \caption{Training set class distribution of the 47 crop classes, sorted by descending frequency.}
+    \label{tab:train_class_distribution}
+    \resizebox{0.9\textwidth}{!}{
+        \begin{tabular}{clr}
             \toprule
-            \textbf{Crop Class} & \textbf{Crop Class} & \textbf{Crop Class} \\
+            \textbf{Class ID} & \textbf{Crop Name} & \textbf{Percentage (\%)} \\
             \midrule
-            Alfalfa Forage & Onions & Summer Common Wheat \\
-            Alternating Meadow & Other Arable Land & Summer Mixed Cereals \\
-            Beet & Pastures & Summer Oats \\
-            Broad Beans & Peas/Cereals Mixture & Summer Peas \\
-            Buckwheat & Perennial Pasture & Sunflowers \\
-            Clover & Rangeland & Table Apples \\
-            Corn Cob Mix & Seed Maize Multiplication & Table Pumpkins \\
-            Elephant Grass & Silage Maize & Two/Multi-Row Spring Barley \\
-            Energy Wood & Single Culture Field Vegetables & Winter Common Wheat \\
-            Forage Grasses & Single Mown Meadow & Winter Cumin \\
-            Grain Maize & Soybeans & Winter Durum Wheat \\
-            Grain Peas & Spelt & Winter Mixed Cereals \\
-            Grassland Fallow & Spring Barley & Winter Rape \\
-            Green Fallow & Starch/Industrial Potatoes & Winter Rye \\
-            Miscellaneous Field Fodder & Strawberries & Winter Triticale \\
-            Oil Pumpkin & Sugar Beet & \\
+            1 & MOWING MEADOW/PASTURE THREE OR MORE USES & 32.67 \\
+            10 & GRAIN MAIZE & 7.31 \\
+            2 & MOWING MEADOW/PASTURE TWO USES & 7.15 \\
+            9 & WINTER COMMON WHEAT & 6.92 \\
+            0 & WINTER BARLEY & 6.19 \\
+            3 & SILAGE MAIZE & 5.64 \\
+            13 & DRESS & 4.76 \\
+            18 & PERENNIAL PASTURE & 4.57 \\
+            4 & WINTER TRITICALE & 3.71 \\
+            29 & ALTERNATING MEADOW (EGART, ARABLE PASTURE) & 3.14 \\
+            26 & SOYBEANS & 2.36 \\
+            24 & WINTER RYE & 1.99 \\
+            7 & SUMMER OATS & 1.79 \\
+            5 & GREEN FALLOW & 1.54 \\
+            45 & SUGAR BEETS & 0.83 \\
+            33 & ALPINE FORAGE area & 0.81 \\
+            6 & SINGLE-MOWN MEADOW & 0.80 \\
+            22 & WINTER RAPESEED & 0.78 \\
+            21 & SPRING BARLEY & 0.75 \\
+            15 & CLOVER & 0.66 \\
+            16 & MISCELLANEOUS FIELD FODDER & 0.53 \\
+            17 & FORAGE GRASSES & 0.50 \\
+            28 & CORN CORN COB MIX (CCM) & 0.46 \\
+            30 & HUT WILLOW & 0.43 \\
+            11 & WINTER MIXED CEREALS & 0.41 \\
+            8 & BROAD BEANS (BROAD BEANS) & 0.32 \\
+            23 & SUMMER MIXED CEREALS & 0.26 \\
+            27 & WINTER SPELT (SPELZ) & 0.26 \\
+            38 & LUCERNE & 0.23 \\
+            46 & SEED MAIZE PROPAGATION & 0.23 \\
+            43 & STARCHINDUSTRIAL POTATOES & 0.23 \\
+            12 & TABLE POTATOES & 0.22 \\
+            20 & GRASSLAND FALLOW & 0.20 \\
+            31 & OIL PUMPKIN & 0.17 \\
+            35 & PEAS - CEREALS MIXTURE & 0.14 \\
+            19 & ELEPHANT GRASS (CHINESE REED, MISCANTHUS SINENSIS) & 0.13 \\
+            32 & ENERGY WOOD WITHOUT ROBINIA & 0.11 \\
+            44 & SEED POTATOES & 0.11 \\
+            25 & SUMMER COMMON WHEAT & 0.11 \\
+            42 & SINGLE-CULTURE FIELD VEGETABLES & 0.10 \\
+            40 & SUMMER POPIES & 0.09 \\
+            37 & GRAIN PEAS & 0.08 \\
+            14 & STRAWBERRIES & 0.07 \\
+            39 & WINTER CUMIN & 0.07 \\
+            41 & SUNFLOWERS & 0.07 \\
+            34 & TABLE APPLES & 0.06 \\
+            36 & OTHER ARABLE LAND & 0.05 \\
             \bottomrule
         \end{tabular}
     }
