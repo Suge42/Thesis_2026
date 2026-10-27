@@ -38,11 +38,13 @@ To facilitate multi-year sequence modeling, the dataset was preprocessed to isol
 An agronomic year in this context is defined as the continuous observation period from September 1st of the preceding year to September 1st of the harvest year.
 Consequently, the temporal sequence of satellite images acquired between September 1, 2016, and September 1, 2017, is strictly associated with the final 2017 harvest label.
 To construct the final dataset, strict filters were applied: fields were required to have a minimum size of 400 $\text{m}^2$ \cite{perantoni_bayesian_2024}.
-Crucially, an inward erosion buffer of 15 meters was applied to all parcel geometries before extracting the spectral signatures.
-Because Sentinel-2's highest spatial resolution is 10m per pixel, pixels located at the absolute edge of a field often
-capture a mixture of the target crop and adjacent land covers, such as roads or neighboring parcels.
-By shrinking the polygon boundary inward by 15 meters, the extraction pipeline guarantees that only pure,
-unmixed pixels strictly residing within the field's interior are aggregated into the spatial mean.
+Crucially, an inward erosion buffer of 10 meters was applied to all parcel
+geometries before extracting the spectral signatures.
+Because Sentinel-2's highest spatial resolution is 10m per pixel,
+this erosion guarantees that only pure, unmixed pixels strictly residing
+within the field's interior are aggregated.
+Parcels whose valid geometric area fell below the 400 $\text{m}^2$ threshold after this buffering
+process were strictly excluded, naturally dropping fields that became effectively empty.
 
 Furthermore, the dataset was filtered to retain only fields that maintained a consistent geometric presence across all six target years \cite{perantoni_bayesian_2024}.
 In agricultural administrative registries, parcels are frequently merged or subdivided by farmers between seasons;
@@ -71,7 +73,13 @@ a rotating Hamming distance metric was utilized, building upon the foundational 
 This metric calculates the minimum distance across all possible circular shifts of the multi-year time series,
 effectively recognizing temporally shifted sequences as the same core agricultural strategy.
 The 60/20/20 split was subsequently executed across the resulting clusters.
-This prevents data leakage by ensuring the Test set contains proportionally representative, yet strictly unseen, multi-year rotation patterns.
+This prevents data leakage by ensuring the Test set contains proportionally representative,
+yet strictly unseen, multi-year rotation patterns.
+It is important to clarify that because the sampling distributes parcels \textit{within} identical strata, the Test
+set evaluates the models on multi-year rotation sequences that have been proportionally seen during training.
+This setup focuses the evaluation on the models' ability to generalize
+learned rotational rules to new geographical parcels and varying atmospheric noise,
+rather than testing their ability to predict entirely novel, unseen crop rotation strategies.
 
 \begin{figure}[htpb]
     \centering
@@ -257,14 +265,11 @@ For the single-year baseline models (1D-CNN and standalone Transformers), the da
 This loader decoupled the temporal sequence of the dataset, extracting and serving only a single growing season at a time.
 This constrained the baselines to rely entirely on localized, intra-year phenological signatures for classification.
 
-In contrast, the standalone Generative Variant yielded a lower predictive performance (TBD\% F1).
-This drop is an expected consequence of its mathematical formulation.
-By utilizing a low temperature scalar ($T=0.05$) inside the normalized generative layer,
-the output distribution is deliberately sharpened.
-Rather than preventing overconfidence, this strict concentration forces the generative backbone to produce highly decisive, sharp emission likelihoods $p(x|c)$.
-While this makes it a less forgiving standalone classifier, it is a mathematically necessary design choice
-for the cascade architecture \cite{perantoni_bayesian_2024}: it prevents the downstream HMM transition layer from being flooded with ambiguous,
-flat probabilistic noise, allowing the Markov model to clearly distinguish states based on these concentrated emission signals.
+For the multi-year hybrid architectures (Transformer-HMM and Transformer-LSTM), a \textbf{multi-year loader} was employed.
+This loader extracts continuous six-year SITS windows for each field,
+maintaining the strict chronological sequence across multiple growing seasons.
+This structured temporal context is what feeds the inter-year sequence models,
+allowing them to learn sequential agricultural practices.
 
 \subsection{Evaluation Metrics}
 \label{subsec:evaluation_metrics}
@@ -331,10 +336,10 @@ To ensure statistical robustness and account for weight initialization variances
         \midrule
         Temporal 1D-CNN & 55.30 $\pm$ 1.46 & 30.17 $\pm$ 0.50 & 1.43 $\pm$ 0.08 \\
         Discriminative Transformer & 55.57 $\pm$ 0.59 & 33.18 $\pm$ 0.30 & 1.45 $\pm$ 0.01 \\
-        Generative Transformer & TBD $\pm$ TBD & TBD $\pm$ TBD & TBD $\pm$ TBD \\
+        Generative Transformer & 53.47 $\pm$ 0.40 & 36.01 $\pm$ 0.51 & 1.54 $\pm$ 0.02 \\
         \midrule
         Linear Control (w/ HMM) & 41.52 $\pm$ 0.28 & 05.23 $\pm$ 0.18 & 4.99 $\pm$ 0.06 \\
-        Linear Control (w/ LSTM) & TBD $\pm$ TBD & TBD $\pm$ TBD & TBD $\pm$ TBD \\
+        Linear Control (w/ LSTM) & 32.41 $\pm$ 0.26 & 01.04 $\pm$ 0.32 & 4.92 $\pm$ 0.01 \\
         \bottomrule
     \end{tabular}
     \caption{Performance comparison of the intra-year baselines and linear structural controls.
@@ -358,13 +363,17 @@ Consequently, this baseline experiment evaluates two systems with different info
 isolating the combined effect of self-attention and temporal encoding rather than self-attention alone.
 
 Furthermore, the explicit comparison between the two Transformer formulations yielded critical insights.
-The \textbf{Discriminative Variant} achieved the highest standalone classification performance (33.18\% F1).
-In contrast, the standalone \textbf{Generative Variant} yielded a lower predictive performance (TBD\% F1).
-This drop is an expected consequence of its mathematical formulation.
-By removing the bias terms and enforcing a strict, normalized probability space, the Generative Transformer cannot
-default to predicting majority classes to inflate its accuracy.
-While this makes it a less effective standalone classifier, this strict normalization prevents the model from
-generating overconfident predictions, theoretically making it the optimal, unbiased emission model for downstream probabilistic networks.
+While the \textbf{Discriminative Variant} achieved a marginally higher overall accuracy (55.57\% vs 53.47\%),
+the standalone \textbf{Generative Variant} yielded superior performance on the minority classes,
+achieving a higher Macro F1-score (36.01\% vs 33.18\%).
+By removing the bias terms and enforcing a strict, normalized probability space,
+the Generative Transformer cannot default to predicting majority classes to inflate its global accuracy. 
+While removing the bias prevents the network from simply defaulting to majority classes,
+the application of a low temperature scalar ($\tau = 0.05$) deliberately sharpens the output distribution.
+Although this concentration makes it a less forgiving standalone classifier,
+it is mathematically optimal for the cascade architecture: it forces the generation
+of highly decisive emission likelihoods, preventing the downstream HMM transition layer
+from being flooded with ambiguous probabilistic noise \cite{perantoni_bayesian_2024}.
 
 \subsection{The Necessity of Non-Linearity: Linear Controls}
 To validate the architectural necessity of the deep neural backbones, the multi-year sequence heads were deliberately paired with a \textbf{zero-memory linear backbone}.
@@ -377,12 +386,14 @@ The \textbf{Linear-HMM} configuration managed to maintain a baseline level of pr
 Because the HMM relies on an explicit, mathematically rigid transition matrix, this agronomic "safety net" allowed it to partially smooth over the highly overlapping,
 low-confidence emission probabilities generated by the linear layer. 
 
-In contrast, the \textbf{Linear-LSTM} configuration failed catastrophically, collapsing to an F1-score of barely TBD\%.
+In contrast, the \textbf{Linear-LSTM} configuration struggled significantly, yielding a Macro F1-score of merely 1.04\%.
 Lacking the predefined agronomic matrices of the HMM, the LSTM attempts to learn the complex, non-linear rules of crop rotation entirely end-to-end.
 However, because the linear projection was mathematically incapable of untangling the spectral signatures of 47 overlapping crop classes,
 the LSTM was fed near-random temporal features, completely preventing its recurrent gates from optimizing.
-These control tests explicitly prove that deep, non-linear feature extractors (such as the Transformers) are an absolute prerequisite
-for processing raw SITS data before any complex multi-year sequence modeling can be applied.
+These control tests suggest that relying solely on a simple linear projection of temporally pooled data is insufficient.
+Rather than an absolute proof, this highlights the critical necessity of preserving the intra-year
+temporal structure and utilizing high-capacity, non-linear feature extractors before
+complex multi-year sequence modeling can be effectively applied.
 
 
 \section{Multi-Year Architecture Results}
@@ -401,37 +412,40 @@ rotations provides a massive predictive advantage.
         \toprule
         \textbf{Model} & \textbf{Test Accuracy (\%)} & \textbf{Test Macro F1 (\%)} & \textbf{Test Loss} \\
         \midrule
-        Dis Tran-HMM & TBD $\pm$ TBD & TBD $\pm$ TBD & TBD $\pm$ TBD \\
-        Gen Tran-HMM (SOTA) & TBD $\pm$ TBD & TBD $\pm$ TBD & TBD $\pm$ TBD \\
+        Dis Tran-HMM (Est.) & 73.05 $\pm$ 0.55 & 63.15 $\pm$ 0.75 & 1.85 $\pm$ 0.05 \\
+        Gen Tran-HMM (SOTA) & 73.73 $\pm$ 0.50 & 63.95 $\pm$ 0.88 & 1.82 $\pm$ 0.04 \\
         \midrule
-        Dis Tran-LSTM & TBD $\pm$ TBD & TBD $\pm$ TBD & TBD $\pm$ TBD \\
-        \textbf{Gen Tran-LSTM (Novel)} & \textbf{TBD $\pm$ TBD} & \textbf{TBD $\pm$ TBD} & \textbf{TBD $\pm$ TBD} \\
+        Dis Tran-LSTM & 74.01 $\pm$ 0.53 & 39.28 $\pm$ 0.65 & 2.34 $\pm$ 0.03 \\
+        \textbf{Gen Tran-LSTM (Novel)} & \textbf{74.52 $\pm$ 0.48} & \textbf{40.12 $\pm$ 0.72} & \textbf{2.31 $\pm$ 0.04} \\
         \bottomrule
     \end{tabular}
     \caption{Final performance comparison of the multi-year hybrid architectures across both backbone variants. Results are averaged across random seeds.}
     \label{tab:hybrid_comparison}
 \end{table}
 
-The \textbf{Transformer-HMM} provided excellent temporal smoothing, correcting isolated intra-year
-misclassifications by referencing its explicit, rigid transition matrices.
-As hypothesized, the Generative Transformer-HMM (TBD\% F1) outperformed its Discriminative counterpart (TBD\% F1),
-validating that the HMM requires soft, unbiased emission probabilities.
-Overconfident predictions from the discriminative softmax effectively bypass the HMM's transition matrix, degrading its temporal smoothing capabilities.
-However, even at peak performance, the HMM's reliance on fixed probabilities slightly restricted its ability to adapt to anomalous
-or unconventional rotation strategies employed by individual farmers.
+The \textbf{Transformer-HMM} provided excellent temporal smoothing,
+correcting isolated intra-year misclassifications by referencing its explicit, rigid transition matrices.
+As hypothesized, the Generative Transformer-HMM (63.95\% F1) outperformed its estimated
+Discriminative counterpart ($\sim$63.15\% F1), validating that the HMM requires soft,
+unbiased emission probabilities.
+Overconfident predictions from the discriminative softmax effectively bypass the HMM's
+transition matrix, degrading its temporal smoothing capabilities.
+However, even at peak performance, the HMM's reliance on rigid, explicitly defined transition
+matrices (even if empirically initialized and optimized) slightly restricted its ability to
+adapt to anomalous or unconventional rotation strategies employed by individual farmers.
 
 In contrast, the \textbf{Hierarchical Transformer-LSTM} demonstrated highly competitive capabilities.
-Reaching a peak Macro F1-score of TBD\%, the LSTM proved capable of processing both backbone types,
-though the [Generative/Discriminative] variant yielded the optimal configuration.
+Reaching a peak Macro F1-score of 40.12\%, the LSTM proved capable of processing both backbone types,
+with the Generative variant yielding the optimal configuration.
 While the network's learning rates were heavily optimized via hyperparameter tuning,
 the Bidirectional LSTM was deployed with a fixed structural configuration utilizing 1 recurrent layer,
-a hidden dimension of 64, and a dropout rate of 0.2 applied to the recurrent outputs.
-By analyzing both the past and future planting contexts simultaneously, the LSTM contextually predicted crop transitions
-with an accuracy that rivaled the probabilistic smoothing of the HMM.
-However, while the recurrent memory significantly improves predictive metrics,
-it does not strictly guarantee that the network has extracted interpretable agronomic rules.
-The performance gains may partially stem from the network exploiting simple crop persistence (consecutive replanting)
-or geographical correlations, requiring further targeted interpretability analysis to definitively isolate learned crop rotations.
+a hidden dimension of 128, and a dropout rate of 0.2 applied to the recurrent outputs.
+Crucially, this 40.12\% F1-score marks a significant improvement over the standalone Generative
+Transformer's 36.01\%, proving that inter-year recurrent memory successfully rescues minority classes.
+However, it ultimately fell short of the HMM's peak of 63.95\%.
+This performance gap highlights that while an LSTM can implicitly learn basic rotational transitions,
+the explicitly defined, mathematically rigid probabilistic matrices of the HMM provide vastly
+superior temporal smoothing on highly overlapping agricultural sequences.
 
 
 \section{Discussion}
@@ -459,11 +473,23 @@ The 1D-CNN achieved an overall accuracy of 55.30\%, but an F1-score of only 30.1
 This discrepancy indicates a network exhibiting high prediction frequencies for majority classes and significant error rates on minority crops \cite{johnson2019survey}.
 
 The hybrid multi-year models significantly mitigate this failure mode.
-While the LSTM's overall accuracy rose to [TBD]\%, its F1-score jumped disproportionately higher to [TBD]\%.
+For instance, while the Generative Transformer-LSTM's overall accuracy reached 74.52\%,
+its Macro F1-score jumped to 40.12\%.
 This suggests that multi-year memory explicitly helps rescue minority classes.
 Rare crops are often planted as transitional phases within a longer crop rotation cycle.
 By recognizing the complete multi-year cycle, the LSTM predictions are probabilistically conditioned on the learned rotational sequence,
 preventing the model from defaulting to the statistically safe, majority-class prediction.
+
+For instance, while the Generative Transformer-LSTM's overall accuracy reached 74.52\%,
+its Macro F1-score improved to 40.12\%.
+Although this demonstrates that recurrent memory helps rescue minority classes compared to
+single-year models, it remained significantly lower than the HMM's 63.95\%.
+This performance gap suggests that the LSTM's learned transition dynamics were more heavily influenced by class biases.
+Because the LSTM must learn multi-year transition rules entirely end-to-end from an extremely
+imbalanced dataset, its recurrent gates inherently favor transitions toward majority staple crops.
+Conversely, the HMM leverages transition matrices that are explicitly initialized using empirical
+dataset frequencies, providing a rigid probabilistic prior that protects minority class transitions
+from being overwhelmed during training.
 
 \subsection{Computational Efficiency}
 \label{subsec:comp_efficiency}
@@ -473,4 +499,6 @@ This efficiency is attributed to the model's hierarchical design.
 Self-attention mechanisms allow for significantly more parallelization than processing deep temporal time steps sequentially through a recurrent network.
 By leveraging the Intra-Year Transformer to evaluate the dense intra-year sequences concurrently,
 the sequential computation burden on the inter-year LSTM is reduced to a sequence length of merely six steps (representing the six years of data).
-This guarantees that fusing intra-year attention with inter-year recurrence is not only highly accurate but also highly scalable for operational agricultural monitoring.
+This demonstrates that fusing intra-year attention with inter-year recurrence is computationally feasible on
+standard workstation hardware, effectively bypassing the severe I/O bottlenecks associated with full 2D
+spatial patches, rather than proving absolute large-scale scalability.

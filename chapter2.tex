@@ -89,10 +89,10 @@ proportional preservation of temporal distance, this mapping effectively makes t
     \caption{AgroDays Positional Encoding (Lookup Table)}
     \label{alg:agrodays}
     \begin{algorithmic}[1]
-        \Require Maximum agricultural day $max\_seq \gets 365$
+        \Require Maximum agricultural day $max\_seq \gets 366$
         \Require Pre-compute during initialization: 
         \State $table \gets \text{zeros}(max\_seq, d\_model)$
-        \For{$pos = 0$ \textbf{to} $max\_seq$}
+        \For{$pos = 1$ \textbf{to} $max\_seq$}
             \For{$i = 0$ \textbf{to} $d\_model/2$}
                 \State $freq \gets pos / 10000^{2i/d\_model}$
                 \State $table[pos, 2i] \gets \sin(freq)$
@@ -118,6 +118,12 @@ a frozen lookup table \cite{attention_is_all_you_need}.
 During the forward pass, the model simply uses the input matrix $pos$ as indices to extract the correct sine and cosine vectors
 for each specific agricultural day, injecting this explicit temporal signal directly into the spectral embeddings.
 
+To handle calendar variations such as leap years, the day index is bounded to a 366-day cycle.
+For days lacking valid satellite acquisitions due to irregular revisit times,
+no explicit temporal padding is required for the positional encoding itself;
+instead, the overall sequence is zero-padded to a maximum length, and a standard padding mask is supplied
+to the Transformer to ensure the attention mechanism ignores these artificial tokens.
+
 \subsection{Linear Structural Controls}
 \label{subsec:linear_controls}
 
@@ -131,6 +137,9 @@ A single trained linear layer then maps these 13 features directly to the 47 out
 This projection is jointly optimized alongside the sequence heads (LSTM and HMM) utilizing a standard Categorical Cross-Entropy loss.
 Because a single linear layer applied to temporally pooled data cannot mathematically disentangle highly overlapping,
 non-linear phenological profiles, it outputs near-random temporal features.
+Furthermore, because this control utilizes a temporal mean, it entirely collapses the intra-annual temporal sequence.
+Therefore, this configuration evaluates the dual impact of removing both non-linear feature extraction
+and the chronological intra-year temporal structure.
 Testing the sequence heads on these impoverished inputs isolates their transition-modeling capabilities,
 explicitly evaluating whether multi-year sequence smoothing requires a high-capacity, non-linear feature extractor to function.
 
@@ -176,7 +185,8 @@ All subsequent computations are executed in log-space using the numerically stab
 
 During training and inference, the architecture employs a forward-backward algorithm to perform marginal smoothing;
 it computes the posterior probability of each crop class at year $t$ given the entire multi-year sequence of observations $x_{1:T}$.
-The network's final output logits are derived by averaging the forward and backward log-posteriors \cite{perantoni_bayesian_2024}.
+The network's final output logits are derived by combining (summing in log-space) the
+forward and backward probabilities to compute the smoothed marginals \cite{perantoni_bayesian_2024}.
 While Viterbi decoding (which seeks the single maximum probability sequence $\arg\max_{s_{1:T}} P(s_{1:T} | x_{1:T})$)
 is also computed as a supplementary metric, the primary sequence optimization relies on the smoothed marginals.
 Consequently, while the HMM heavily penalizes unlikely crop rotations, it does not enforce rigid, deterministic agronomic constraints;
@@ -245,3 +255,9 @@ The bidirectional nature of the LSTM is highly critical; it enables the network 
 This allows the model to refine its current crop prediction based on deep inter-year transition rules learned from preceding and subsequent planting decisions.
 Finally, the concatenated bidirectional hidden states are passed through a dropout regularization layer and a final linear classifier to output
 the highly contextualized unnormalized logit scores for all target crop classes across the entire multi-year sequence.
+
+The entire network is optimized end-to-end using a combined loss function:
+$\mathcal{L}_{total} = \mathcal{L}_{inter} + \lambda \mathcal{L}_{intra}$, where $\mathcal{L}_{inter}$ is
+the primary cross-entropy loss from the multi-year sequence output, $\mathcal{L}_{intra}$ is the
+auxiliary intra-year cross-entropy loss, and $\lambda$ is a weighting coefficient empirically
+set to balance feature extraction and transition modeling.
