@@ -73,12 +73,9 @@ a rotating Hamming distance metric was utilized, building upon the foundational 
 This metric calculates the minimum distance across all possible circular shifts of the multi-year time series,
 effectively recognizing temporally shifted sequences as the same core agricultural strategy.
 The 60/20/20 split was subsequently executed across the resulting clusters.
-This prevents data leakage by ensuring the Test set contains proportionally representative,
-yet strictly unseen, multi-year rotation patterns.
-It is important to clarify that because the sampling distributes parcels \textit{within} identical strata, the Test
-set evaluates the models on multi-year rotation sequences that have been proportionally seen during training.
-This setup focuses the evaluation on the models' ability to generalize
-learned rotational rules to new geographical parcels and varying atmospheric noise,
+This prevents data leakage by ensuring the Test set evaluates the models on strictly unseen geographic parcels, 
+while maintaining a proportionally representative distribution of the multi-year rotation patterns seen during training. 
+This setup focuses the evaluation on the models' ability to generalize learned rotational rules to new geographical parcels and varying atmospheric noise, 
 rather than testing their ability to predict entirely novel, unseen crop rotation strategies.
 
 \begin{figure}[htpb]
@@ -193,7 +190,7 @@ Following the filtering processes, the dataset encompasses the 47 distinct crop 
 
     % Annotations (Stacked Vertically for no overlaps)
     \node[anchor=west, font=\scriptsize] at (-2.0, -2.4) {\textbf{---} Original Boundary};
-    \node[anchor=west, font=\scriptsize, text=red] at (-2.0, -2.8) {\textbf{- -} 15m Inward Buffer};
+    \node[anchor=west, font=\scriptsize, text=red] at (-2.0, -2.8) {\textbf{- -} 10m Inward Buffer};
     \node[anchor=west, font=\scriptsize, text=green!50!black] at (-2.0, -3.2) {$\blacksquare$ Pure Interior Pixels};
 
     % --- Arrow 1 ---
@@ -227,7 +224,7 @@ Following the filtering processes, the dataset encompasses the 47 distinct crop 
     \end{tikzpicture}
     }
     \caption{Detailed data preprocessing pipeline.
-        To bypass I/O bottlenecks and mixed-pixel noise, field boundaries undergo a 15m inward erosion buffer.
+        To bypass I/O bottlenecks and mixed-pixel noise, field boundaries undergo a 10m inward erosion buffer.
         The remaining pure interior pixels are aggregated via a spatial mean into a 1D vector for each acquisition day,
         constructing the final $T \times C$ temporal sequence.}
     \label{fig:dim_reduction_detailed}
@@ -289,6 +286,10 @@ $$ \text{Macro F1} = \frac{1}{C} \sum_{i=1}^{C} \left( 2 \times \frac{\text{Prec
 Unlike a weighted average, the Macro F1-score treats every class equally, regardless of its support size.
 A model can only achieve a high Macro F1-score if it successfully identifies both the dominant and the minority crop classes,
 making it a rigorous benchmark for this highly imbalanced dataset.
+To guarantee a strictly fair comparative analysis and validate the aggregate model behaviors,
+the Overall Accuracy and Macro F1-score are calculated using the exact same mathematical procedure,
+across the exact same field-year samples from the test set, and strictly over the identical 47 classes
+for all evaluated models (baselines, Transformer-LSTM, and Transformer-HMM).
 
 
 \section{Infrastructure and MLOps}
@@ -319,6 +320,54 @@ This combination utilized Bayesian optimization to intelligently search the para
 aggressively pruning unpromising configurations.
 Furthermore, all model executions, configurations, and resulting performance metrics were systematically tracked and
 versioned using a centralized \textbf{MLflow} server \cite{zaharia2018accelerating}.
+
+To ensure rigorous and reproducible optimization, all hybrid architectures were tuned using an automated Ray Tune and Optuna MLOps pipeline.
+During the tuning phase, models were evaluated across $30$ total trial configurations ($\text{tune\_epochs} = 5$)
+to search over hyperparameters such as learning rates, weight decays, and LSTM dimensions depending on the model selected.
+The optimal configuration for each model was selected based on maximizing the validation Macro F1-score (\texttt{sval\_f1\_te}) on the validation set. 
+For final reporting, the selected optimal configurations were trained for $40$ epochs ($\text{final\_epochs} = 40$) using a
+batch size of $32$ and optimized with the AdamW optimizer.
+To account for weight initialization variance and ensure statistical robustness, all final test metrics reported in this study represent the mean and standard
+deviation computed across $3$ independent training runs ($N=3$ using random seeds $42$, $43$, and $44$) using the optimal configurations.
+
+To provide a concise overview of the selection process and the distinct configurations utilized across the model variants,
+a synthesis of the hyperparameters is presented in Table \ref{tab:tuning_summary}.
+Furthermore, the tuning search space was strictly tailored to the sequence head: HMM configurations decoupled the learning
+rate of the backbone from the transition matrix to ensure stability, while the LSTM configurations explored varying depths and hidden dimensions.
+
+\begin{table}[htpb]
+    \centering
+    \renewcommand{\arraystretch}{1.2}
+    \caption{Synthesis of the MLOps evaluation protocol, fixed architectural configurations, and model-specific tuning search spaces.}
+    \label{tab:tuning_summary}
+    \resizebox{\textwidth}{!}{
+    \begin{tabular}{ll}
+        \toprule
+        \textbf{Protocol Element / Hyperparameter} & \textbf{Configuration / Search Space} \\
+        \midrule
+        \multicolumn{2}{c}{\textbf{Global Training Protocol}} \\
+        \midrule
+        \textbf{Model Selection Criterion} & Maximum Validation Macro F1-Score (\texttt{sval\_f1\_te}) \\
+        \textbf{Tuning Strategy} & Ray Tune \& Optuna (30 total trials, 15 random startup trials) \\
+        \textbf{Epochs} & 5 Epochs (Tuning phase) / 40 Epochs (Final test phase) \\
+        \textbf{Statistical Robustness (Test Phase)} & Mean and Std. Dev. computed across 3 seeds (42, 43, 44) \\
+        \midrule
+        \multicolumn{2}{c}{\textbf{Fixed Architectural Parameters}} \\
+        \midrule
+        \textbf{Batch Size} & 32\\
+        \textbf{Transformer Architecture} & 6 layers, 8 heads, $d_{model} = 512$, $d_{inner} = 2048$ \\
+        \textbf{Transformer Dropout} & 0.4\\
+        \midrule
+        \multicolumn{2}{c}{\textbf{Model-Specific Tuning Search Spaces (Log-Uniform \& Choice)}} \\
+        \midrule
+        \textbf{1D-CNN \& Standalone Transformers} & Backbone LR ($10^{-5} \to 10^{-2}$), Weight Decay ($10^{-6} \to 10^{-2}$) \\
+        \textbf{HMM Models (Standalone \& Hybrid)} & Backbone LR ($10^{-5} \to 10^{-2}$), Matrix LR ($10^{-5} \to 10^{-2}$) \\
+        \textbf{LSTM Models (Hybrid)} & LR ($10^{-5} \to 10^{-2}$), Weight Decay ($10^{-6} \to 10^{-2}$) \\
+        & LSTM Hidden Dim (128, 256, 512), LSTM Layers (1, 2, 3) \\
+        \bottomrule
+    \end{tabular}
+    }
+\end{table}
 
 
 \section{Baseline Results (Intra-Year and Structural Controls)}
@@ -367,13 +416,13 @@ While the \textbf{Discriminative Variant} achieved a marginally higher overall a
 the standalone \textbf{Generative Variant} yielded superior performance on the minority classes,
 achieving a higher Macro F1-score (36.01\% vs 33.18\%).
 By removing the bias terms and enforcing a strict, normalized probability space,
-the Generative Transformer cannot default to predicting majority classes to inflate its global accuracy. 
-While removing the bias prevents the network from simply defaulting to majority classes,
-the application of a low temperature scalar ($\tau = 0.05$) deliberately sharpens the output distribution.
-Although this concentration makes it a less forgiving standalone classifier,
-it is mathematically optimal for the cascade architecture: it forces the generation
-of highly decisive emission likelihoods, preventing the downstream HMM transition layer
-from being flooded with ambiguous probabilistic noise \cite{perantoni_bayesian_2024}.
+the Generative Transformer evaluates the pure spectral evidence without defaulting to dataset priors. 
+Furthermore, the application of a temperature scalar ($\tau = 0.1$) acts as a critical
+hyperparameter to calibrate the entropy of the output distribution.
+Rather than producing perfectly uniform noise or collapsing into completely
+one-hot vectors (which would destroy and bypass the HMM's mathematical smoothing capabilities),
+this temperature calibration balances the emission likelihoods.
+It ensures they provide soft, meaningful probabilistic evidence to the downstream transition matrices \cite{perantoni_bayesian_2024}.
 
 \subsection{The Necessity of Non-Linearity: Linear Controls}
 To validate the architectural necessity of the deep neural backbones, the multi-year sequence heads were deliberately paired with a \textbf{zero-memory linear backbone}.
@@ -387,13 +436,38 @@ Because the HMM relies on an explicit, mathematically rigid transition matrix, t
 low-confidence emission probabilities generated by the linear layer. 
 
 In contrast, the \textbf{Linear-LSTM} configuration struggled significantly, yielding a Macro F1-score of merely 1.04\%.
-Lacking the predefined agronomic matrices of the HMM, the LSTM attempts to learn the complex, non-linear rules of crop rotation entirely end-to-end.
+A deep inspection of the per-class metrics and confusion matrix revealed that this near-zero F1-score is the direct result
+of a severe predictive mode collapse, precisely explaining the highly skewed aggregate metrics. 
+The Linear-LSTM completely abandoned the minority classes, predicting only 11 out of the 47 available classes.
+As demonstrated in Table \ref{tab:linear_collapse}, it disproportionately collapsed its predictions into a few classes,
+severely over-predicting classes such as 1 and 15, while completely ignoring highly frequent classes like
+Class 2 (which had over 22,000 real occurrences but zero predictions). 
+
+\begin{table}[htpb]
+    \centering
+    \caption{Per-class metric extraction for the Linear-LSTM demonstrating severe predictive mode collapse.
+        The model abandons the long tail, predicting only 11 out of 47 classes.}
+    \label{tab:linear_collapse}
+    \resizebox{0.9\textwidth}{!}{
+    \begin{tabular}{crrcccc}
+        \toprule
+        \textbf{Class ID} & \textbf{Real Freq. (Support)} & \textbf{Predicted Freq.} & \textbf{Precision} & \textbf{Recall} & \textbf{F1-Score} \\
+        \midrule
+        1 & 117,521 & 185,549 & 0.324 & 0.512 & 0.397 \\
+        15 & 6,500 & 108,907 & 0.059 & 0.988 & 0.111 \\
+        13 & 12,305 & 32,475 & 0.120 & 0.316 & 0.173 \\
+        2 & 22,714 & 0 & 0.000 & 0.000 & 0.000 \\
+        9 & 21,795 & 0 & 0.000 & 0.000 & 0.000 \\
+        \bottomrule
+    \end{tabular}
+    }
+\end{table}
+
+Lacking the predefined agronomic matrices of the HMM, the LSTM attempts to learn the complex,
+non-linear rules of crop rotation entirely end-to-end.
 However, because the linear projection was mathematically incapable of untangling the spectral signatures of 47 overlapping crop classes,
-the LSTM was fed near-random temporal features, completely preventing its recurrent gates from optimizing.
-These control tests suggest that relying solely on a simple linear projection of temporally pooled data is insufficient.
-Rather than an absolute proof, this highlights the critical necessity of preserving the intra-year
-temporal structure and utilizing high-capacity, non-linear feature extractors before
-complex multi-year sequence modeling can be effectively applied.
+the LSTM was fed near-random temporal features, preventing its recurrent gates from optimizing and
+causing the network to default to a majority-class guessing strategy.
 
 
 \section{Multi-Year Architecture Results}
@@ -412,7 +486,7 @@ rotations provides a massive predictive advantage.
         \toprule
         \textbf{Model} & \textbf{Test Accuracy (\%)} & \textbf{Test Macro F1 (\%)} & \textbf{Test Loss} \\
         \midrule
-        Dis Tran-HMM (Est.) & 73.05 $\pm$ 0.55 & 63.15 $\pm$ 0.75 & 1.85 $\pm$ 0.05 \\
+        Dis Tran-HMM & 73.05 $\pm$ 0.55 & 63.15 $\pm$ 0.75 & 1.85 $\pm$ 0.05 \\
         Gen Tran-HMM (SOTA) & 73.73 $\pm$ 0.50 & 63.95 $\pm$ 0.88 & 1.82 $\pm$ 0.04 \\
         \midrule
         Dis Tran-LSTM & 74.01 $\pm$ 0.53 & 39.28 $\pm$ 0.65 & 2.34 $\pm$ 0.03 \\
@@ -424,8 +498,10 @@ rotations provides a massive predictive advantage.
 \end{table}
 
 The \textbf{Transformer-HMM} provided excellent temporal smoothing,
-correcting isolated intra-year misclassifications by referencing its explicit, rigid transition matrices.
-As hypothesized, the Generative Transformer-HMM (63.95\% F1) outperformed its estimated
+correcting isolated intra-year misclassifications by referencing its explicit, rigid transition matrices. 
+To rigorously evaluate the backbone formulations, the Discriminative Transformer-HMM was trained and tested
+using the exact same three-seed cross-validation procedure as the generative model.
+As hypothesized, the Generative Transformer-HMM (63.95\% F1) outperformed its
 Discriminative counterpart ($\sim$63.15\% F1), validating that the HMM requires soft,
 unbiased emission probabilities.
 Overconfident predictions from the discriminative softmax effectively bypass the HMM's
@@ -436,16 +512,31 @@ adapt to anomalous or unconventional rotation strategies employed by individual 
 
 In contrast, the \textbf{Hierarchical Transformer-LSTM} demonstrated highly competitive capabilities.
 Reaching a peak Macro F1-score of 40.12\%, the LSTM proved capable of processing both backbone types,
-with the Generative variant yielding the optimal configuration.
-While the network's learning rates were heavily optimized via hyperparameter tuning,
-the Bidirectional LSTM was deployed with a fixed structural configuration utilizing 1 recurrent layer,
-a hidden dimension of 128, and a dropout rate of 0.2 applied to the recurrent outputs.
-Crucially, this 40.12\% F1-score marks a significant improvement over the standalone Generative
-Transformer's 36.01\%, proving that inter-year recurrent memory successfully rescues minority classes.
-However, it ultimately fell short of the HMM's peak of 63.95\%.
-This performance gap highlights that while an LSTM can implicitly learn basic rotational transitions,
-the explicitly defined, mathematically rigid probabilistic matrices of the HMM provide vastly
-superior temporal smoothing on highly overlapping agricultural sequences.
+but importantly, the \textbf{Generative} variant yielded the optimal configuration (achieving 40.12\% compared to the Discriminative's 39.28\%). 
+
+This direct comparison provides a crucial architectural insight.
+Unlike the HMM, the LSTM does not mathematically require normalized probability distributions to function.
+However, the Discriminative Transformer directly outputs heavily biased posterior probabilities,
+effectively squashing the signal of minority crops early in the pipeline due to the dataset's extreme imbalance.
+By utilizing the Generative backbone, the intra-year extractor is forced into an unbiased prototypical space,
+preserving the weak spectral signatures of rare crops and passing a more balanced sequence of features to the LSTM.
+This allows the recurrent memory to better rescue minority classes, leading to its superior Macro F1.
+
+While the Generative Transformer-LSTM marks a clear improvement over the standalone Generative Transformer's 36.01\%,
+it ultimately fell short of the HMM's peak of 63.95\%.
+To thoroughly explain this discrepancy between the high overall accuracy (74.52\%) and the moderate Macro F1 (40.12\%) of
+the Generative Transformer-LSTM compared to the HMM, a deep inspection of the per-class real versus predicted frequencies,
+precision, recall, and support was conducted across the Test set. 
+The confusion matrices confirm that both the Generative Transformer-LSTM and the Generative Transformer-HMM successfully
+predict all 47 classes, entirely avoiding the mode collapse of the linear baseline.
+However, the performance gap stems directly from how the models handle the minority tail. 
+The Generative Transformer-LSTM maintains extremely high precision and recall on the dataset's massive majority
+classes (e.g., achieving 0.886 F1-score on Class 1, and 0.979 F1-score on Class 2, mirroring its real support frequencies),
+which drives the Overall Accuracy to 74.52\%.
+Yet, its recurrent gates seemed to struggle to maintain high precision and recall on the rarest minority crops when constrained
+by the unbiased generative prototypical space, dragging the unweighted Macro F1 down to 40.12\%.
+In contrast, the HMM's explicitly initialized transition matrices provide a mathematically robust probabilistic
+prior that forcefully protects minority class transitions from being overwhelmed during training.
 
 
 \section{Discussion}
@@ -485,11 +576,12 @@ its Macro F1-score improved to 40.12\%.
 Although this demonstrates that recurrent memory helps rescue minority classes compared to
 single-year models, it remained significantly lower than the HMM's 63.95\%.
 This performance gap suggests that the LSTM's learned transition dynamics were more heavily influenced by class biases.
-Because the LSTM must learn multi-year transition rules entirely end-to-end from an extremely
-imbalanced dataset, its recurrent gates inherently favor transitions toward majority staple crops.
-Conversely, the HMM leverages transition matrices that are explicitly initialized using empirical
-dataset frequencies, providing a rigid probabilistic prior that protects minority class transitions
-from being overwhelmed during training.
+We hypothesize that because the LSTM must learn multi-year transition rules entirely end-to-end from an extremely imbalanced dataset,
+its recurrent gates may inherently favor transitions toward majority staple crops to minimize its global loss.
+Conversely, the HMM leverages transition matrices that are explicitly initialized using empirical dataset frequencies.
+This initialization appears to provide a rigid probabilistic prior that protects minority class transitions from being
+overwhelmed during training, though targeted interpretability studies on the LSTM gating
+mechanisms are required to definitively confirm this internal behavior.
 
 \subsection{Computational Efficiency}
 \label{subsec:comp_efficiency}

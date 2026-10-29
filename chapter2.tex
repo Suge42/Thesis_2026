@@ -21,8 +21,9 @@ This is followed by a 1D Batch Normalization layer and an in-place ReLU activati
 The second layer further projects the features from 64 to 128 channels, utilizing the same kernel size, padding, normalization, and activation parameters.
 
 For classification, a point-wise convolution (kernel size of 1) is applied to map the extracted 128-dimensional features to the target crop classes.
-Because the network produces predictions for each time step, a temporal mean pooling of the unnormalized logits
-is executed across all time steps in the year to generate the final field-level classification.
+Because the network produces predictions for each time step, a \textbf{masked} temporal mean pooling of
+the unnormalized logits is executed across all time steps in the year to generate the final field-level classification,
+explicitly ensuring that zero-padded tokens are excluded from the average.
 It is important to note that with two convolutional layers utilizing a kernel size of 3, a stride of 1, and a padding of 1,
 the local receptive field spans exactly five consecutive observations.
 Because the input sequence is irregularly sampled due to cloud cover, these five observations do not correspond
@@ -92,8 +93,8 @@ proportional preservation of temporal distance, this mapping effectively makes t
         \Require Maximum agricultural day $max\_seq \gets 366$
         \Require Pre-compute during initialization: 
         \State $table \gets \text{zeros}(max\_seq, d\_model)$
-        \For{$pos = 1$ \textbf{to} $max\_seq$}
-            \For{$i = 0$ \textbf{to} $d\_model/2$}
+        \For{$pos = 0$ \textbf{to} $max\_seq - 1$}
+            \For{$i = 0$ \textbf{to} $(d\_model/2) - 1$}
                 \State $freq \gets pos / 10000^{2i/d\_model}$
                 \State $table[pos, 2i] \gets \sin(freq)$
                 \State $table[pos, 2i+1] \gets \cos(freq)$
@@ -187,6 +188,11 @@ During training and inference, the architecture employs a forward-backward algor
 it computes the posterior probability of each crop class at year $t$ given the entire multi-year sequence of observations $x_{1:T}$.
 The network's final output logits are derived by combining (summing in log-space) the
 forward and backward probabilities to compute the smoothed marginals \cite{perantoni_bayesian_2024}.
+
+The network's final output logits are derived by combining the forward and backward probabilities,
+which mathematically translates to summing their log-probabilities (the log-space equivalent of probability multiplication),
+to compute the smoothed marginals \cite{perantoni_bayesian_2024}.
+
 While Viterbi decoding (which seeks the single maximum probability sequence $\arg\max_{s_{1:T}} P(s_{1:T} | x_{1:T})$)
 is also computed as a supplementary metric, the primary sequence optimization relies on the smoothed marginals.
 Consequently, while the HMM heavily penalizes unlikely crop rotations, it does not enforce rigid, deterministic agronomic constraints;
@@ -209,7 +215,8 @@ without relying on fixed, explicit transition matrices.
 The architecture processes the temporal scales using a two-stage approach.
 In the first stage, the sequence is flattened to merge the batch and year dimensions,
 allowing the Intra-Year Transformer Encoder to evaluate all years independently and concurrently by flattening the temporal sequences into the batch dimension.
-The Transformer's complex phenological outputs are temporally mean-pooled and passed through an intra-year classifier,
+The Transformer's complex phenological outputs are temporally masked-mean-pooled
+(strictly excluding artificial padding tokens) and passed through an intra-year classifier,
 collapsing the dense $d\_model$ feature extraction into a sequence of real-valued scores (logits) for the 47 specific target classes.
 Crucially, this intermediate 47-dimensional vector is not merely a latent representation;
 the Intra-Year Transformer is explicitly optimized using an auxiliary intra-year classification loss during training.
@@ -236,7 +243,7 @@ In the second stage, this chronological sequence of yearly predictions is restor
         \State $X_{emb} \gets \text{LinearProjection}(X_{flat})$
         \State $X_{emb} \gets \text{AgroDaysPositionalEncoding}(X_{emb}, pos_{flat})$
         \State $T_{out} \gets \text{TransformerEncoder}(X_{emb})$ \Comment{Self-Attention over time steps}
-        \State $Y_{emb} \gets \text{mean}(T_{out}, \text{dim}=1)$ \Comment{Temporal pooling: $[B \cdot Y, d\_model]$}
+        \State $Y_{emb} \gets \text{masked\_mean}(T_{out}, \text{dim}=1, \text{mask})$ \Comment{Masked temporal pooling, ignoring padding: $[B \cdot Y, d\_model]$}
         \State $Y_{logits} \gets \text{IntraYearClassifier}(Y_{emb})$ \Comment{Map to real-valued logits: $[B \cdot Y, n\_classes]$}
         \vspace{1.5mm}
         \State \textbf{Stage 2: Inter-Year Processing (LSTM)}
@@ -260,4 +267,4 @@ The entire network is optimized end-to-end using a combined loss function:
 $\mathcal{L}_{total} = \mathcal{L}_{inter} + \lambda \mathcal{L}_{intra}$, where $\mathcal{L}_{inter}$ is
 the primary cross-entropy loss from the multi-year sequence output, $\mathcal{L}_{intra}$ is the
 auxiliary intra-year cross-entropy loss, and $\lambda$ is a weighting coefficient empirically
-set to balance feature extraction and transition modeling.
+set to $1.0$ to balance feature extraction and transition modeling.
