@@ -499,8 +499,14 @@ rotations provides a massive predictive advantage.
 
 The \textbf{Transformer-HMM} provided excellent temporal smoothing,
 correcting isolated intra-year misclassifications by referencing its explicit, rigid transition matrices. 
-To rigorously evaluate the backbone formulations, the Discriminative Transformer-HMM was trained and tested
-using the exact same three-seed cross-validation procedure as the generative model.
+To rigorously evaluate the backbone formulations, the Transformer-HMM was evaluated
+using three independent training runs with different random seeds on the same fixed train/validation/test split. 
+Specifically, the dataset partitioning remained strictly identical across all runs to prevent evaluation variance,
+while the different random seeds solely dictated three stochastic components: the initial neural network weight distributions,
+the random dropout masks applied during training, and the shuffling sequence of the training dataloader.
+This methodology ensures the final averaged metrics are statistically robust against initialization
+randomicity, while evaluating exactly the same geographical parcels.
+
 As hypothesized, the Generative Transformer-HMM (63.95\% F1) outperformed its
 Discriminative counterpart ($\sim$63.15\% F1), validating that the HMM requires soft,
 unbiased emission probabilities.
