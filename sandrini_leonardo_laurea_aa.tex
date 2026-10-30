@@ -59,13 +59,14 @@
 %% Sezione Ringraziamenti opzionale
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  \input{ringraziamenti}
-  \clearpage
-  \pagestyle{plain} % nessuna intestazione e pie pagina con numero al centro
+  %\input{ringraziamenti}
+  %\clearpage
+  %\pagestyle{plain} % nessuna intestazione e pie pagina con numero al centro
 
   
   % inizio numerazione pagine in numeri arabi
-  \mainmatter
+  %\mainmatter
+  \pagenumbering{arabic}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -152,6 +153,7 @@
     % bibliografia in formato bibtex
     %
     % aggiunta del capitolo nell'indice
+    \clearpage
     \addcontentsline{toc}{chapter}{Bibliography}
     % stile con ordinamento alfabetico in funzione degli autori
     %\bibliographystyle{plain}

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.5) (preloaded format=pdflatex 2026.8.17)  30 OCT 2026 19:31
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.5) (preloaded format=pdflatex 2026.8.17)  30 OCT 2026 22:35
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -709,7 +709,7 @@ Package epstopdf Info: Source file: <marchio_unitrento_colore_it_202002.eps>
 (epstopdf)             Command: <miktex-epstopdf --outfile=marchio_unitrento_colore_it_202002-eps-converted-to.pdf marchio_unitrento_colore_it_202002.eps>
 (epstopdf)             \includegraphics on input line 7.
 Package epstopdf Info: Output file is already uptodate.
-<marchio_unitrento_colore_it_202002-eps-converted-to.pdf, id=169, 369.7815pt x 114.6684pt>
+<marchio_unitrento_colore_it_202002-eps-converted-to.pdf, id=165, 369.7815pt x 114.6684pt>
 File: marchio_unitrento_colore_it_202002-eps-converted-to.pdf Graphic file (type pdf)
 <use marchio_unitrento_colore_it_202002-eps-converted-to.pdf>
 Package pdftex.def Info: marchio_unitrento_colore_it_202002-eps-converted-to.pdf  used on input line 7.
@@ -727,19 +727,11 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 )) [1
 
-{C:/Users/lsand/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map} <./marchio_unitrento_colore_it_202002-eps-converted-to.pdf>] (ringraziamenti.tex)
-pdfTeX warning (ext4): destination with the same identifier (name{page.}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.63   \clearpage
-                  [2
-
-] (sandrini_leonardo_laurea_aa.toc)
+{C:/Users/lsand/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map} <./marchio_unitrento_colore_it_202002-eps-converted-to.pdf>] (sandrini_leonardo_laurea_aa.toc)
 \tf@toc=\write5
 \openout5 = `sandrini_leonardo_laurea_aa.toc'.
 
  [1
-
 
 
 ] (abstract.tex [2
@@ -759,7 +751,7 @@ Chapter 2.
 
 
 pdfTeX warning: pdflatex (file ./images/cnn_diagram.pdf): PDF inclusion: found PDF version <1.7>, but at most version <1.5> allowed
-<images/cnn_diagram.pdf, id=368, 499.8675pt x 243.79079pt>
+<images/cnn_diagram.pdf, id=360, 499.8675pt x 243.79079pt>
 File: images/cnn_diagram.pdf Graphic file (type pdf)
 <use images/cnn_diagram.pdf>
 Package pdftex.def Info: images/cnn_diagram.pdf  used on input line 34.
@@ -769,7 +761,7 @@ Package pdftex.def Info: images/cnn_diagram.pdf  used on input line 34.
  <./images/cnn_diagram.pdf>]
 
 pdfTeX warning: pdflatex (file ./images/transformer_diagram.pdf): PDF inclusion: found PDF version <1.7>, but at most version <1.5> allowed
-<images/transformer_diagram.pdf, id=391, 630.43526pt x 391.4625pt>
+<images/transformer_diagram.pdf, id=382, 630.43526pt x 391.4625pt>
 File: images/transformer_diagram.pdf Graphic file (type pdf)
 <use images/transformer_diagram.pdf>
 Package pdftex.def Info: images/transformer_diagram.pdf  used on input line 49.
@@ -779,23 +771,23 @@ Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on inp
  [13]
 
 pdfTeX warning: pdflatex (file ./images/transformer_hmm_diagram.pdf): PDF inclusion: found PDF version <1.7>, but at most version <1.5> allowed
-<images/transformer_hmm_diagram.pdf, id=439, 759.79855pt x 365.44528pt>
+<images/transformer_hmm_diagram.pdf, id=431, 759.79855pt x 365.44528pt>
 File: images/transformer_hmm_diagram.pdf Graphic file (type pdf)
 <use images/transformer_hmm_diagram.pdf>
-Package pdftex.def Info: images/transformer_hmm_diagram.pdf  used on input line 163.
+Package pdftex.def Info: images/transformer_hmm_diagram.pdf  used on input line 161.
 (pdftex.def)             Requested size: 435.32422pt x 209.38219pt.
 
-Overfull \hbox (10.94707pt too wide) in paragraph at lines 193--197
+Overfull \hbox (10.94707pt too wide) in paragraph at lines 191--195
 []\OT1/cmr/m/n/10.95 (-20) While Viterbi de-cod-ing (which seeks the sin-gle max-i-mum prob-a-bil-ity se-quence $[] [][] \OML/cmm/m/it/10.95 P\OT1/cmr/m/n/10.95 (-20) (\OML/cmm/m/it/10.95 s[]\OMS/cmsy/m/n/10.95 j\OML/cmm/m/it/10.95 x[]\OT1/cmr/m/n/10.95 (-20) )$)
  []
 
 [14 <./images/transformer_hmm_diagram.pdf>]
 
 pdfTeX warning: pdflatex (file ./images/transformer_lstm_diagram.pdf): PDF inclusion: found PDF version <1.7>, but at most version <1.5> allowed
-<images/transformer_lstm_diagram.pdf, id=475, 759.79855pt x 340.3917pt>
+<images/transformer_lstm_diagram.pdf, id=469, 759.79855pt x 340.3917pt>
 File: images/transformer_lstm_diagram.pdf Graphic file (type pdf)
 <use images/transformer_lstm_diagram.pdf>
-Package pdftex.def Info: images/transformer_lstm_diagram.pdf  used on input line 207.
+Package pdftex.def Info: images/transformer_lstm_diagram.pdf  used on input line 206.
 (pdftex.def)             Requested size: 435.32422pt x 195.02771pt.
 ) (chapter3.tex [15 <./images/transformer_lstm_diagram.pdf>] [16]
 Chapter 3.
@@ -804,7 +796,7 @@ Chapter 3.
 ]
 
 pdfTeX warning: pdflatex (file ./images/map_33UVP.pdf): PDF inclusion: found PDF version <1.7>, but at most version <1.5> allowed
-<images/map_33UVP.pdf, id=531, 810.4679pt x 472.88669pt>
+<images/map_33UVP.pdf, id=522, 810.4679pt x 472.88669pt>
 File: images/map_33UVP.pdf Graphic file (type pdf)
 <use images/map_33UVP.pdf>
 Package pdftex.def Info: images/map_33UVP.pdf  used on input line 83.
@@ -813,7 +805,8 @@ Package pdftex.def Info: images/map_33UVP.pdf  used on input line 83.
 Chapter 4.
 [26
 
-]) (sandrini_leonardo_laurea_aa.bbl [27] [28
+]) [27] (sandrini_leonardo_laurea_aa.bbl [28
+
 
 ] [29]
 Underfull \hbox (badness 1189) in paragraph at lines 305--309
@@ -826,20 +819,20 @@ LaTeX2e <2026-06-01>
 L3 programming layer <2026-07-20>
  ***********
 Package rerunfilecheck Info: File `sandrini_leonardo_laurea_aa.out' has not changed.
-(rerunfilecheck)             Checksum: 0C0853390159F93A544E4EF9C64C996E;8994.
+(rerunfilecheck)             Checksum: CAAF3BDAFD20B9E93A53C74C23806528;8715.
  ) 
 Here is how much of TeX's memory you used:
- 28046 strings out of 467500
- 532028 string characters out of 5408529
- 986328 words of memory out of 5000000
- 56445 multiletter control sequences out of 15000+600000
- 651873 words of font info for 228 fonts, out of 8000000 for 9000
+ 28033 strings out of 467500
+ 531730 string characters out of 5408529
+ 985273 words of memory out of 5000000
+ 56438 multiletter control sequences out of 15000+600000
+ 651813 words of font info for 227 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 92i,10n,104p,1066b,1171s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 92i,10n,104p,1066b,1173s stack positions out of 10000i,1000n,20000p,200000b,200000s
  <C:\Users\lsand\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm1095.pk><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx8.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmcsc10.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi6.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr6.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr9.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmss10.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmss8.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmss9.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmssbx10.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt10.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msam10.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on sandrini_leonardo_laurea_aa.pdf (33 pages, 1752691 bytes).
+Output written on sandrini_leonardo_laurea_aa.pdf (32 pages, 1750766 bytes).
 PDF statistics:
- 851 PDF objects out of 1000 (max. 8388607)
- 131 named destinations out of 1000 (max. 500000)
- 54131 words of extra memory for PDF output out of 61914 (max. 10000000)
+ 843 PDF objects out of 1000 (max. 8388607)
+ 130 named destinations out of 1000 (max. 500000)
+ 54123 words of extra memory for PDF output out of 61914 (max. 10000000)
 

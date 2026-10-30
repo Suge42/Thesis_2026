@@ -128,7 +128,7 @@ to the Transformer to ensure the attention mechanism ignores these artificial to
 \subsection{Linear Structural Controls}
 \label{subsec:linear_controls}
 
-To scientifically validate the necessity of the aforementioned non-linear backbones,
+To evaluate the architectures without the aforementioned non-linear backbones,
 standalone multi-year controls utilizing a zero-memory linear baseline were evaluated.
 Rather than relying on randomly initialized weights, this control relies on a fully trainable linear layer devoid of intermediate non-linearities.
 
@@ -136,8 +136,6 @@ Specifically, the raw 13-band SITS data is temporally mean-pooled across the gro
 collapse the intra-year temporal sequence into a static feature vector.
 A single trained linear layer then maps these 13 features directly to the 47 output classes.
 This projection is jointly optimized alongside the sequence heads (LSTM and HMM) utilizing a standard Categorical Cross-Entropy loss.
-Because a single linear layer applied to temporally pooled data cannot mathematically disentangle highly overlapping,
-non-linear phenological profiles, it outputs near-random temporal features.
 Furthermore, because this control utilizes a temporal mean, it entirely collapses the intra-annual temporal sequence.
 Therefore, this configuration evaluates the dual impact of removing both non-linear feature extraction
 and the chronological intra-year temporal structure.
@@ -171,7 +169,7 @@ These likelihoods are then passed into the HMM transition layer.
 To ensure a scientifically rigorous comparison against the purely neural recurrent baseline,
 it is crucial to detail the exact formulation of the HMM implemented in this thesis \cite{perantoni_bayesian_2024}.
 
-Rather than relying on frozen, manually defined agronomic rules, the HMM's explicit probabilistic
+Rather than relying on frozen, manually defined agronomic rules, the HMM's probabilistic
 transition matrices are jointly optimized during training alongside the neural backbone \cite{perantoni_bayesian_2024}.
 The transition model is formulated as a first-order, time-variant Markov chain;
 this means a distinct transition matrix is utilized for each specific yearly interval
@@ -198,9 +196,10 @@ rather, it balances the Transformer's emission likelihoods with maximum statisti
 \subsection{The Novel Hierarchical Transformer-LSTM}
 \label{subsec:transformer_lstm}
 
-As an alternative to Bayesian transition smoothing, this thesis proposes a novel, purely neural multi-year architecture:
-the Hierarchical Transformer-LSTM. This model is designed to learn both intra-year phenology and inter-year crop rotations end-to-end,
-without relying on fixed, explicit transition matrices.
+As an alternative to Bayesian transition smoothing, this thesis proposes a novel,
+purely neural multi-year architecture: the Hierarchical Transformer-LSTM.
+This model is designed to learn both intra-year phenology and inter-year crop rotations end-to-end,
+without relying on empirically optimized transition matrices.
 
 \begin{figure}[htpb]
     \centering

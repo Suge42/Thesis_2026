@@ -413,7 +413,7 @@ and predict multi-year agricultural cycles directly from continuous, raw satelli
 Recently, researchers have demonstrated significant success in bridging these paradigms by integrating Bayesian modeling---such
 as Hidden Markov Models (HMMs)---with deep Transformer Encoders to explicitly capture intricate multi-year crop rotation patterns \cite{perantoni_bayesian_2024}. 
 In this cascade setup, the Transformer acts as the emission model providing class likelihoods, while the HMM acts as the transition model.
-The HMM models the temporal sequence through explicit transition matrices.
+The HMM models the temporal sequence through probabilistic transition matrices.
 Rather than relying strictly on fixed agronomic rules, these matrices can be initialized empirically
 from dataset frequencies and jointly optimized during training, allowing the model to balance statistical
 temporal coherence with the emission likelihoods provided by the Transformer.
@@ -436,9 +436,10 @@ and exploring the predictive power of multi-year sequence modeling. The primary 
     \item \textbf{Comprehensive Baseline Benchmarking:}
         Robust single-year temporal baseline models---specifically a \textbf{1-Dimensional Convolutional Neural Network (1D-CNN)}
         and standalone \textbf{Transformer Encoders} (evaluated in both generative and discriminative variants)---are developed and
-        tuned to provide a standard for intra-year phenological classification. 
+        tuned to provide a standard for intra-year phenological classification.
         Additionally, standalone tests using a simplified \textbf{linear backbone} paired with \textbf{LSTM} and \textbf{HMM} heads are executed.
-        These serve as a deliberate control mechanism, proving the structural necessity of high-capacity non-linear feature extractors when processing raw SITS.
+        These serve as a deliberate control mechanism to evaluate the architectures when both high-capacity non-linear feature extractors
+        and intra-year chronological information are removed.
     
     \item \textbf{Confronting Novel and Established Multi-Year Architectures:}
         A custom Hierarchical \textbf{Transformer-LSTM} architecture is designed and compared to the established \textbf{Transformer-HMM} Bayesian approach.

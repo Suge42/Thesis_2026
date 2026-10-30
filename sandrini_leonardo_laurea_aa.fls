@@ -425,17 +425,11 @@ INPUT C:\Users\lsand\AppData\Local\Programs\MiKTeX\tex\latex\microtype\mt-msb.cf
 INPUT C:\Users\lsand\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\symbols\msbm10.tfm
 INPUT C:\Users\lsand\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\symbols\msbm10.tfm
 INPUT C:\Users\lsand\AppData\Local\MiKTeX\fonts\map\pdftex\pdftex.map
-INPUT .\ringraziamenti.tex
-INPUT .\ringraziamenti.tex
-INPUT .\ringraziamenti.tex
-INPUT .\ringraziamenti.tex
-INPUT ringraziamenti.tex
-INPUT C:\Users\lsand\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmbx10.tfm
 INPUT C:\Users\lsand\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmbx12.tfm
-INPUT C:\Users\lsand\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmti10.tfm
 INPUT .\sandrini_leonardo_laurea_aa.toc
 INPUT .\sandrini_leonardo_laurea_aa.toc
 INPUT sandrini_leonardo_laurea_aa.toc
+INPUT C:\Users\lsand\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmbx10.tfm
 INPUT C:\Users\lsand\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmr8.tfm
 INPUT C:\Users\lsand\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmr6.tfm
 INPUT C:\Users\lsand\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmmi10.tfm
@@ -465,6 +459,7 @@ INPUT .\chapter1.tex
 INPUT .\chapter1.tex
 INPUT chapter1.tex
 INPUT C:\Users\lsand\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmbx12.tfm
+INPUT C:\Users\lsand\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmti10.tfm
 INPUT C:\Users\lsand\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmss10.tfm
 INPUT C:\Users\lsand\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmss8.tfm
 INPUT C:\Users\lsand\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmss9.tfm
