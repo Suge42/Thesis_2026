@@ -89,17 +89,14 @@ The established Generative Transformer-HMM achieved an optimal Macro F1-score of
 The novel Generative Transformer-LSTM successfully learned multi-year agricultural cycles end-to-end,
 reaching a Macro F1-score of 40.12\%, marking a clear improvement over its single-year counterpart.
 
-While the LSTM demonstrated that recurrent memory cells can intrinsically capture temporal
-dependencies to boost accuracy, it ultimately fell short of the HMM's performance.
-This performance gap suggests that the LSTM's learned transition dynamics were more heavily
-influenced by class biases.
-Because the recurrent network must learn multi-year transition rules entirely end-to-end
-from an extremely imbalanced dataset, its recurrent gates inherently favor transitions
-toward majority staple crops.
-Conversely, the HMM leverages transition matrices that are explicitly initialized using
-empirical dataset frequencies, providing a rigid probabilistic prior that protects minority
-class transitions from being overwhelmed during training and
-offering vastly superior temporal smoothing.
+While the LSTM suggests that recurrent memory cells can intrinsically capture temporal
+dependencies to improve accuracy, it ultimately fell short of the HMM's performance.
+This performance gap suggests that, although unconstrained recurrent networks may learn multi-year transition rules end-to-end,
+they could remain highly susceptible to the dataset's extreme class imbalance.
+Conversely, the HMM's explicit empirical initialization of transition matrices may act as a robust probabilistic prior.
+This statistical foundation could help protect minority crop transitions from being overshadowed during training,
+potentially delivering more effective temporal smoothing across complex agricultural cycles.
+However, further interpretability studies would be required to confirm this mechanism.
 By evaluating this optimized software framework, this thesis provides a computationally
 feasible solution for operational longitudinal crop mapping.
 The findings lay the groundwork for future research, which aims to improve scalability
