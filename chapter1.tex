@@ -103,17 +103,16 @@ non-linear feature extractors for sequence models, in particular the multi-year 
 performed by the HMM, to be able to effectively interpret raw satellite data.
 
 These baselines are systematically compared against two high-capacity, multi-year hybrid architectures. 
-The first is the Transformer-HMM, an established state-of-the-art Bayesian framework \cite{perantoni_bayesian_2024}
-utilized here as an advanced reference model.
-To optimize the emission probabilities provided to the HMM transition layer, different backbone architectures are explicitly
-compared---including 1D-CNNs and both generative and discriminative variants of the Transformer backbone \cite{perantoni_bayesian_2024}.
+The first is the Transformer-HMM, an established state-of-the-art Bayesian framework \cite{perantoni_bayesian_2024} utilized here as an advanced reference model.
+Based on recent literature, this Bayesian cascade is anchored exclusively to a generative Transformer backbone,
+which provides the unbiased emission probabilities mathematically required by the HMM to function optimally \cite{perantoni_bayesian_2024}.
+The second is a novel, purely neural end-to-end architecture proposed by this thesis: the Hierarchical Transformer-LSTM. 
+By integrating the self-attention mechanism \cite{attention_is_all_you_need, garnot2020psetae} with the recurrent memory of an LSTM,
+this research systematically confronts Bayesian transition modeling against deep recurrent memory. 
+Furthermore, to determine how recurrent sequence heads best consume intra-year features,
+the generative and discriminative variants of the Transformer backbone are explicitly compared specifically for the LSTM architecture.
 Although state-space models like Mamba \cite{gu_mamba_2023} were originally slated for this feature-extraction comparison,
 time constraints limited the executed backbones to convolutions and self-attention.
-The second is a novel, purely neural end-to-end architecture proposed by this thesis: the Hierarchical Transformer-LSTM. 
-By integrating the self-attention mechanism proven effective on satellite time series \cite{attention_is_all_you_need, garnot2020psetae}
-with the recurrent memory of an LSTM, this research systematically confronts Bayesian transition modeling against deep recurrent memory to answer
-whether neural networks can intrinsically learn and leverage the historical rules of multi-year crop rotation to significantly
-outperform models that rely on single-year phenology alone.
 
 
 \section{Research Question and Objectives}
@@ -150,8 +149,8 @@ spanning both machine learning infrastructure and architectural design:
         To construct the novel Hierarchical \allowbreak Transformer-LSTM and confront it against the established
         Transformer-HMM to evaluate sequence modeling beyond a single harvest cycle.
         This objective focuses on using self-attention to manage intra-year weather irregularities, while comparing an LSTM memory cell against an HMM 
-        cascade to capture inter-year crop rotation dependencies. Additionally, both generative and discriminative variants of the Transformer backbone are 
-        tested to optimize the emission probabilities passed to the sequence heads.
+        cascade to capture inter-year crop rotation dependencies.
+        Additionally, the impact of providing generative versus discriminative emission features to the recurrent sequence heads is explicitly evaluated.
     
     \item[iv)] \textbf{Automating Hyperparameter Optimization:}
         To build a robust, fully automated Machine Learning Operations (MLOps) pipeline integrating PyTorch Lightning, Ray Tune, and Optuna.

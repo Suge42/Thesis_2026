@@ -19,14 +19,14 @@ demonstrating that raw SITS data must be cleanly untangled before transition mod
 
 Ultimately, the multi-year architectures significantly improved classification performance by leveraging historical crop rotation context.
 Both architectures successfully captured inter-year dependencies to improve over baseline models.
-The established Generative Transformer-HMM achieved an optimal Macro F1-score of 63.95\%,
-while the novel Generative Transformer-LSTM reached 40.12\%, significantly outperforming the
-36.01\% achieved by its single-year counterpart.
-Crucially, while the Transformer-LSTM demonstrated that recurrent memory cells can intrinsically model
-inter-year temporal dependencies end-to-end to boost accuracy, the results confirm that the
-explicitly initialized probabilistic transition matrices of the HMM remain the superior
-method for smoothing complex, highly imbalanced agricultural cycles. 
-While the performance gap suggests differences in how transition dynamics are handled,
+The established Generative Transformer-HMM achieved a robust Macro F1-score of 63.95\%.
+Crucially, the novel Discriminative Transformer-LSTM reached an optimal Macro F1-score of 68.47\% and an Overall Accuracy of 82.07\%,
+significantly outperforming both its single-year counterpart and the Bayesian cascade.
+This result demonstrates that recurrent memory cells can intrinsically model inter-year temporal dependencies end-to-end,
+potentially capturing complex agricultural cycles more effectively than empirically initialized probabilistic transition matrices. 
+However, the contrasting performance drop of the Generative Transformer-LSTM (achieving only 40.12\% Macro F1)
+indicates that the LSTM's success might be dependent on the discriminative formulation of its input features.
+While we hypothesize that the LSTM requires standard biased logits to properly regulate its recurrent gates,
 further targeted interpretability studies are required to confirm the precise mechanisms driving this behavior.
 
 

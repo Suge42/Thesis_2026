@@ -34,10 +34,10 @@
 \contentsline {section}{\numberline {3.5}Discussion}{25}{section.3.5}%
 \contentsline {subsection}{\numberline {3.5.1}Single-Year vs. Multi-Year Capabilities}{25}{subsection.3.5.1}%
 \contentsline {subsection}{\numberline {3.5.2}The Impact of Class Imbalance}{25}{subsection.3.5.2}%
-\contentsline {subsection}{\numberline {3.5.3}Computational Efficiency}{26}{subsection.3.5.3}%
-\contentsline {chapter}{\numberline {4}Conclusions and Future Work}{27}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Conclusions}{27}{section.4.1}%
-\contentsline {section}{\numberline {4.2}Limitations and Future Work}{27}{section.4.2}%
-\contentsline {subsection}{\numberline {4.2.1}Observed Limitations}{27}{subsection.4.2.1}%
-\contentsline {subsection}{\numberline {4.2.2}Future Work}{28}{subsection.4.2.2}%
-\contentsline {chapter}{Bibliography}{28}{subsection.4.2.2}%
+\contentsline {subsection}{\numberline {3.5.3}Computational Efficiency}{25}{subsection.3.5.3}%
+\contentsline {chapter}{\numberline {4}Conclusions and Future Work}{26}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Conclusions}{26}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Limitations and Future Work}{26}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}Observed Limitations}{26}{subsection.4.2.1}%
+\contentsline {subsection}{\numberline {4.2.2}Future Work}{27}{subsection.4.2.2}%
+\contentsline {chapter}{Bibliography}{27}{subsection.4.2.2}%

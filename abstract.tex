@@ -60,8 +60,8 @@ to raw satellite data.
 To bridge the gap between intra-year phenological tracking and historical agricultural dependencies,
 two distinct multi-year hybrid architectures are compared.
 The established Transformer-HMM cascade acts as the Bayesian reference model.
-In this framework, the Transformer acts exclusively as the emission model,
-generating yearly class likelihoods, while a Hidden Markov Model (HMM) models the temporal
+In this framework, a generative Transformer acts exclusively as the emission model,
+generating unbiased yearly class likelihoods, while a Hidden Markov Model (HMM) models the temporal
 sequence using explicit probabilistic transition matrices empirically initialized from the dataset.
 Compared with this, the thesis proposes a novel Hierarchical Transformer-LSTM,
 a purely neural end-to-end architecture.
@@ -85,18 +85,18 @@ Ultimately, both multi-year architectures, evaluated across the full six-year se
 substantially outperformed the single-year baselines.
 This demonstrates that historical crop rotation context is highly effective at rescuing
 minority classes that traditional models ignore.
-The established Generative Transformer-HMM achieved an optimal Macro F1-score of 63.95\%.
-The novel Generative Transformer-LSTM successfully learned multi-year agricultural cycles end-to-end,
-reaching a Macro F1-score of 40.12\%, marking a clear improvement over its single-year counterpart.
+The established Generative Transformer-HMM achieved a robust Macro F1-score of 63.95\%.
+The novel Discriminative Transformer-LSTM successfully learned multi-year agricultural cycles end-to-end,
+reaching an optimal Macro F1-score of 68.47\% and an Overall Accuracy of 82.07\%,
+marking a clear improvement over both the single-year counterparts and the HMM cascade.
 
-While the LSTM suggests that recurrent memory cells can intrinsically capture temporal
-dependencies to improve accuracy, it ultimately fell short of the HMM's performance.
-This performance gap suggests that, although unconstrained recurrent networks may learn multi-year transition rules end-to-end,
-they could remain highly susceptible to the dataset's extreme class imbalance.
-Conversely, the HMM's explicit empirical initialization of transition matrices may act as a robust probabilistic prior.
-This statistical foundation could help protect minority crop transitions from being overshadowed during training,
-potentially delivering more effective temporal smoothing across complex agricultural cycles.
-However, further interpretability studies would be required to confirm this mechanism.
+This performance suggests that deep recurrent memory cells can intrinsically capture complex
+temporal dependencies to improve accuracy, surpassing empirically initialized statistical matrices.
+However, experiments also revealed that the Generative variant of the LSTM suffered from severe mode
+concentration across both majority and rare classes. 
+This suggests that while unconstrained recurrent networks can learn multi-year transition rules end-to-end,
+they remain highly susceptible to the specific probabilistic formulation of their input features.
+The underlying internal mechanics driving this behavior remain a hypothesis, identifying a clear need for future interpretability studies.
 By evaluating this optimized software framework, this thesis provides a computationally
 feasible solution for operational longitudinal crop mapping.
 The findings lay the groundwork for future research, which aims to improve scalability

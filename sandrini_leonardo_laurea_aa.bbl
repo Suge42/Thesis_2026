@@ -109,13 +109,6 @@ Gianmarco Perantoni, Giulio Weikmann, and Lorenzo Bruzzone.
 \newblock \href {https://doi.org/10.1109/IGARSS53475.2024.10642432}
   {\path{doi:10.1109/IGARSS53475.2024.10642432}}.
 
-\bibitem{gu_mamba_2023}
-Albert Gu and Tri Dao.
-\newblock Mamba: Linear-time sequence modeling with selective state spaces.
-\newblock {\em arXiv preprint arXiv:2312.00752}, 2023.
-\newblock \href {https://doi.org/10.48550/arXiv.2312.00752}
-  {\path{doi:10.48550/arXiv.2312.00752}}.
-
 \bibitem{attention_is_all_you_need}
 Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones,
   Aidan~N. Gomez, \L{}ukasz Kaiser, and Illia Polosukhin.
@@ -135,6 +128,13 @@ Vivien Sainte Fare~Garnot, Loic Landrieu, Sebastien Giordano, and Nesrine
   Recognition ({CVPR})}, pages 12325--12334, Seattle, WA, USA, 2020. IEEE.
 \newblock \href {https://doi.org/10.1109/CVPR42600.2020.01234}
   {\path{doi:10.1109/CVPR42600.2020.01234}}.
+
+\bibitem{gu_mamba_2023}
+Albert Gu and Tri Dao.
+\newblock Mamba: Linear-time sequence modeling with selective state spaces.
+\newblock {\em arXiv preprint arXiv:2312.00752}, 2023.
+\newblock \href {https://doi.org/10.48550/arXiv.2312.00752}
+  {\path{doi:10.48550/arXiv.2312.00752}}.
 
 \bibitem{osman_crop_2013}
 Julien Osman, Jordi Inglada, Jean-Fran{\c{c}}ois Dejoux, Olivier Hagolle, and
