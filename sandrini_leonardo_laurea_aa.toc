@@ -31,7 +31,7 @@
 \contentsline {subsection}{\numberline {3.3.1}Temporal 1D-CNN vs. Transformer Encoders}{23}{subsection.3.3.1}%
 \contentsline {subsection}{\numberline {3.3.2}The Necessity of Non-Linearity: Linear Controls}{23}{subsection.3.3.2}%
 \contentsline {section}{\numberline {3.4}Multi-Year Architecture Results}{24}{section.3.4}%
-\contentsline {section}{\numberline {3.5}Discussion}{25}{section.3.5}%
+\contentsline {section}{\numberline {3.5}Discussion}{24}{section.3.5}%
 \contentsline {subsection}{\numberline {3.5.1}Single-Year vs. Multi-Year Capabilities}{25}{subsection.3.5.1}%
 \contentsline {subsection}{\numberline {3.5.2}The Impact of Class Imbalance}{25}{subsection.3.5.2}%
 \contentsline {subsection}{\numberline {3.5.3}Computational Efficiency}{25}{subsection.3.5.3}%

@@ -53,9 +53,8 @@ distance into the spectral embeddings.
 Crucially, the research also introduces linear structural controls; in these tests,
 the deep non-linear feature extractors are replaced by a zero-memory linear backbone that
 temporally mean-pools the sequence and feeds directly into multi-year sequence heads.
-This deliberate structural control motivates investigating the necessity of utilizing high-capacity,
-non-linear neural backbones before complex multi-year sequence smoothing can be effectively applied
-to raw satellite data.
+The resulting performance degradation in these specific configurations highlights the challenges of
+sequence modeling when both non-linear feature extraction and intra-year temporal information are not employed.
 
 To bridge the gap between intra-year phenological tracking and historical agricultural dependencies,
 two distinct multi-year hybrid architectures are compared.
@@ -78,9 +77,8 @@ of single-year models when confronted with highly imbalanced agricultural datase
 The 1D-CNN and standalone Discriminative Transformer achieved limited Macro
 F1-scores of 30.17\% and 33.18\%, respectively, frequently defaulting to majority staple
 crops at the expense of minority classes.
-The linear structural controls proved the necessity of non-linear feature extraction,
-suffering significant performance degradation with the Linear-LSTM configuration yielding
-a Macro F1-score of merely 1.04\%.
+The linear structural controls suffered significant performance degradation,
+with the Linear-LSTM configuration yielding a Macro F1-score of merely 1.04\%.
 Ultimately, both multi-year architectures, evaluated across the full six-year sequence,
 substantially outperformed the single-year baselines.
 This demonstrates that historical crop rotation context is highly effective at rescuing
@@ -92,11 +90,10 @@ marking a clear improvement over both the single-year counterparts and the HMM c
 
 This performance suggests that deep recurrent memory cells can intrinsically capture complex
 temporal dependencies to improve accuracy, surpassing empirically initialized statistical matrices.
-However, experiments also revealed that the Generative variant of the LSTM suffered from severe mode
-concentration across both majority and rare classes. 
+However, experiments also revealed that the Generative variant of the LSTM achieved a significantly lower Macro F1-score (40.12\%). 
 This suggests that while unconstrained recurrent networks can learn multi-year transition rules end-to-end,
-they remain highly susceptible to the specific probabilistic formulation of their input features.
-The underlying internal mechanics driving this behavior remain a hypothesis, identifying a clear need for future interpretability studies.
+their performance in this setup remains highly susceptible to the specific probabilistic formulation of their input features,
+identifying a clear need for future interpretability studies.
 By evaluating this optimized software framework, this thesis provides a computationally
 feasible solution for operational longitudinal crop mapping.
 The findings lay the groundwork for future research, which aims to improve scalability

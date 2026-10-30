@@ -13,9 +13,9 @@ This engineering optimization enabled the deployment of an automated MLOps pipel
 The systematic evaluation answered the primary research questions with quantitative evidence.
 Single-year baselines confirmed the limitations of analyzing growing seasons in isolation;
 the Temporal 1D-CNN and standalone Discriminative Transformer achieved limited Macro F1-scores of 30.17\% and 33.18\%, respectively.
-Furthermore, structural control tests explicitly motivated investigating the role of non-linear feature extractors:
-when the neural backbones were replaced with linear projections, the HMM cascade's performance dropped to a 5.23\% Macro F1,
-demonstrating that raw SITS data must be cleanly untangled before transition modeling can occur.
+Furthermore, structural control tests evaluated baseline configurations where the neural backbones were replaced with linear projections and temporal mean-pooling.
+The resulting performance drops (such as the HMM cascade yielding a 5.23\% Macro F1) highlighted the
+difficulty of modeling transitions when both non-linear feature extraction and intra-year chronological information are not employed.
 
 Ultimately, the multi-year architectures significantly improved classification performance by leveraging historical crop rotation context.
 Both architectures successfully captured inter-year dependencies to improve over baseline models.
@@ -24,8 +24,8 @@ Crucially, the novel Discriminative Transformer-LSTM reached an optimal Macro F1
 significantly outperforming both its single-year counterpart and the Bayesian cascade.
 This result demonstrates that recurrent memory cells can intrinsically model inter-year temporal dependencies end-to-end,
 potentially capturing complex agricultural cycles more effectively than empirically initialized probabilistic transition matrices. 
-However, the contrasting performance drop of the Generative Transformer-LSTM (achieving only 40.12\% Macro F1)
-indicates that the LSTM's success might be dependent on the discriminative formulation of its input features.
+However, the contrasting performance drop of the Generative Transformer-LSTM (achieving 40.12\% Macro F1)
+indicates that the LSTM's success in this setup is heavily dependent on the discriminative formulation of its input features.
 While we hypothesize that the LSTM requires standard biased logits to properly regulate its recurrent gates,
 further targeted interpretability studies are required to confirm the precise mechanisms driving this behavior.
 
@@ -49,6 +49,11 @@ several direct limitations emerged from this study, guiding the direction of fut
     \item \textbf{Information Baselines:}
         The explicit temporal distances injected into the Transformer models via the AgroDays Positional Encoding created
         an uneven information baseline when compared to the implicit sequential ordering of the 1D-CNN.
+    \item \textbf{Limited Per-Class Metrics Interpretability:}
+        Due to inconsistencies in the logging of granular classification reports for certain model variations (such as the Linear-LSTM and Generative Transformer-LSTM),
+        the definitive evaluation of these specific configurations was restricted to aggregate metrics (Overall Accuracy and Macro F1).
+        This lack of reliable per-class analysis limits the ability to conclusively diagnose specific prediction behaviors,
+        leaving certain internal network dynamics—such as the exact mechanism of mode collapse or minority class tracking—as theoretical hypotheses.
 \end{itemize}
 
 \subsection{Future Work}

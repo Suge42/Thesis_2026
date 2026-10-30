@@ -186,9 +186,6 @@ All subsequent computations are executed in log-space using the numerically stab
 
 During training and inference, the architecture employs a forward-backward algorithm to perform marginal smoothing;
 it computes the posterior probability of each crop class at year $t$ given the entire multi-year sequence of observations $x_{1:T}$.
-The network's final output logits are derived by combining (summing in log-space) the
-forward and backward probabilities to compute the smoothed marginals \cite{perantoni_bayesian_2024}.
-
 The network's final output logits are derived by combining the forward and backward probabilities,
 which mathematically translates to summing their log-probabilities (the log-space equivalent of probability multiplication),
 to compute the smoothed marginals \cite{perantoni_bayesian_2024}.
