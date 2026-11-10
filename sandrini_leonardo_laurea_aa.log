@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.5) (preloaded format=pdflatex 2026.8.17)  30 OCT 2026 22:35
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.5) (preloaded format=pdflatex 2026.8.17)  10 NOV 2026 01:02
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -824,7 +824,7 @@ Package rerunfilecheck Info: File `sandrini_leonardo_laurea_aa.out' has not chan
 Here is how much of TeX's memory you used:
  28033 strings out of 467500
  531730 string characters out of 5408529
- 985273 words of memory out of 5000000
+ 985272 words of memory out of 5000000
  56438 multiletter control sequences out of 15000+600000
  651813 words of font info for 227 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
