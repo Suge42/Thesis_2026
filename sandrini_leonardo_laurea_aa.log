@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.5) (preloaded format=pdflatex 2026.8.17)  10 NOV 2026 01:02
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.5) (preloaded format=pdflatex 2026.8.17)  11 NOV 2026 06:22
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -596,24 +596,24 @@ LaTeX Warning: Unused global option(s):
 (sandrini_leonardo_laurea_aa.aux)
 \openout1 = `sandrini_leonardo_laurea_aa.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 47.
-LaTeX Font Info:    ... okay on input line 47.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 47.
-LaTeX Font Info:    ... okay on input line 47.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 47.
-LaTeX Font Info:    ... okay on input line 47.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 47.
-LaTeX Font Info:    ... okay on input line 47.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 47.
-LaTeX Font Info:    ... okay on input line 47.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 47.
-LaTeX Font Info:    ... okay on input line 47.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 47.
-LaTeX Font Info:    ... okay on input line 47.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 47.
-LaTeX Font Info:    ... okay on input line 47.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 47.
-LaTeX Font Info:    ... okay on input line 47.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 48.
+LaTeX Font Info:    ... okay on input line 48.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 48.
+LaTeX Font Info:    ... okay on input line 48.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 48.
+LaTeX Font Info:    ... okay on input line 48.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 48.
+LaTeX Font Info:    ... okay on input line 48.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 48.
+LaTeX Font Info:    ... okay on input line 48.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 48.
+LaTeX Font Info:    ... okay on input line 48.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 48.
+LaTeX Font Info:    ... okay on input line 48.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 48.
+LaTeX Font Info:    ... okay on input line 48.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 48.
+LaTeX Font Info:    ... okay on input line 48.
  (C:\Users\lsand\AppData\Local\Programs\MiKTeX\tex/context/base/mkii\supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count351
@@ -673,13 +673,13 @@ File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-LaTeX Info: Redefining \microtypecontext on input line 47.
-Package microtype Info: Applying patch `item' on input line 47.
-Package microtype Info: Applying patch `toc' on input line 47.
-Package microtype Info: Applying patch `eqnum' on input line 47.
-Package microtype Info: Applying patch `footnote' on input line 47.
-Package microtype Info: Applying patch `verbatim' on input line 47.
-LaTeX Info: Redefining \microtypesetup on input line 47.
+LaTeX Info: Redefining \microtypecontext on input line 48.
+Package microtype Info: Applying patch `item' on input line 48.
+Package microtype Info: Applying patch `toc' on input line 48.
+Package microtype Info: Applying patch `eqnum' on input line 48.
+Package microtype Info: Applying patch `footnote' on input line 48.
+Package microtype Info: Applying patch `verbatim' on input line 48.
+LaTeX Info: Redefining \microtypesetup on input line 48.
 Package microtype Info: Generating PDF output.
 Package microtype Info: Character protrusion enabled (level 2).
 Package microtype Info: Using default protrusion set `alltext'.
@@ -693,7 +693,7 @@ Package microtype Info: No adjustment of character kerning.
 (C:\Users\lsand\AppData\Local\Programs\MiKTeX\tex/latex/microtype\mt-cmr.cfg
 File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman (RS)
 )
-Package hyperref Info: Link coloring OFF on input line 47.
+Package hyperref Info: Link coloring OFF on input line 48.
  (sandrini_leonardo_laurea_aa.out) (sandrini_leonardo_laurea_aa.out)
 \@outlinefile=\write4
 \openout4 = `sandrini_leonardo_laurea_aa.out'.
@@ -727,51 +727,97 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 )) [1
 
-{C:/Users/lsand/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map} <./marchio_unitrento_colore_it_202002-eps-converted-to.pdf>] (sandrini_leonardo_laurea_aa.toc)
+{C:/Users/lsand/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map} <./marchio_unitrento_colore_it_202002-eps-converted-to.pdf>]
+pdfTeX warning (ext4): destination with the same identifier (name{page.}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.55   \cleardoublepage
+                        [2
+
+] (ringraziamenti.tex
+Underfull \hbox (badness 10000) in paragraph at lines 4--7
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 8--10
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 11--13
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 14--16
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 17--19
+
+ []
+
+)
+pdfTeX warning (ext4): destination with the same identifier (name{page.}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.66   \cleardoublepage
+                        [3
+
+]
+pdfTeX warning (ext4): destination with the same identifier (name{page.}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.66   \cleardoublepage
+                        [4
+
+] (sandrini_leonardo_laurea_aa.toc)
 \tf@toc=\write5
 \openout5 = `sandrini_leonardo_laurea_aa.toc'.
 
  [1
 
+] [2
 
-] (abstract.tex [2
+] (abstract.tex [3
 
-
-]) [3] (chapter1.tex
+]) [4] (chapter1.tex
 Chapter 1.
 Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `cmss' (encoding: OT1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
-[4
+[5
 
 
-] [5] [6] [7] [8] [9]) (chapter2.tex [10]
+] [6] [7] [8] [9] [10]) (chapter2.tex [11] [12
+
+]
 Chapter 2.
 
 
 pdfTeX warning: pdflatex (file ./images/cnn_diagram.pdf): PDF inclusion: found PDF version <1.7>, but at most version <1.5> allowed
-<images/cnn_diagram.pdf, id=360, 499.8675pt x 243.79079pt>
+<images/cnn_diagram.pdf, id=379, 499.8675pt x 243.79079pt>
 File: images/cnn_diagram.pdf Graphic file (type pdf)
 <use images/cnn_diagram.pdf>
 Package pdftex.def Info: images/cnn_diagram.pdf  used on input line 34.
 (pdftex.def)             Requested size: 386.95897pt x 188.73131pt.
-[11
-
- <./images/cnn_diagram.pdf>]
+[13 <./images/cnn_diagram.pdf>]
 
 pdfTeX warning: pdflatex (file ./images/transformer_diagram.pdf): PDF inclusion: found PDF version <1.7>, but at most version <1.5> allowed
-<images/transformer_diagram.pdf, id=382, 630.43526pt x 391.4625pt>
+<images/transformer_diagram.pdf, id=401, 630.43526pt x 391.4625pt>
 File: images/transformer_diagram.pdf Graphic file (type pdf)
 <use images/transformer_diagram.pdf>
 Package pdftex.def Info: images/transformer_diagram.pdf  used on input line 49.
 (pdftex.def)             Requested size: 435.32422pt x 270.31847pt.
-[12 <./images/transformer_diagram.pdf>]
+[14 <./images/transformer_diagram.pdf>]
 Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on input line 90.
- [13]
+ [15]
 
 pdfTeX warning: pdflatex (file ./images/transformer_hmm_diagram.pdf): PDF inclusion: found PDF version <1.7>, but at most version <1.5> allowed
-<images/transformer_hmm_diagram.pdf, id=431, 759.79855pt x 365.44528pt>
+<images/transformer_hmm_diagram.pdf, id=450, 759.79855pt x 365.44528pt>
 File: images/transformer_hmm_diagram.pdf Graphic file (type pdf)
 <use images/transformer_hmm_diagram.pdf>
 Package pdftex.def Info: images/transformer_hmm_diagram.pdf  used on input line 161.
@@ -781,39 +827,39 @@ Overfull \hbox (10.94707pt too wide) in paragraph at lines 191--195
 []\OT1/cmr/m/n/10.95 (-20) While Viterbi de-cod-ing (which seeks the sin-gle max-i-mum prob-a-bil-ity se-quence $[] [][] \OML/cmm/m/it/10.95 P\OT1/cmr/m/n/10.95 (-20) (\OML/cmm/m/it/10.95 s[]\OMS/cmsy/m/n/10.95 j\OML/cmm/m/it/10.95 x[]\OT1/cmr/m/n/10.95 (-20) )$)
  []
 
-[14 <./images/transformer_hmm_diagram.pdf>]
+[16 <./images/transformer_hmm_diagram.pdf>]
 
 pdfTeX warning: pdflatex (file ./images/transformer_lstm_diagram.pdf): PDF inclusion: found PDF version <1.7>, but at most version <1.5> allowed
-<images/transformer_lstm_diagram.pdf, id=469, 759.79855pt x 340.3917pt>
+<images/transformer_lstm_diagram.pdf, id=488, 759.79855pt x 340.3917pt>
 File: images/transformer_lstm_diagram.pdf Graphic file (type pdf)
 <use images/transformer_lstm_diagram.pdf>
 Package pdftex.def Info: images/transformer_lstm_diagram.pdf  used on input line 206.
 (pdftex.def)             Requested size: 435.32422pt x 195.02771pt.
-) (chapter3.tex [15 <./images/transformer_lstm_diagram.pdf>] [16]
+) (chapter3.tex [17 <./images/transformer_lstm_diagram.pdf>] [18]
 Chapter 3.
-[17
+[19
 
 ]
 
 pdfTeX warning: pdflatex (file ./images/map_33UVP.pdf): PDF inclusion: found PDF version <1.7>, but at most version <1.5> allowed
-<images/map_33UVP.pdf, id=522, 810.4679pt x 472.88669pt>
+<images/map_33UVP.pdf, id=541, 810.4679pt x 472.88669pt>
 File: images/map_33UVP.pdf Graphic file (type pdf)
 <use images/map_33UVP.pdf>
 Package pdftex.def Info: images/map_33UVP.pdf  used on input line 83.
 (pdftex.def)             Requested size: 435.32422pt x 254.00568pt.
-[18 <./images/map_33UVP.pdf>] [19] [20] [21] [22] [23] [24]) (chapter4.tex [25]
+[20 <./images/map_33UVP.pdf>] [21] [22] [23] [24] [25] [26]) (chapter4.tex [27] [28
+
+]
 Chapter 4.
-[26
-
-]) [27] (sandrini_leonardo_laurea_aa.bbl [28
+[29]) [30] (sandrini_leonardo_laurea_aa.bbl [31
 
 
-] [29]
+] [32]
 Underfull \hbox (badness 1189) in paragraph at lines 305--309
 []\OT1/cmr/m/n/10.95 (+20) William Fal-con et al.  Py-Torch Light-ning.  GitHub repos-i-tory. []$\OT1/cmtt/m/n/10.95 https : / / github . com /
  []
 
-[30]) [31] (sandrini_leonardo_laurea_aa.aux)
+[33]) [34] (sandrini_leonardo_laurea_aa.aux)
  ***********
 LaTeX2e <2026-06-01>
 L3 programming layer <2026-07-20>
@@ -822,17 +868,17 @@ Package rerunfilecheck Info: File `sandrini_leonardo_laurea_aa.out' has not chan
 (rerunfilecheck)             Checksum: CAAF3BDAFD20B9E93A53C74C23806528;8715.
  ) 
 Here is how much of TeX's memory you used:
- 28033 strings out of 467500
- 531730 string characters out of 5408529
- 985272 words of memory out of 5000000
- 56438 multiletter control sequences out of 15000+600000
- 651813 words of font info for 227 fonts, out of 8000000 for 9000
+ 28052 strings out of 467500
+ 532051 string characters out of 5408529
+ 985285 words of memory out of 5000000
+ 56446 multiletter control sequences out of 15000+600000
+ 652029 words of font info for 229 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 92i,10n,104p,1066b,1173s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 92i,10n,104p,1066b,1169s stack positions out of 10000i,1000n,20000p,200000b,200000s
  <C:\Users\lsand\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm1095.pk><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx8.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmcsc10.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi6.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr6.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr9.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmss10.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmss8.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmss9.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmssbx10.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt10.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msam10.pfb><C:/Users/lsand/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on sandrini_leonardo_laurea_aa.pdf (32 pages, 1750766 bytes).
+Output written on sandrini_leonardo_laurea_aa.pdf (38 pages, 1757312 bytes).
 PDF statistics:
- 843 PDF objects out of 1000 (max. 8388607)
- 130 named destinations out of 1000 (max. 500000)
+ 869 PDF objects out of 1000 (max. 8388607)
+ 134 named destinations out of 1000 (max. 500000)
  54123 words of extra memory for PDF output out of 61914 (max. 10000000)
 

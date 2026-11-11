@@ -1,13 +1,13 @@
 # Fdb version 4
-["bibtex sandrini_leonardo_laurea_aa"] 1794268959.6456 "sandrini_leonardo_laurea_aa.aux" "sandrini_leonardo_laurea_aa.bbl" "sandrini_leonardo_laurea_aa" 1794268963.1886 0
+["bibtex sandrini_leonardo_laurea_aa"] 1794374480.89757 "sandrini_leonardo_laurea_aa.aux" "sandrini_leonardo_laurea_aa.bbl" "sandrini_leonardo_laurea_aa" 1794374561.2814 0
   "./biblio.bib" 1794268954 17570 f9d31e87afcfa5f533c299b057c21024 ""
   "C:/Users/lsand/AppData/Local/Programs/MiKTeX/bibtex/bst/urlbst/unsrturl.bst" 1675594511 30912 2cfc330ae0a68bbf7dc64e1666bbb15c ""
-  "sandrini_leonardo_laurea_aa.aux" 1794268962 20623 87ffba0f448b392d7010d024813de041 "pdflatex"
+  "sandrini_leonardo_laurea_aa.aux" 1794374560 20625 56255e00f84ac620969f3fa151148dda "pdflatex"
   (generated)
   "sandrini_leonardo_laurea_aa.bbl"
   "sandrini_leonardo_laurea_aa.blg"
   (rewritten before read)
-["pdflatex"] 1794268959.98445 "c:/Users/lsand/Desktop/Thesis/Thesis_2026/sandrini_leonardo_laurea_aa.tex" "sandrini_leonardo_laurea_aa.pdf" "sandrini_leonardo_laurea_aa" 1794268963.18951 0
+["pdflatex"] 1794374557.6675 "c:/Users/lsand/Desktop/Thesis/Thesis_2026/sandrini_leonardo_laurea_aa.tex" "sandrini_leonardo_laurea_aa.pdf" "sandrini_leonardo_laurea_aa" 1794374561.28236 0
   "C:/Users/lsand/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1792500731 80909 eab91d9745dd2edfd62a31d53cd5fe15 ""
   "C:/Users/lsand/AppData/Local/MiKTeX/fonts/pk/ljfour/jknappen/ec/dpi600/tcrm1095.pk" 1787003831 12668 dbab264e03c5e099c5e229b3042bc5cd ""
   "C:/Users/lsand/AppData/Local/MiKTeX/miktex/data/le/pdftex/pdflatex.fmt" 1787003793 13367647 c9e88592577dadd504cf07e21bcdd721 ""
@@ -216,7 +216,7 @@
   "C:/Users/lsand/AppData/Local/Programs/MiKTeX/tex/latex/url/url.sty" 1388490452 12796 8edb7d69a20b857904dd0ea757c14ec9 ""
   "C:/Users/lsand/AppData/Local/Programs/MiKTeX/tex/latex/xcolor/xcolor.sty" 1729265222 55384 b454dec21c2d9f45ec0b793f0995b992 ""
   "abstract.tex" 1794268954 8082 5769a897f66270a0dcd7e1d5242d3f68 ""
-  "c:/Users/lsand/Desktop/Thesis/Thesis_2026/sandrini_leonardo_laurea_aa.tex" 1794268954 7221 1053e99ddfe6b1be9f56f01938e819f5 ""
+  "c:/Users/lsand/Desktop/Thesis/Thesis_2026/sandrini_leonardo_laurea_aa.tex" 1794374507 7381 f4c42f3ac5fac59e52961d69c2e576bf ""
   "chapter1.tex" 1794268954 33675 a9a6ed22abd589f8aa24c23a46c9e375 ""
   "chapter2.tex" 1794268954 19050 37f1a8cc0e6a96b2e4d015cc8e122b49 ""
   "chapter3.tex" 1794268954 38294 46da745831ea9b7526c70e3517bcd19b ""
@@ -228,11 +228,12 @@
   "images/transformer_lstm_diagram.pdf" 1794268954 58628 8966ddbf3b8556b467c92473b852c3eb ""
   "marchio_unitrento_colore_it_202002.eps" 1581498201 222744 4e32327f5c4814cb131fa38eeccdbfae ""
   "pagina_iniziale.tex" 1794268954 1193 e9b0fbdce1471a2acdc429e6b28895e8 ""
-  "sandrini_leonardo_laurea_aa.aux" 1794268962 20623 87ffba0f448b392d7010d024813de041 "pdflatex"
-  "sandrini_leonardo_laurea_aa.bbl" 1794268959 16249 f7f4184fcbbcaf91950491315733cfff "bibtex sandrini_leonardo_laurea_aa"
-  "sandrini_leonardo_laurea_aa.out" 1794268962 8715 caaf3bdafd20b9e93a53c74c23806528 "pdflatex"
-  "sandrini_leonardo_laurea_aa.tex" 1794268954 7221 1053e99ddfe6b1be9f56f01938e819f5 ""
-  "sandrini_leonardo_laurea_aa.toc" 1794268962 3906 a21498669624d5fd8b3654d0906ea4ad "pdflatex"
+  "ringraziamenti.tex" 1794374556 2468 d81acd4c5bb499e44fce25fa5bad4278 ""
+  "sandrini_leonardo_laurea_aa.aux" 1794374560 20625 56255e00f84ac620969f3fa151148dda "pdflatex"
+  "sandrini_leonardo_laurea_aa.bbl" 1794374481 16249 f7f4184fcbbcaf91950491315733cfff "bibtex sandrini_leonardo_laurea_aa"
+  "sandrini_leonardo_laurea_aa.out" 1794374560 8715 caaf3bdafd20b9e93a53c74c23806528 "pdflatex"
+  "sandrini_leonardo_laurea_aa.tex" 1794374507 7381 f4c42f3ac5fac59e52961d69c2e576bf ""
+  "sandrini_leonardo_laurea_aa.toc" 1794374560 3906 c79267b58eae3e2337c362c289b9e036 "pdflatex"
   (generated)
   "sandrini_leonardo_laurea_aa.aux"
   "sandrini_leonardo_laurea_aa.log"
